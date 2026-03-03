@@ -33,6 +33,11 @@ class _EMATeacher:
         for p_t, p_s in zip(self.teacher.parameters(), student.parameters()):
             p_t.data.mul_(d).add_(p_s.data, alpha=(1.0 - d))
 
+    # Notes:
+    # - `teacher` is a frozen copy of the student model used to produce
+    #   more stable visual representations (momentum teacher in the paper).
+    # - `update` performs weight averaging: p_t = decay * p_t + (1-decay) * p_s.
+
 
 class CustomTrainerStage1(SFTTrainer):
     def __init__(
@@ -285,6 +290,10 @@ class CustomTrainerStage1(SFTTrainer):
 
     @torch.no_grad()
     def _teacher_build_latents(self, inputs, k, p):
+        # Inputs: `inputs` contains token tensors and (optionally) two image streams:
+        #  - `pixel_values` / `image_grid_thw`: visual inputs corresponding to user images
+        #  - `pixel_values_latent` / `image_grid_thw_latent`: helper images used to construct latents
+        # `k` is the requested latent size, `p` is coverage probability for top-p selection.
         device = self.model.device
         ids  = inputs["input_ids"].to(device)
         attn = inputs["attention_mask"].to(device)
@@ -292,6 +301,7 @@ class CustomTrainerStage1(SFTTrainer):
 
         special_ids, image_token_id, latent_start_id, latent_end_id, latent_pad_id = self._get_special_ids()
 
+        # Find positions (indices) of latent-pad tokens within each latent segment.
         seg_pad_indices = self._find_latent_segments(ids, latent_start_id, latent_end_id, latent_pad_id)
         if len(seg_pad_indices) == 0:
             return None, torch.zeros_like(ids, dtype=torch.bool)
@@ -319,12 +329,17 @@ class CustomTrainerStage1(SFTTrainer):
         if start_assistant <= 0:
             return None, torch.zeros_like(ids, dtype=torch.bool)
 
+        # Build the contextual query `u` used to score visual patches.
+        # Preferred strategy: use `_user_side_attn_pooling` which leverages
+        # cross-attention patterns between prompt tokens and image tokens in the teacher's last layer.
+        # Fallback: mean of prefix text embeddings and global image embedding.
         u = self._user_side_attn_pooling(tea, inputs, ids, attn)
         if u is None:
             token_embeds = tea.get_input_embeddings()(ids)
             u_text = self._prefix_text_mean_from_embeds(token_embeds, ids, start_assistant, special_ids)
             u_img  = self._image_input_global_mean(tea, inputs)
             parts = [u_text] + ([u_img] if u_img is not None else [])
+            # `u` shape: (1, H) where H is hidden dim of the model's text/vision representation
             u = torch.stack([x.squeeze(0) for x in parts]).mean(dim=0, keepdim=True)
 
         pv  = inputs.get("pixel_values_latent", None)
@@ -333,6 +348,8 @@ class CustomTrainerStage1(SFTTrainer):
             return None, torch.zeros_like(ids, dtype=torch.bool)
         pv  = pv.to(device).to(tea.visual.dtype)
         thw = thw.to(device)
+        # Extract dense visual patch embeddings from the teacher visual encoder.
+        # `patch_all` shape: (num_patches_total, D), where patches are concatenated across helper images.
         patch_all = tea.visual(pv, grid_thw=thw)
         num_imgs  = int(thw.shape[0])
 
@@ -353,6 +370,9 @@ class CustomTrainerStage1(SFTTrainer):
         Kstars = []
         prev_sel_mean = None
 
+        # Iterate latent segments (one per helper image/segment). For each
+        # segment we compute similarities between candidate patch embeddings
+        # and the contextual query `q_t`, then select top patches by top-p/k.
         for seg_idx, pad_pos in enumerate(seg_pad_indices):
             if len(pad_pos) == 0:
                 Kstars.append(0); continue
@@ -389,10 +409,15 @@ class CustomTrainerStage1(SFTTrainer):
 
             assert seg_idx < num_imgs, "latent 段数量与 helper images 数量不一致"
             st_img, ed_img = slices_per_img[seg_idx]
+            # `ei` are patch vectors for this helper image: shape (P, D)
             ei = patch_all[st_img:ed_img, :]
+            # Optionally group/aggregate patch vectors to reduce P to a target L_group
             cand = self._maybe_group_for_helper(ei, L_group)
 
+            # Compute cosine similarity between each candidate patch (P') and query (1, D)
+            # `sim` shape: (P',)
             sim = F.cosine_similarity(cand, q_t.expand_as(cand), dim=-1)
+            # Select indices via top-p/top-k strategy
             top_idx = self._top_p_top_k(sim, p=self.coverage_p, k=k)
             Kstar = len(top_idx)
             Kstars.append(Kstar)
@@ -410,6 +435,12 @@ class CustomTrainerStage1(SFTTrainer):
         return latents, firstK_mask
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        # High-level compute_loss flow:
+        # 1) Build teacher latents via `_teacher_build_latents(inputs)` (returns latents, firstK_mask)
+        # 2) If teacher latents are available, create `mod_inputs` containing `latent_hidden_states`
+        #    and `image_out_mask` and call the parent's `compute_loss` to obtain CE loss and outputs.
+        # 3) If `sim_weight` > 0, compute similarity loss between predicted hidden states and
+        #    the inputs_embeds at latent positions using `firstK_mask`, and combine with CE.
         k = getattr(self.model.config, "latent_size", 8)
         teacher_latents, firstK_mask = self._teacher_build_latents(inputs, k=k, p=self.coverage_p)
         

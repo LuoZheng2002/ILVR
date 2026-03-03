@@ -214,6 +214,13 @@ def process_batch(
     replacement_length: int,
     pad_token: int = 0
 ):
+    # input_ids: (B, T) token ids tensor
+    # attention_mask: same shape, 1 for real tokens
+    # start_token / end_token: token ids that bracket image/latent segments
+    # replacement_token: the token id to use for collapsed latent pads
+    # replacement_length: number of replacement_token tokens to emit per latent segment
+    # Returns: new_input_ids (B, T'), new_attention_mask (B, T') after replacing
+    # each latent segment with [start_token] + replacement_length * [replacement_token] + [end_token]
     batch_size, _ = input_ids.shape
     processed_sequences = []
     for b in range(batch_size):
@@ -331,6 +338,13 @@ def generate_labels_with_latent_template(
     latent_pad_id: int,
     latent_ce_ratio: float = 1.0,
 ) -> torch.Tensor:
+    # Create token-level labels for cross-entropy training under the latent template.
+    # - input_ids: (B, T)
+    # - start_sequence: token sequence that marks the beginning of assistant answer (e.g. '<|im_start|>assistant')
+    # - pad_token_idx: padding id to be masked
+    # - latent_start_id/latent_end_id/latent_pad_id: ids that mark latent template spans
+    # - latent_ce_ratio: fraction of latent-pad positions inside latent segments to keep for CE.
+    # Returns: labels tensor of shape (B, T) where masked positions are set to -100 (ignored by CE).
     B, _ = input_ids.shape
     labels = input_ids.clone()
 
@@ -383,6 +397,13 @@ class LatentTemplateLogitsProcessor(LogitsProcessor):
         self.latent_pad_id   = int(latent_pad_id)
         self.K               = int(K)
 
+    # This logits processor enforces the generation policy for latent spans
+    # during autoregressive decoding. Behavior per batch item:
+    # - If not inside a latent span: forbid latent_pad and latent_end tokens.
+    # - If inside a latent span and the number of pad tokens emitted so far < K:
+    #     force latent_pad token (set all other logits to -inf).
+    # - If inside a latent span and pad tokens >= K: force latent_end token.
+
     def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor) -> torch.FloatTensor:
         B = input_ids.size(0)
         for b in range(B):
@@ -397,6 +418,7 @@ class LatentTemplateLogitsProcessor(LogitsProcessor):
             last_e = _last_pos(end_positions)
             inside = (last_s != -1) and (last_e < last_s)
 
+            # Not currently inside an open latent span: prevent emitting latent tokens
             if not inside:
                 scores[b, self.latent_pad_id] = -float("inf")
                 scores[b, self.latent_end_id] = -float("inf")
@@ -409,6 +431,9 @@ class LatentTemplateLogitsProcessor(LogitsProcessor):
                 n_pad += 1
                 i += 1
 
+            # Inside an open latent span: force pad tokens until K pads are generated,
+            # then force the latent_end token. Implementation sets all logits to -inf
+            # except the allowed token (pad or end), which is given logit 0.0.
             if n_pad < self.K:
                 scores[b, :] = -float("inf")
                 scores[b, self.latent_pad_id] = 0.0

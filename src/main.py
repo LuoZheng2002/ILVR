@@ -28,6 +28,9 @@ from trainer import CustomTrainerStage1
 # ==============================================================
 
 def collate_fn_stage1(examples, processor, args):
+    # Build chat-style prompts for each example. At this stage `texts` contains
+    # full ChatML-style prompts (strings) with placeholders for images.
+    # Example prompt (simplified): "<|im_start|>user ... <image> ... <|im_start|>assistant ... <output_image>"
     texts = [processor.apply_chat_template(example, tokenize=False) for example in examples]
     texts = [place_input_image(t) for t in texts]
     texts = [place_output_image(t) for t in texts]
@@ -70,6 +73,12 @@ def collate_fn_stage1(examples, processor, args):
     )
     batch["input_ids"] = new_input_ids
     batch["attention_mask"] = new_attention_mask
+    # At this point:
+    # - `batch['input_ids']` is a tensor of shape (B, T') where latent spans between
+    #   <|latent_start|> and <|latent_end|> have been replaced by `args.latent_size` copies
+    #   of the single `latent_pad` token ID. This compresses variable-length visual
+    #   segments into a fixed-length latent region per segment.
+    # - `batch['attention_mask']` matches the new sequence length.
     
     answer_start_token_pattern = processor.tokenizer("<|im_start|>assistant", return_tensors="pt")["input_ids"][0]
 
