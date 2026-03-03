@@ -1,0 +1,26 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 23, in <module>
+    from task_deepseed import *
+  File "/projects/bfdz/zluo8/ILVR/src/task_deepseed.py", line 8, in <module>
+    TRAIN_IMAGE_ROOT = os.environ["TRAIN_IMAGE_ROOT"]  # No default, must be set by user
+                       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "<frozen os>", line 717, in __getitem__
+KeyError: 'TRAIN_IMAGE_ROOT'
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1235, in launch_command
+    simple_launcher(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 823, in simple_launcher
+    raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
+subprocess.CalledProcessError: Command '['/projects/bfdz/zluo8/ILVR/.venv/bin/python', 'src/main.py', '--model', 'Qwen/Qwen2.5-VL-7B-Instruct', '--epochs', '15', '--task', 'zebra-cot', '--gradient_accumulation_steps', '8', '--stage', 'stage1', '--warm_up_steps', '10', '--data_path', 'data/TRAIN.jsonl', '--log_file', 'train.log', '--latent_size', '8', '--ce_weight', '1', '--save_model_path', 'checkpoints', '--cache_dir', '/work/nvme/bfdz/zluo8/huggingface', '--save_steps', '612']' returned non-zero exit status 1.

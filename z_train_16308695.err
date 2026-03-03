@@ -1,0 +1,86 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-03-03 01:09:01 - INFO - ========================================
+2026-03-03 01:09:01 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-03 01:09:01 - INFO - ========================================
+2026-03-03 01:09:01 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-03 01:09:04 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:02,  1.65it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  6.54it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.67it/s]
+2026-03-03 01:09:23 - INFO - Moving model to CUDA device: 0 ...
+/projects/bfdz/zluo8/ILVR/src/trainer.py:54: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+2026-03-03 01:11:56 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-03 01:11:56 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-03 01:11:56 - WARNING - Gradient accumulation steps mismatch: GradientAccumulationPlugin has 1, DeepSpeed config has 8. Using DeepSpeed's value.
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 265, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 249, in main_train
+    trainer.train(resume_from_checkpoint=last_checkpoint)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+    return inner_training_loop(
+        args=args,
+    ...<2 lines>...
+        ignore_keys_for_eval=ignore_keys_for_eval,
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2393, in _inner_training_loop
+    model, self.optimizer = self.accelerator.prepare(self.model, self.optimizer)
+                            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 1547, in prepare
+    result = self._prepare_deepspeed(*args)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 2290, in _prepare_deepspeed
+    engine, optimizer, _, lr_scheduler = ds_initialize(**kwargs)
+                                         ~~~~~~~~~~~~~^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/__init__.py", line 153, in initialize
+    dist.init_distributed(dist_backend=dist_backend,
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          distributed_port=distributed_port,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          dist_init_required=dist_init_required)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/comm/comm.py", line 842, in init_distributed
+    mpi_discovery(distributed_port=distributed_port, verbose=verbose)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/comm/comm.py", line 861, in mpi_discovery
+    from mpi4py import MPI
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1322, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1262, in _find_spec
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/mpi4py/_mpiabi.py", line 290, in find_spec
+    mpiabi_suffix = _get_mpiabi_suffix(fullname)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/mpi4py/_mpiabi.py", line 276, in _get_mpiabi_suffix
+    mpiabi = _get_mpiabi()
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/mpi4py/_mpiabi.py", line 258, in _get_mpiabi
+    mpiabi = _get_mpiabi_from_libmpi(libmpi)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/mpi4py/_mpiabi.py", line 217, in _get_mpiabi_from_libmpi
+    lib = _dlopen_libmpi(libmpi)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/mpi4py/_mpiabi.py", line 210, in _dlopen_libmpi
+    raise RuntimeError("\n".join(errors))
+RuntimeError: cannot load MPI library
+/projects/bfdz/zluo8/ILVR/.venv/lib/libmpi.so: cannot open shared object file: No such file or directory
+/projects/bfdz/zluo8/ILVR/.venv/lib/libmpi.so.12: cannot open shared object file: No such file or directory
+/projects/bfdz/zluo8/ILVR/.venv/lib/libmpi.so.40: cannot open shared object file: No such file or directory
+libmpi.so: cannot open shared object file: No such file or directory
+libmpi.so.12: cannot open shared object file: No such file or directory
+libmpi.so.40: cannot open shared object file: No such file or directory
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1235, in launch_command
+    simple_launcher(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 823, in simple_launcher
+    raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
+subprocess.CalledProcessError: Command '['/projects/bfdz/zluo8/ILVR/.venv/bin/python', 'src/main.py', '--model', 'Qwen/Qwen2.5-VL-7B-Instruct', '--epochs', '15', '--task', 'zebra-cot', '--gradient_accumulation_steps', '8', '--stage', 'stage1', '--warm_up_steps', '10', '--data_path', 'data/TRAIN.jsonl', '--log_file', 'train.log', '--latent_size', '8', '--ce_weight', '1', '--save_model_path', 'checkpoints', '--cache_dir', '/work/nvme/bfdz/zluo8/huggingface', '--save_steps', '612']' returned non-zero exit status 1.
