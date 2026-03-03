@@ -1,0 +1,41 @@
+activate_environment.sh: line 1: ./venv/bin/activate: No such file or directory
+The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+df: /u/zluo8/.triton/autotune: No such file or directory
+usage: main.py [-h] [--evaluation_output_path EVALUATION_OUTPUT_PATH]
+               [--model MODEL] [--stage STAGE]
+               [--task {vsp-spatial-reasoning,vsp-spatial-planning,blink-jigsaw,sat,vsp-spatial-planning-cot,zebra-cot}]
+               [--test_data_path TEST_DATA_PATH] [--latent_size LATENT_SIZE]
+               [--save_steps SAVE_STEPS] [--compress_strategy {average}]
+               [--gradient_accumulation_steps GRADIENT_ACCUMULATION_STEPS]
+               [--epochs EPOCHS] [--data_path DATA_PATH] [--log_file LOG_FILE]
+               [--save_model_path SAVE_MODEL_PATH]
+               [--load_model_path LOAD_MODEL_PATH] [--cache_dir CACHE_DIR]
+               [--ce_weight CE_WEIGHT] [--warm_up_steps WARM_UP_STEPS]
+               [--sim_weight SIM_WEIGHT] [--ema_tau EMA_TAU]
+               [--coverage_p COVERAGE_P] [--image_pool_k IMAGE_POOL_K]
+               [--latent_ce_ratio LATENT_CE_RATIO] [--use_lora]
+               [--lora_r LORA_R] [--lora_alpha LORA_ALPHA]
+               [--lora_dropout LORA_DROPOUT]
+               [--lora_target_modules LORA_TARGET_MODULES]
+               [--resume_from_checkpoint_path RESUME_FROM_CHECKPOINT_PATH]
+               [--helper_group_L HELPER_GROUP_L]
+               [--latent_num_segments_train LATENT_NUM_SEGMENTS_TRAIN]
+               [--max_seq_length_train MAX_SEQ_LENGTH_TRAIN]
+main.py: error: argument --warm_up_steps: invalid int value: ''
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1235, in launch_command
+    simple_launcher(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 823, in simple_launcher
+    raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
+subprocess.CalledProcessError: Command '['/projects/bfdz/zluo8/ILVR/.venv/bin/python', 'src/main.py', '--model', 'Qwen/Qwen2.5-VL-7B-Instruct', '--epochs', '15', '--task', 'zebra-cot', '--gradient_accumulation_steps', '8', '--stage', 'stage1', '--warm_up_steps', '', '--data_path', '', '--log_file', 'train.log', '--latent_size', '8', '--ce_weight', '1', '--save_model_path', 'checkpoints', '--cache_dir', '', '--save_steps', '']' returned non-zero exit status 2.

@@ -6,7 +6,7 @@ export TOKENIZERS_PARALLELISM=false
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 
-export HF_HUB_OFFLINE=1
+export HF_HUB_OFFLINE=0
 unset CUDA_VISIBLE_DEVICES
 
 MODEL_NAME="Qwen/Qwen2.5-VL-7B-Instruct"
@@ -15,11 +15,11 @@ EPOCHS=15
 GRAD_ACCUM_STEPS=8
 LATENT_SIZE=8
 CE_WEIGHT=1
-WARM_UP_STEPS=
-SAVE_STEPS=
-DATA_PATH=""
-SAVE_MODEL_PATH=""
-LOG_FILE=""
+WARM_UP_STEPS=10
+SAVE_STEPS=612
+DATA_PATH="data"
+SAVE_MODEL_PATH="checkpoints"
+LOG_FILE="train.log"
 
 
 mkdir -p "$(dirname "$SAVE_MODEL_PATH")" "$(dirname "$LOG_FILE")"
