@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-export HF_HOME=""
+export HF_HOME=/work/nvme/bfdz/zluo8/huggingface
 export TOKENIZERS_PARALLELISM=false
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
@@ -17,7 +17,9 @@ LATENT_SIZE=8
 CE_WEIGHT=1
 WARM_UP_STEPS=10
 SAVE_STEPS=612
-DATA_PATH="data"
+DATA_PATH="data/TRAIN.jsonl"
+TRAIN_IMAGE_ROOT="data/images_comt"
+TEST_IMAGE_ROOT=""
 SAVE_MODEL_PATH="checkpoints"
 LOG_FILE="train.log"
 

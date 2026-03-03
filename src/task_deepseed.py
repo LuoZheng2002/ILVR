@@ -1,8 +1,12 @@
 from PIL import Image
 import os
 
-TRAIN_IMAGE_ROOT = "/mnt/public/users/dongshuai/LVR/ILVR_PUB/COMT"
-TEST_IMAGE_ROOT  = ""
+# TRAIN_IMAGE_ROOT and TEST_IMAGE_ROOT can be overridden via environment variables
+# so that users can point the training run to their local `data/images_comt/` folder
+# without editing the source file. Default values point to the original published
+# dataset location used by the authors.
+TRAIN_IMAGE_ROOT = os.environ["TRAIN_IMAGE_ROOT"]  # No default, must be set by user
+TEST_IMAGE_ROOT  = os.environ["TEST_IMAGE_ROOT"]   # No default, must be set by user
 
 # ====== Utility Functions ======
 def _to_list(x):

@@ -1,0 +1,49 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-03-03 00:16:32 - INFO - ========================================
+2026-03-03 00:16:32 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-03 00:16:32 - INFO - ========================================
+2026-03-03 00:16:32 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-03 00:16:41 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Fetching 5 files:   0%|          | 0/5 [00:00<?, ?it/s]/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:801: UserWarning: Not enough free disk space to download the file. The expected file size is: 3900.23 MB. The target location models--Qwen--Qwen2.5-VL-7B-Instruct/blobs only has 1242.70 MB free disk space.
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:801: UserWarning: Not enough free disk space to download the file. The expected file size is: 3864.73 MB. The target location models--Qwen--Qwen2.5-VL-7B-Instruct/blobs only has 1242.70 MB free disk space.
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:801: UserWarning: Not enough free disk space to download the file. The expected file size is: 3900.23 MB. The target location models--Qwen--Qwen2.5-VL-7B-Instruct/blobs only has 1242.69 MB free disk space.
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:801: UserWarning: Not enough free disk space to download the file. The expected file size is: 3864.73 MB. The target location models--Qwen--Qwen2.5-VL-7B-Instruct/blobs only has 1242.69 MB free disk space.
+  warnings.warn(
+Fetching 5 files:  20%|██        | 1/5 [00:56<03:46, 56.56s/it]Fetching 5 files:  40%|████      | 2/5 [00:58<01:12, 24.18s/it]Fetching 5 files:  80%|████████  | 4/5 [00:58<00:09,  9.15s/it]Fetching 5 files: 100%|██████████| 5/5 [00:58<00:00, 11.70s/it]
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:02,  1.99it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  4.81it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.51it/s]
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:801: UserWarning: Not enough free disk space to download the file. The expected file size is: 0.00 MB. The target location models--Qwen--Qwen2.5-VL-7B-Instruct/blobs only has 0.00 MB free disk space.
+  warnings.warn(
+2026-03-03 00:18:02 - INFO - Moving model to CUDA device: 0 ...
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 265, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 173, in main_train
+    train_dataset = load_jsonl_dataset(args.data_path)
+  File "/projects/bfdz/zluo8/ILVR/src/utils_deepseed.py", line 75, in load_jsonl_dataset
+    with open(jsonl_path, "r", encoding="utf-8") as f:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+IsADirectoryError: [Errno 21] Is a directory: 'data'
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1235, in launch_command
+    simple_launcher(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 823, in simple_launcher
+    raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
+subprocess.CalledProcessError: Command '['/projects/bfdz/zluo8/ILVR/.venv/bin/python', 'src/main.py', '--model', 'Qwen/Qwen2.5-VL-7B-Instruct', '--epochs', '15', '--task', 'zebra-cot', '--gradient_accumulation_steps', '8', '--stage', 'stage1', '--warm_up_steps', '10', '--data_path', 'data', '--log_file', 'train.log', '--latent_size', '8', '--ce_weight', '1', '--save_model_path', 'checkpoints', '--cache_dir', '', '--save_steps', '612']' returned non-zero exit status 1.
