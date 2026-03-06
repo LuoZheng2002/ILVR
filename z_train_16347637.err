@@ -1,0 +1,391 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 02:24:12 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 02:24:12 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 02:24:12 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 02:24:12 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 02:24:12 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - ========================================
+2026-03-06 02:24:12 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 02:24:12 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 02:24:12 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 02:24:12 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 02:24:12 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 02:24:12 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 02:24:12 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 02:24:12 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 02:24:12 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 02:24:12 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 02:24:12 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 02:24:12 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 02:24:12 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 02:24:12 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 02:24:12 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 02:24:12 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-06 02:24:15 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 02:24:15 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 02:24:15 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 02:24:15 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 02:24:15 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 301, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 167, in main_train
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_path,
+    ...<5 lines>...
+        trust_remote_code=True
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 317, in _wrapper
+    return func(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4995, in from_pretrained
+    model_init_context = cls.get_init_context(is_quantized, _is_ds_init_called)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4377, in get_init_context
+    init_contexts.extend([deepspeed.zero.Init(config_dict_or_path=deepspeed_config()), set_zero3_state()])
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1004, in __init__
+    _ds_config = deepspeed.runtime.config.DeepSpeedConfig(config_dict_or_path,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+                                                          mpu) if config_dict_or_path is not None else None
+                                                          ^^^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 301, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 751, in __init__
+    self._configure_train_batch_size()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 167, in main_train
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_path,
+    ...<5 lines>...
+        trust_remote_code=True
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 938, in _configure_train_batch_size
+    self._batch_assertion()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 317, in _wrapper
+    return func(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 878, in _batch_assertion
+    assert (train_batch > 0), f"Train batch size: {train_batch} has to be greater than 0"
+            ^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4995, in from_pretrained
+    model_init_context = cls.get_init_context(is_quantized, _is_ds_init_called)
+TypeError: '>' not supported between instances of 'str' and 'int'
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4377, in get_init_context
+    init_contexts.extend([deepspeed.zero.Init(config_dict_or_path=deepspeed_config()), set_zero3_state()])
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1004, in __init__
+    _ds_config = deepspeed.runtime.config.DeepSpeedConfig(config_dict_or_path,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+                                                          mpu) if config_dict_or_path is not None else None
+                                                          ^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 751, in __init__
+    self._configure_train_batch_size()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 938, in _configure_train_batch_size
+    self._batch_assertion()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 878, in _batch_assertion
+    assert (train_batch > 0), f"Train batch size: {train_batch} has to be greater than 0"
+            ^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'str' and 'int'
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 301, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 167, in main_train
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_path,
+    ...<5 lines>...
+        trust_remote_code=True
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 317, in _wrapper
+    return func(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4995, in from_pretrained
+    model_init_context = cls.get_init_context(is_quantized, _is_ds_init_called)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4377, in get_init_context
+    init_contexts.extend([deepspeed.zero.Init(config_dict_or_path=deepspeed_config()), set_zero3_state()])
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1004, in __init__
+    _ds_config = deepspeed.runtime.config.DeepSpeedConfig(config_dict_or_path,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+                                                          mpu) if config_dict_or_path is not None else None
+                                                          ^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 751, in __init__
+    self._configure_train_batch_size()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 938, in _configure_train_batch_size
+    self._batch_assertion()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 878, in _batch_assertion
+    assert (train_batch > 0), f"Train batch size: {train_batch} has to be greater than 0"
+            ^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'str' and 'int'
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 301, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 167, in main_train
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_path,
+    ...<5 lines>...
+        trust_remote_code=True
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 317, in _wrapper
+    return func(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4995, in from_pretrained
+    model_init_context = cls.get_init_context(is_quantized, _is_ds_init_called)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4377, in get_init_context
+    init_contexts.extend([deepspeed.zero.Init(config_dict_or_path=deepspeed_config()), set_zero3_state()])
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1004, in __init__
+    _ds_config = deepspeed.runtime.config.DeepSpeedConfig(config_dict_or_path,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+                                                          mpu) if config_dict_or_path is not None else None
+                                                          ^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 751, in __init__
+    self._configure_train_batch_size()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 938, in _configure_train_batch_size
+    self._batch_assertion()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 878, in _batch_assertion
+    assert (train_batch > 0), f"Train batch size: {train_batch} has to be greater than 0"
+            ^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'str' and 'int'
+2026-03-06 02:24:15 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 02:24:15 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 301, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 167, in main_train
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_path,
+    ...<5 lines>...
+        trust_remote_code=True
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 317, in _wrapper
+    return func(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4995, in from_pretrained
+    model_init_context = cls.get_init_context(is_quantized, _is_ds_init_called)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4377, in get_init_context
+    init_contexts.extend([deepspeed.zero.Init(config_dict_or_path=deepspeed_config()), set_zero3_state()])
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1004, in __init__
+    _ds_config = deepspeed.runtime.config.DeepSpeedConfig(config_dict_or_path,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+                                                          mpu) if config_dict_or_path is not None else None
+                                                          ^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 751, in __init__
+    self._configure_train_batch_size()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 938, in _configure_train_batch_size
+    self._batch_assertion()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 878, in _batch_assertion
+    assert (train_batch > 0), f"Train batch size: {train_batch} has to be greater than 0"
+            ^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'str' and 'int'
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 301, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 167, in main_train
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_path,
+    ...<5 lines>...
+        trust_remote_code=True
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 317, in _wrapper
+    return func(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4995, in from_pretrained
+    model_init_context = cls.get_init_context(is_quantized, _is_ds_init_called)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4377, in get_init_context
+    init_contexts.extend([deepspeed.zero.Init(config_dict_or_path=deepspeed_config()), set_zero3_state()])
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1004, in __init__
+    _ds_config = deepspeed.runtime.config.DeepSpeedConfig(config_dict_or_path,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+                                                          mpu) if config_dict_or_path is not None else None
+                                                          ^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 751, in __init__
+    self._configure_train_batch_size()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 938, in _configure_train_batch_size
+    self._batch_assertion()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 878, in _batch_assertion
+    assert (train_batch > 0), f"Train batch size: {train_batch} has to be greater than 0"
+            ^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'str' and 'int'
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 301, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 167, in main_train
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_path,
+    ...<5 lines>...
+        trust_remote_code=True
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 317, in _wrapper
+    return func(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4995, in from_pretrained
+    model_init_context = cls.get_init_context(is_quantized, _is_ds_init_called)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4377, in get_init_context
+    init_contexts.extend([deepspeed.zero.Init(config_dict_or_path=deepspeed_config()), set_zero3_state()])
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1004, in __init__
+    _ds_config = deepspeed.runtime.config.DeepSpeedConfig(config_dict_or_path,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+                                                          mpu) if config_dict_or_path is not None else None
+                                                          ^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 751, in __init__
+    self._configure_train_batch_size()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 938, in _configure_train_batch_size
+    self._batch_assertion()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 878, in _batch_assertion
+    assert (train_batch > 0), f"Train batch size: {train_batch} has to be greater than 0"
+            ^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'str' and 'int'
+2026-03-06 02:24:15 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 301, in <module>
+    main_train()
+    ~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 167, in main_train
+    model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+        model_path,
+    ...<5 lines>...
+        trust_remote_code=True
+    )
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 317, in _wrapper
+    return func(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4995, in from_pretrained
+    model_init_context = cls.get_init_context(is_quantized, _is_ds_init_called)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4377, in get_init_context
+    init_contexts.extend([deepspeed.zero.Init(config_dict_or_path=deepspeed_config()), set_zero3_state()])
+                          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1004, in __init__
+    _ds_config = deepspeed.runtime.config.DeepSpeedConfig(config_dict_or_path,
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+                                                          mpu) if config_dict_or_path is not None else None
+                                                          ^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 751, in __init__
+    self._configure_train_batch_size()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 938, in _configure_train_batch_size
+    self._batch_assertion()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/config.py", line 878, in _batch_assertion
+    assert (train_batch > 0), f"Train batch size: {train_batch} has to be greater than 0"
+            ^^^^^^^^^^^^^^^
+TypeError: '>' not supported between instances of 'str' and 'int'
+W0306 02:24:17.708000 3441024 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3441096 closing signal SIGTERM
+W0306 02:24:17.714000 3441024 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3441097 closing signal SIGTERM
+W0306 02:24:17.722000 3441024 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3441098 closing signal SIGTERM
+W0306 02:24:17.723000 3441024 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3441102 closing signal SIGTERM
+W0306 02:24:17.723000 3441024 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3441103 closing signal SIGTERM
+E0306 02:24:17.938000 3441024 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 3 (pid: 3441099) of binary: /projects/bfdz/zluo8/ILVR/.venv/bin/python
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1226, in launch_command
+    multi_gpu_launcher(args)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 853, in multi_gpu_launcher
+    distrib_run.run(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+    ~~~~~~~~~~~~~~~
+        config=config,
+        ~~~~~~~~~~~~~~
+        entrypoint=cmd,
+        ~~~~~~~~~~~~~~~
+    )(*cmd_args)
+    ~^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+    ...<2 lines>...
+    )
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+src/main.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2026-03-06_02:24:17
+  host      : gpue02.delta.ncsa.illinois.edu
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 3441101)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-06_02:24:17
+  host      : gpue02.delta.ncsa.illinois.edu
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 3441099)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
