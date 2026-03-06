@@ -1,0 +1,108 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-03-06 15:38:41 - INFO - ========================================
+2026-03-06 15:38:41 - INFO - ========================================
+2026-03-06 15:38:41 - INFO - ========================================
+2026-03-06 15:38:42 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 15:38:41 - INFO - ========================================
+2026-03-06 15:38:42 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 15:38:42 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 15:38:42 - INFO - ========================================
+2026-03-06 15:38:42 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 15:38:42 - INFO - ========================================
+2026-03-06 15:38:42 - INFO - ========================================
+2026-03-06 15:38:42 - INFO - ========================================
+2026-03-06 15:38:42 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=32, world_size=4
+2026-03-06 15:38:42 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=32, world_size=4
+2026-03-06 15:38:42 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=32, world_size=4
+2026-03-06 15:38:42 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=32, world_size=4
+2026-03-06 15:38:42 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 15:38:42 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 15:38:42 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 15:38:42 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 15:38:42 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 15:38:42 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 15:38:42 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 15:38:42 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-06 15:38:44 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 15:38:44 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 15:38:44 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 15:38:44 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:08<00:32,  8.12s/it]Loading checkpoint shards:  20%|██        | 1/5 [00:08<00:32,  8.09s/it]Loading checkpoint shards:  20%|██        | 1/5 [00:08<00:32,  8.14s/it]Loading checkpoint shards:  20%|██        | 1/5 [00:08<00:33,  8.32s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:12<00:17,  5.90s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:12<00:17,  5.92s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:12<00:17,  5.91s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:12<00:18,  6.05s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:16<00:10,  5.20s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:16<00:10,  5.21s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:16<00:10,  5.20s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:17<00:10,  5.34s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:21<00:04,  4.85s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:21<00:04,  4.85s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:21<00:04,  4.85s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:21<00:00,  4.23s/it]
+Loading checkpoint shards: 100%|██████████| 5/5 [00:21<00:00,  4.23s/it]
+Loading checkpoint shards: 100%|██████████| 5/5 [00:21<00:00,  4.24s/it]
+Loading checkpoint shards:  80%|████████  | 4/5 [00:21<00:04,  4.99s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:22<00:00,  3.50s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:22<00:00,  4.51s/it]
+2026-03-06 15:39:18 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-06 15:39:18 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-06 15:39:18 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-06 15:39:18 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-06 15:39:18 - INFO - Using CUDA device: 3
+2026-03-06 15:39:18 - INFO - Using CUDA device: 2
+2026-03-06 15:39:18 - INFO - Using CUDA device: 0
+2026-03-06 15:39:18 - INFO - Using CUDA device: 1
+/projects/bfdz/zluo8/ILVR/src/trainer.py:57: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+/projects/bfdz/zluo8/ILVR/src/trainer.py:57: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+/projects/bfdz/zluo8/ILVR/src/trainer.py:57: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+/projects/bfdz/zluo8/ILVR/src/trainer.py:57: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+2026-03-06 15:40:12 - WARNING - EMA disabled because ZeRO-3 is enabled; set ILVR_FORCE_EMA_WITH_ZERO3=1 to force-enable at your own memory risk
+2026-03-06 15:40:12 - WARNING - EMA disabled because ZeRO-3 is enabled; set ILVR_FORCE_EMA_WITH_ZERO3=1 to force-enable at your own memory risk
+2026-03-06 15:40:12 - WARNING - EMA disabled because ZeRO-3 is enabled; set ILVR_FORCE_EMA_WITH_ZERO3=1 to force-enable at your own memory risk
+2026-03-06 15:40:12 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-06 15:40:12 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-06 15:40:12 - WARNING - EMA disabled because ZeRO-3 is enabled; set ILVR_FORCE_EMA_WITH_ZERO3=1 to force-enable at your own memory risk
+2026-03-06 15:40:12 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-06 15:40:12 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-06 15:40:12 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-06 15:40:12 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-06 15:40:12 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-06 15:40:12 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-06 15:40:12 - WARNING - Gradient accumulation steps mismatch: GradientAccumulationPlugin has 1, DeepSpeed config has 8. Using DeepSpeed's value.
+  0%|          | 0/1620 [00:00<?, ?it/s]Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
