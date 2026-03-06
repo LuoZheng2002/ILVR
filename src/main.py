@@ -157,7 +157,27 @@ def main_train():
         trust_remote_code=True
     )
     
-    model.resize_token_embeddings(len(processor.tokenizer))
+    # old code:
+    # model.resize_token_embeddings(len(processor.tokenizer))
+    
+    # new code: to ensure vocab sync across tokenizer, model embeddings, and model config after adding latent tokens
+    new_vocab = len(processor.tokenizer)
+    model.resize_token_embeddings(new_vocab)
+    model.config.vocab_size = new_vocab
+    if hasattr(model, "generation_config") and model.generation_config is not None:
+        model.generation_config.vocab_size = new_vocab
+
+    in_vocab = model.get_input_embeddings().weight.shape[0]
+    out_vocab = model.get_output_embeddings().weight.shape[0]
+    assert in_vocab == new_vocab, f"input embedding vocab mismatch: {in_vocab} != {new_vocab}"
+    assert out_vocab == new_vocab, f"output embedding vocab mismatch: {out_vocab} != {new_vocab}"
+    assert model.config.vocab_size == new_vocab, (
+        f"config vocab mismatch: {model.config.vocab_size} != {new_vocab}"
+    )
+    logging.info(
+        f"Vocab sync check passed: tokenizer={new_vocab}, input_emb={in_vocab}, "
+        f"output_emb={out_vocab}, config_vocab={model.config.vocab_size}"
+    )
 
     for param in model.visual.parameters():
         param.requires_grad = False
