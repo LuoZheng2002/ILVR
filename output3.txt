@@ -1,0 +1,185 @@
+import source: installed transformers
+class identity: transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLCausalLMOutputWithPast
+mro: Qwen2_5_VLCausalLMOutputWithPast -> ModelOutput -> OrderedDict -> dict -> object
+dataclass fields:
+ - loss: type=Optional, default=None, default_factory=<none>
+ - logits: type=Optional, default=None, default_factory=<none>
+ - past_key_values: type=Optional, default=None, default_factory=<none>
+ - hidden_states: type=Optional, default=None, default_factory=<none>
+ - attentions: type=Optional, default=None, default_factory=<none>
+ - rope_deltas: type=Optional, default=None, default_factory=<none>
+annotations keys: ['loss', 'logits', 'past_key_values', 'hidden_states', 'attentions', 'rope_deltas']
+annotations detail:
+ - loss: typing.Optional[torch.FloatTensor]
+ - logits: typing.Optional[torch.FloatTensor]
+ - past_key_values: typing.Optional[list[torch.FloatTensor]]
+ - hidden_states: typing.Optional[tuple[torch.FloatTensor]]
+ - attentions: typing.Optional[tuple[torch.FloatTensor]]
+ - rope_deltas: typing.Optional[torch.LongTensor]
+outputs instance type: <class 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl.Qwen2_5_VLCausalLMOutputWithPast'>
+hasattr(outputs, 'inputs_embeds'): False
+hasattr(outputs, 'hidden_states'): True
+available keys: []
+
+class vars:
+ - __annotations__: <class 'dict'> {'loss': typing.Optional[torch.FloatTensor], 'logits': typing.Optional[torch.FloatTensor], 'past_key_values': typing.Optional[list[torch.FloatTensor]], 'hidden_states': typing.Optional[tuple[torch.FloatTensor]], 'attentions': typing.Optional[tuple[torch.FloatTensor]], 'rope_deltas': typing.Option...
+ - __dataclass_fields__: <class 'dict'> {'loss': Field(name='loss',type=typing.Optional[torch.FloatTensor],default=None,default_factory=<dataclasses._MISSING_TYPE object at 0x7f2d50a91160>,init=True,repr=True,hash=None,compare=True,metadata=mappingproxy({}),kw_only=False,_field_type=_FIELD), 'logits': Field(name='logits',type=typing.Op...
+ - __dataclass_params__: <class 'dataclasses._DataclassParams'> _DataclassParams(init=True,repr=True,eq=True,order=False,unsafe_hash=False,frozen=False,match_args=True,kw_only=False,slots=False,weakref_slot=False)
+ - __doc__: <class 'str'> '\nBase class for Qwen2_5_VL causal language model (or autoregressive) outputs.\n    Args:\n        loss (`torch.FloatTensor` of shape `(1,)`, *optional*, returned when `labels` is provided):\n            Language modeling loss (for next-token prediction).\n        logits (`torch.FloatTensor` of ...
+ - __eq__: <class 'function'> <function Qwen2_5_VLCausalLMOutputWithPast.__eq__ at 0x7f2b4b3689a0>
+ - __firstlineno__: <class 'int'> 1347
+ - __hash__: <class 'NoneType'> None
+ - __init__: <class 'function'> <function Qwen2_5_VLCausalLMOutputWithPast.__init__ at 0x7f2b4b368900>
+ - __match_args__: <class 'tuple'> ('loss', 'logits', 'past_key_values', 'hidden_states', 'attentions', 'rope_deltas')
+ - __module__: <class 'str'> 'transformers.models.qwen2_5_vl.modeling_qwen2_5_vl'
+ - __replace__: <class 'function'> <function _replace at 0x7f2d50930b80>
+ - __repr__: <class 'function'> <function Qwen2_5_VLCausalLMOutputWithPast.__repr__ at 0x7f2b4b368720>
+ - __static_attributes__: <class 'tuple'> ()
+ - attentions: <class 'NoneType'> None
+ - hidden_states: <class 'NoneType'> None
+ - logits: <class 'NoneType'> None
+ - loss: <class 'NoneType'> None
+ - past_key_values: <class 'NoneType'> None
+ - rope_deltas: <class 'NoneType'> None
+
+class dir():
+ - __annotations__
+ - __class__
+ - __class_getitem__
+ - __contains__
+ - __dataclass_fields__
+ - __dataclass_params__
+ - __delattr__
+ - __delitem__
+ - __dict__
+ - __dir__
+ - __doc__
+ - __eq__
+ - __firstlineno__
+ - __format__
+ - __ge__
+ - __getattribute__
+ - __getitem__
+ - __getstate__
+ - __gt__
+ - __hash__
+ - __init__
+ - __init_subclass__
+ - __ior__
+ - __iter__
+ - __le__
+ - __len__
+ - __lt__
+ - __match_args__
+ - __module__
+ - __ne__
+ - __new__
+ - __or__
+ - __post_init__
+ - __reduce__
+ - __reduce_ex__
+ - __replace__
+ - __repr__
+ - __reversed__
+ - __ror__
+ - __setattr__
+ - __setitem__
+ - __sizeof__
+ - __static_attributes__
+ - __str__
+ - __subclasshook__
+ - attentions
+ - clear
+ - copy
+ - fromkeys
+ - get
+ - hidden_states
+ - items
+ - keys
+ - logits
+ - loss
+ - move_to_end
+ - past_key_values
+ - pop
+ - popitem
+ - rope_deltas
+ - setdefault
+ - to_tuple
+ - update
+ - values
+
+instance vars (vars(outputs) / __dict__):
+ - attentions: <class 'NoneType'> None
+ - hidden_states: <class 'NoneType'> None
+ - logits: <class 'NoneType'> None
+ - loss: <class 'NoneType'> None
+ - past_key_values: <class 'NoneType'> None
+ - rope_deltas: <class 'NoneType'> None
+
+instance dir():
+ - __annotations__
+ - __class__
+ - __class_getitem__
+ - __contains__
+ - __dataclass_fields__
+ - __dataclass_params__
+ - __delattr__
+ - __delitem__
+ - __dict__
+ - __dir__
+ - __doc__
+ - __eq__
+ - __firstlineno__
+ - __format__
+ - __ge__
+ - __getattribute__
+ - __getitem__
+ - __getstate__
+ - __gt__
+ - __hash__
+ - __init__
+ - __init_subclass__
+ - __ior__
+ - __iter__
+ - __le__
+ - __len__
+ - __lt__
+ - __match_args__
+ - __module__
+ - __ne__
+ - __new__
+ - __or__
+ - __post_init__
+ - __reduce__
+ - __reduce_ex__
+ - __replace__
+ - __repr__
+ - __reversed__
+ - __ror__
+ - __setattr__
+ - __setitem__
+ - __sizeof__
+ - __static_attributes__
+ - __str__
+ - __subclasshook__
+ - attentions
+ - clear
+ - copy
+ - fromkeys
+ - get
+ - hidden_states
+ - items
+ - keys
+ - logits
+ - loss
+ - move_to_end
+ - past_key_values
+ - pop
+ - popitem
+ - rope_deltas
+ - setdefault
+ - to_tuple
+ - update
+ - values
+
+outputs.items():

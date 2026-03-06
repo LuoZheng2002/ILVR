@@ -473,6 +473,9 @@ class CustomTrainerStage1(SFTTrainer):
         mod_inputs["latent_hidden_states"] = teacher_latents.to(self.model.device).to(self.model.dtype)
         mod_inputs["image_out_mask"] = firstK_mask
 
+        # Request hidden states explicitly because newer HF output objects don't
+        # expose `inputs_embeds` and return hidden states as a tuple by layer.
+        mod_inputs["output_hidden_states"] = True
         ce_loss, outputs = super().compute_loss(
             model, mod_inputs, return_outputs=True, num_items_in_batch=num_items_in_batch
         )
@@ -480,7 +483,15 @@ class CustomTrainerStage1(SFTTrainer):
             return (ce_loss, outputs) if return_outputs else ce_loss
 
         pred_h = outputs.hidden_states
-        inp_h  = outputs.inputs_embeds
+        if isinstance(pred_h, (tuple, list)):
+            pred_h = pred_h[-1] if len(pred_h) > 0 else None
+        if pred_h is None:
+            return (ce_loss, outputs) if return_outputs else ce_loss
+
+        input_ids = mod_inputs.get("input_ids", None)
+        if input_ids is None:
+            return (ce_loss, outputs) if return_outputs else ce_loss
+        inp_h = self.model.get_input_embeddings()(input_ids.to(pred_h.device))
         B, T, H = pred_h.shape
         if T <= 1:
             return (ce_loss, outputs) if return_outputs else ce_loss
