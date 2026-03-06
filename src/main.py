@@ -286,7 +286,7 @@ def main_train():
         args=training_args,
         train_dataset=train_dataset,
         data_collator=collate_fn,
-        tokenizer=processor.tokenizer,
+        processing_class=processor.tokenizer,
         peft_config=peft_config,
         sim_weight=getattr(args, "sim_weight", 1.0),
         ema_tau=getattr(args, "ema_tau", 0.999),
