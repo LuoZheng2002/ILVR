@@ -4,6 +4,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 import copy
+import json
+import os
+import logging
 import deepspeed
 from typing import List
 
@@ -57,7 +60,31 @@ class CustomTrainerStage1(SFTTrainer):
         self.helper_group_L = int(helper_group_L)
         self.ce_weight = float(ce_weight)
         self.image_pool_k = int(image_pool_k)
-        self._ema = _EMATeacher(self.model, decay=float(ema_tau))
+        self._ema = None
+        self._ema_disabled_for_zero3 = False
+        ema_tau = float(ema_tau)
+        if ema_tau > 0.0:
+            force_ema = os.environ.get("ILVR_FORCE_EMA_WITH_ZERO3", "0") == "1"
+            if self._is_zero3_enabled() and not force_ema:
+                self._ema_disabled_for_zero3 = True
+                logging.warning("EMA disabled because ZeRO-3 is enabled; set ILVR_FORCE_EMA_WITH_ZERO3=1 to force-enable at your own memory risk")
+            else:
+                self._ema = _EMATeacher(self.model, decay=ema_tau)
+
+    def _is_zero3_enabled(self) -> bool:
+        ds_cfg = getattr(self.args, "deepspeed", None)
+        if isinstance(ds_cfg, dict):
+            zero_cfg = ds_cfg.get("zero_optimization", {})
+            return int(zero_cfg.get("stage", 0)) == 3
+        if isinstance(ds_cfg, str):
+            try:
+                with open(ds_cfg, "r", encoding="utf-8") as f:
+                    payload = json.load(f)
+                zero_cfg = payload.get("zero_optimization", {})
+                return int(zero_cfg.get("stage", 0)) == 3
+            except Exception:
+                return False
+        return False
 
     def _find_latent_segments(self, input_ids, latent_start_id, latent_end_id, latent_pad_id):
         ids = input_ids[0].tolist()
@@ -297,142 +324,153 @@ class CustomTrainerStage1(SFTTrainer):
         device = self.model.device
         ids  = inputs["input_ids"].to(device)
         attn = inputs["attention_mask"].to(device)
-        tea  = self._ema.teacher.to(device).eval()
+        if self._ema is not None:
+            tea = self._ema.teacher.to(device).eval()
+            restore_training = False
+        else:
+            tea = self.model
+            restore_training = bool(tea.training)
+            tea.eval()
 
-        special_ids, image_token_id, latent_start_id, latent_end_id, latent_pad_id = self._get_special_ids()
+        try:
+
+            special_ids, image_token_id, latent_start_id, latent_end_id, latent_pad_id = self._get_special_ids()
 
         # Find positions (indices) of latent-pad tokens within each latent segment.
-        seg_pad_indices = self._find_latent_segments(ids, latent_start_id, latent_end_id, latent_pad_id)
-        if len(seg_pad_indices) == 0:
-            return None, torch.zeros_like(ids, dtype=torch.bool)
+            seg_pad_indices = self._find_latent_segments(ids, latent_start_id, latent_end_id, latent_pad_id)
+            if len(seg_pad_indices) == 0:
+                return None, torch.zeros_like(ids, dtype=torch.bool)
 
-        idlist = ids[0].tolist()
-        starts = []
-        ends   = []
-        t = 0; T = len(idlist)
-        while t < T:
-            if idlist[t] == latent_start_id:
-                s = t
-                e = s + 1
-                while e < T and idlist[e] != latent_end_id:
-                    e += 1
-                starts.append(s); ends.append(e)
-                t = e + 1
-            else:
-                t += 1
+            idlist = ids[0].tolist()
+            starts = []
+            ends   = []
+            t = 0; T = len(idlist)
+            while t < T:
+                if idlist[t] == latent_start_id:
+                    s = t
+                    e = s + 1
+                    while e < T and idlist[e] != latent_end_id:
+                        e += 1
+                    starts.append(s); ends.append(e)
+                    t = e + 1
+                else:
+                    t += 1
 
-        pat = self.tokenizer("<|im_start|>assistant", return_tensors="pt")["input_ids"][0].to(device)
-        start_assistant = -1
-        for i in range(0, ids.size(1) - pat.size(0) + 1):
-            if torch.all(ids[0, i:i+pat.size(0)] == pat):
-                start_assistant = i; break
-        if start_assistant <= 0:
-            return None, torch.zeros_like(ids, dtype=torch.bool)
+            pat = self.tokenizer("<|im_start|>assistant", return_tensors="pt")["input_ids"][0].to(device)
+            start_assistant = -1
+            for i in range(0, ids.size(1) - pat.size(0) + 1):
+                if torch.all(ids[0, i:i+pat.size(0)] == pat):
+                    start_assistant = i; break
+            if start_assistant <= 0:
+                return None, torch.zeros_like(ids, dtype=torch.bool)
 
         # Build the contextual query `u` used to score visual patches.
         # Preferred strategy: use `_user_side_attn_pooling` which leverages
         # cross-attention patterns between prompt tokens and image tokens in the teacher's last layer.
         # Fallback: mean of prefix text embeddings and global image embedding.
-        u = self._user_side_attn_pooling(tea, inputs, ids, attn)
-        if u is None:
-            token_embeds = tea.get_input_embeddings()(ids)
-            u_text = self._prefix_text_mean_from_embeds(token_embeds, ids, start_assistant, special_ids)
-            u_img  = self._image_input_global_mean(tea, inputs)
-            parts = [u_text] + ([u_img] if u_img is not None else [])
-            # `u` shape: (1, H) where H is hidden dim of the model's text/vision representation
-            u = torch.stack([x.squeeze(0) for x in parts]).mean(dim=0, keepdim=True)
+            u = self._user_side_attn_pooling(tea, inputs, ids, attn)
+            if u is None:
+                token_embeds = tea.get_input_embeddings()(ids)
+                u_text = self._prefix_text_mean_from_embeds(token_embeds, ids, start_assistant, special_ids)
+                u_img  = self._image_input_global_mean(tea, inputs)
+                parts = [u_text] + ([u_img] if u_img is not None else [])
+                # `u` shape: (1, H) where H is hidden dim of the model's text/vision representation
+                u = torch.stack([x.squeeze(0) for x in parts]).mean(dim=0, keepdim=True)
 
-        pv  = inputs.get("pixel_values_latent", None)
-        thw = inputs.get("image_grid_thw_latent", None)
-        if pv is None or thw is None:
-            return None, torch.zeros_like(ids, dtype=torch.bool)
-        pv  = pv.to(device).to(tea.visual.dtype)
-        thw = thw.to(device)
-        # Extract dense visual patch embeddings from the teacher visual encoder.
-        # `patch_all` shape: (num_patches_total, D), where patches are concatenated across helper images.
-        patch_all = tea.visual(pv, grid_thw=thw)
-        num_imgs  = int(thw.shape[0])
+            pv  = inputs.get("pixel_values_latent", None)
+            thw = inputs.get("image_grid_thw_latent", None)
+            if pv is None or thw is None:
+                return None, torch.zeros_like(ids, dtype=torch.bool)
+            pv  = pv.to(device).to(tea.visual.dtype)
+            thw = thw.to(device)
+            # Extract dense visual patch embeddings from the teacher visual encoder.
+            # `patch_all` shape: (num_patches_total, D), where patches are concatenated across helper images.
+            patch_all = tea.visual(pv, grid_thw=thw)
+            num_imgs  = int(thw.shape[0])
 
-        s_merge = int(getattr(tea.visual, "spatial_merge_size", 2))
-        thw_long = thw.to(dtype=torch.long)
-        tokens_per_img = (thw_long[:,0] * (thw_long[:,1]//s_merge) * (thw_long[:,2]//s_merge))
-        ends_img = torch.cumsum(tokens_per_img, dim=0).tolist()
-        starts_img = [0] + ends_img[:-1]
-        slices_per_img = [(int(st), int(ed)) for st, ed in zip(starts_img, ends_img)]
-        assert len(slices_per_img) == num_imgs
+            s_merge = int(getattr(tea.visual, "spatial_merge_size", 2))
+            thw_long = thw.to(dtype=torch.long)
+            tokens_per_img = (thw_long[:,0] * (thw_long[:,1]//s_merge) * (thw_long[:,2]//s_merge))
+            ends_img = torch.cumsum(tokens_per_img, dim=0).tolist()
+            starts_img = [0] + ends_img[:-1]
+            slices_per_img = [(int(st), int(ed)) for st, ed in zip(starts_img, ends_img)]
+            assert len(slices_per_img) == num_imgs
 
-        text_spans = self._extract_assistant_text_spans(ids[0], starts, ends, start_assistant, special_ids)
-        L_group = getattr(self, "helper_group_L", None)
-        if L_group is None:
-            L_group = int(self.image_pool_k)
+            text_spans = self._extract_assistant_text_spans(ids[0], starts, ends, start_assistant, special_ids)
+            L_group = getattr(self, "helper_group_L", None)
+            if L_group is None:
+                L_group = int(self.image_pool_k)
 
-        latents_list = []
-        Kstars = []
-        prev_sel_mean = None
+            latents_list = []
+            Kstars = []
+            prev_sel_mean = None
 
         # Iterate latent segments (one per helper image/segment). For each
         # segment we compute similarities between candidate patch embeddings
         # and the contextual query `q_t`, then select top patches by top-p/k.
-        for seg_idx, pad_pos in enumerate(seg_pad_indices):
-            if len(pad_pos) == 0:
-                Kstars.append(0); continue
+            for seg_idx, pad_pos in enumerate(seg_pad_indices):
+                if len(pad_pos) == 0:
+                    Kstars.append(0); continue
 
-            text_idx = text_spans[seg_idx] if seg_idx < len(text_spans) else []
-            old_flag = bool(getattr(tea.config, "output_hidden_states", False))
-            tea.config.output_hidden_states = True
-            try:
-                out_assist = tea(
-                    input_ids=ids,
-                    attention_mask=attn,
-                    pixel_values=inputs.get("pixel_values", None),
-                    image_grid_thw=inputs.get("image_grid_thw", None),
-                    output_hidden_states=True,
-                    return_dict=True,
-                )
-            finally:
-                tea.config.output_hidden_states = old_flag
+                text_idx = text_spans[seg_idx] if seg_idx < len(text_spans) else []
+                old_flag = bool(getattr(tea.config, "output_hidden_states", False))
+                tea.config.output_hidden_states = True
+                try:
+                    out_assist = tea(
+                        input_ids=ids,
+                        attention_mask=attn,
+                        pixel_values=inputs.get("pixel_values", None),
+                        image_grid_thw=inputs.get("image_grid_thw", None),
+                        output_hidden_states=True,
+                        return_dict=True,
+                    )
+                finally:
+                    tea.config.output_hidden_states = old_flag
 
-            hs = out_assist.hidden_states
-            x = hs[-1] if isinstance(hs, (tuple, list)) else hs
-            H_last_2d = x[0] if x.dim() == 3 else (x if x.dim() == 2 else tea.get_input_embeddings()(ids)[0])
+                hs = out_assist.hidden_states
+                x = hs[-1] if isinstance(hs, (tuple, list)) else hs
+                H_last_2d = x[0] if x.dim() == 3 else (x if x.dim() == 2 else tea.get_input_embeddings()(ids)[0])
 
-            q_parts = [u]
+                q_parts = [u]
 
-            if len(text_idx) > 0:
-                idx_tensor = torch.tensor(text_idx, device=H_last_2d.device, dtype=torch.long)
-                q_parts.append(H_last_2d.index_select(0, idx_tensor).mean(dim=0, keepdim=True))
+                if len(text_idx) > 0:
+                    idx_tensor = torch.tensor(text_idx, device=H_last_2d.device, dtype=torch.long)
+                    q_parts.append(H_last_2d.index_select(0, idx_tensor).mean(dim=0, keepdim=True))
 
-            if prev_sel_mean is not None:
-                q_parts.append(prev_sel_mean)
+                if prev_sel_mean is not None:
+                    q_parts.append(prev_sel_mean)
 
-            q_t = torch.stack([x.squeeze(0) for x in q_parts], dim=0).mean(dim=0, keepdim=True)
+                q_t = torch.stack([x.squeeze(0) for x in q_parts], dim=0).mean(dim=0, keepdim=True)
 
-            assert seg_idx < num_imgs, "latent 段数量与 helper images 数量不一致"
-            st_img, ed_img = slices_per_img[seg_idx]
-            # `ei` are patch vectors for this helper image: shape (P, D)
-            ei = patch_all[st_img:ed_img, :]
-            # Optionally group/aggregate patch vectors to reduce P to a target L_group
-            cand = self._maybe_group_for_helper(ei, L_group)
+                assert seg_idx < num_imgs, "latent 段数量与 helper images 数量不一致"
+                st_img, ed_img = slices_per_img[seg_idx]
+                # `ei` are patch vectors for this helper image: shape (P, D)
+                ei = patch_all[st_img:ed_img, :]
+                # Optionally group/aggregate patch vectors to reduce P to a target L_group
+                cand = self._maybe_group_for_helper(ei, L_group)
 
-            # Compute cosine similarity between each candidate patch (P') and query (1, D)
-            # `sim` shape: (P',)
-            sim = F.cosine_similarity(cand, q_t.expand_as(cand), dim=-1)
-            # Select indices via top-p/top-k strategy
-            top_idx = self._top_p_top_k(sim, p=self.coverage_p, k=k)
-            Kstar = len(top_idx)
-            Kstars.append(Kstar)
+                # Compute cosine similarity between each candidate patch (P') and query (1, D)
+                # `sim` shape: (P',)
+                sim = F.cosine_similarity(cand, q_t.expand_as(cand), dim=-1)
+                # Select indices via top-p/top-k strategy
+                top_idx = self._top_p_top_k(sim, p=self.coverage_p, k=k)
+                Kstar = len(top_idx)
+                Kstars.append(Kstar)
 
-            if Kstar > 0:
-                chosen = cand[top_idx[:Kstar], :]
-                latents_list.append(chosen)
-                prev_sel_mean = chosen.mean(dim=0, keepdim=True)
+                if Kstar > 0:
+                    chosen = cand[top_idx[:Kstar], :]
+                    latents_list.append(chosen)
+                    prev_sel_mean = chosen.mean(dim=0, keepdim=True)
 
-        if len(latents_list) == 0:
-            return None, torch.zeros_like(ids, dtype=torch.bool)
-        latents = torch.cat(latents_list, dim=0).unsqueeze(0)
+            if len(latents_list) == 0:
+                return None, torch.zeros_like(ids, dtype=torch.bool)
+            latents = torch.cat(latents_list, dim=0).unsqueeze(0)
 
-        firstK_mask = self._build_firstK_mask(ids, seg_pad_indices, Kstars)
-        return latents, firstK_mask
+            firstK_mask = self._build_firstK_mask(ids, seg_pad_indices, Kstars)
+            return latents, firstK_mask
+        finally:
+            if restore_training:
+                tea.train()
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
         # High-level compute_loss flow:

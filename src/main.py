@@ -13,6 +13,10 @@ from transformers import (
     AutoProcessor,
 )
 from transformers.trainer_utils import get_last_checkpoint
+try:
+    from transformers.integrations import HfDeepSpeedConfig
+except Exception:
+    HfDeepSpeedConfig = None
 from trl import SFTTrainer, SFTConfig
 from peft import LoraConfig, get_peft_model
 from datasets import load_dataset
@@ -123,6 +127,18 @@ def main_train():
 
     cache_dir = args.cache_dir
     os.environ['HF_HOME'] = cache_dir
+
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    ds_config_path = os.path.join(repo_root, "configs", "config_stage3.json")
+    ds_init_helper = None
+    if HfDeepSpeedConfig is not None:
+        try:
+            ds_init_helper = HfDeepSpeedConfig(ds_config_path)
+            logging.info(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
+            print(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
+        except Exception as e:
+            logging.warning(f"Failed to initialize HfDeepSpeedConfig ({e}); fallback to regular model init")
+            print(f"Failed to initialize HfDeepSpeedConfig ({e}); fallback to regular model init")
     
     logging.info(f"Loading processor from: {args.model}")
     processor = AutoProcessor.from_pretrained(args.model, cache_dir=cache_dir, trust_remote_code=True)
@@ -153,7 +169,8 @@ def main_train():
         config=config,
         torch_dtype=torch.bfloat16,
         attn_implementation="flash_attention_2",
-        cache_dir=cache_dir if args.stage == 'stage1' else None,
+        cache_dir=cache_dir,
+        low_cpu_mem_usage=True,
         trust_remote_code=True
     )
     
@@ -185,8 +202,7 @@ def main_train():
     if torch.cuda.is_available():
         local_rank = int(os.environ.get("LOCAL_RANK", 0))
         torch.cuda.set_device(local_rank)
-            
-    logging.info(f"Moving model to CUDA device: {torch.cuda.current_device()} ...")
+        logging.info(f"Using CUDA device: {torch.cuda.current_device()}")
     
 
     preprocess_function = task_preporcess_config[args.task]
@@ -235,7 +251,7 @@ def main_train():
         logging_dir='./logs/',
         logging_strategy='steps',
         max_seq_length=32768 if args.stage == 'stage1' else args.max_seq_length_train,
-        deepspeed="configs/config_stage3.json",
+        deepspeed=ds_config_path,
         ddp_find_unused_parameters=False if args.stage == 'stage2' else None,
     )
     
