@@ -1,0 +1,269 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-03-06 16:15:37 - INFO - ========================================
+2026-03-06 16:15:37 - INFO - ========================================
+2026-03-06 16:15:37 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 16:15:37 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-06 16:15:37 - INFO - ========================================
+2026-03-06 16:15:37 - INFO - ========================================
+2026-03-06 16:15:37 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=16, world_size=2
+2026-03-06 16:15:37 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=16, world_size=2
+2026-03-06 16:15:37 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 16:15:37 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-06 16:15:37 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-06 16:15:37 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-06 16:15:41 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-06 16:15:41 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:05<00:23,  5.84s/it]Loading checkpoint shards:  20%|██        | 1/5 [00:05<00:23,  5.93s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:10<00:15,  5.14s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:10<00:15,  5.21s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:15<00:10,  5.06s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:15<00:10,  5.13s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:20<00:04,  4.89s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:20<00:00,  4.02s/it]
+Loading checkpoint shards:  80%|████████  | 4/5 [00:20<00:04,  4.97s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:21<00:00,  3.44s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:21<00:00,  4.22s/it]
+2026-03-06 16:16:08 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-06 16:16:08 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-06 16:16:08 - INFO - Using CUDA device: 0
+2026-03-06 16:16:08 - INFO - Using CUDA device: 1
+/projects/bfdz/zluo8/ILVR/src/trainer.py:57: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+/projects/bfdz/zluo8/ILVR/src/trainer.py:57: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+2026-03-06 16:17:43 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-06 16:17:43 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-06 16:17:43 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-06 16:17:43 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-06 16:17:44 - WARNING - Gradient accumulation steps mismatch: GradientAccumulationPlugin has 1, DeepSpeed config has 8. Using DeepSpeed's value.
+  0%|          | 0/3240 [00:00<?, ?it/s]Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+Trainer.tokenizer is now deprecated. You should use Trainer.processing_class instead.
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 327, in <module>
+[rank1]:     main_train()
+[rank1]:     ~~~~~~~~~~^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 311, in main_train
+[rank1]:     trainer.train(resume_from_checkpoint=last_checkpoint)
+[rank1]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank1]:     return inner_training_loop(
+[rank1]:         args=args,
+[rank1]:     ...<2 lines>...
+[rank1]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank1]:     )
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2582, in _inner_training_loop
+[rank1]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3796, in training_step
+[rank1]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 483, in compute_loss
+[rank1]:     teacher_latents, firstK_mask = self._teacher_build_latents(inputs, k=k, p=self.coverage_p)
+[rank1]:                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank1]:     return func(*args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 371, in _teacher_build_latents
+[rank1]:     u = self._user_side_attn_pooling(tea, inputs, ids, attn)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank1]:     return func(*args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 246, in _user_side_attn_pooling
+[rank1]:     out = tea(
+[rank1]:         input_ids=ids,
+[rank1]:     ...<4 lines>...
+[rank1]:         return_dict=True,
+[rank1]:     )
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/utils/generic.py", line 959, in wrapper
+[rank1]:     output = func(self, *args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 1493, in forward
+[rank1]:     outputs = self.model(
+[rank1]:         input_ids=input_ids,
+[rank1]:     ...<14 lines>...
+[rank1]:         **kwargs,
+[rank1]:     )
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 1275, in forward
+[rank1]:     image_embeds = self.get_image_features(pixel_values, image_grid_thw)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 1188, in get_image_features
+[rank1]:     image_embeds = self.visual(pixel_values, grid_thw=image_grid_thw)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 444, in forward
+[rank1]:     hidden_states = self.patch_embed(hidden_states)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 87, in forward
+[rank1]:     hidden_states = self.proj(hidden_states.to(dtype=target_dtype)).view(-1, self.embed_dim)
+[rank1]:                     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank1]:     return self._call_impl(*args, **kwargs)
+[rank1]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank1]:     return forward_call(*args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/conv.py", line 725, in forward
+[rank1]:     return self._conv_forward(input, self.weight, self.bias)
+[rank1]:            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/conv.py", line 720, in _conv_forward
+[rank1]:     return F.conv3d(
+[rank1]:            ~~~~~~~~^
+[rank1]:         input, weight, bias, self.stride, self.padding, self.dilation, self.groups
+[rank1]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:     )
+[rank1]:     ^
+[rank1]: RuntimeError: weight should have at least three dimensions
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 327, in <module>
+[rank0]:     main_train()
+[rank0]:     ~~~~~~~~~~^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 311, in main_train
+[rank0]:     trainer.train(resume_from_checkpoint=last_checkpoint)
+[rank0]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank0]:     return inner_training_loop(
+[rank0]:         args=args,
+[rank0]:     ...<2 lines>...
+[rank0]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank0]:     )
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2582, in _inner_training_loop
+[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3796, in training_step
+[rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 483, in compute_loss
+[rank0]:     teacher_latents, firstK_mask = self._teacher_build_latents(inputs, k=k, p=self.coverage_p)
+[rank0]:                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 371, in _teacher_build_latents
+[rank0]:     u = self._user_side_attn_pooling(tea, inputs, ids, attn)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 246, in _user_side_attn_pooling
+[rank0]:     out = tea(
+[rank0]:         input_ids=ids,
+[rank0]:     ...<4 lines>...
+[rank0]:         return_dict=True,
+[rank0]:     )
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/utils/generic.py", line 959, in wrapper
+[rank0]:     output = func(self, *args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 1493, in forward
+[rank0]:     outputs = self.model(
+[rank0]:         input_ids=input_ids,
+[rank0]:     ...<14 lines>...
+[rank0]:         **kwargs,
+[rank0]:     )
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 1275, in forward
+[rank0]:     image_embeds = self.get_image_features(pixel_values, image_grid_thw)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 1188, in get_image_features
+[rank0]:     image_embeds = self.visual(pixel_values, grid_thw=image_grid_thw)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 444, in forward
+[rank0]:     hidden_states = self.patch_embed(hidden_states)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/models/qwen2_5_vl/modeling_qwen2_5_vl.py", line 87, in forward
+[rank0]:     hidden_states = self.proj(hidden_states.to(dtype=target_dtype)).view(-1, self.embed_dim)
+[rank0]:                     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+[rank0]:     return self._call_impl(*args, **kwargs)
+[rank0]:            ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+[rank0]:     return forward_call(*args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/conv.py", line 725, in forward
+[rank0]:     return self._conv_forward(input, self.weight, self.bias)
+[rank0]:            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/nn/modules/conv.py", line 720, in _conv_forward
+[rank0]:     return F.conv3d(
+[rank0]:            ~~~~~~~~^
+[rank0]:         input, weight, bias, self.stride, self.padding, self.dilation, self.groups
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:     )
+[rank0]:     ^
+[rank0]: RuntimeError: weight should have at least three dimensions
+  0%|          | 0/3240 [00:05<?, ?it/s]
+W0306 16:17:59.461000 3027134 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 3028217 closing signal SIGTERM
+E0306 16:18:00.041000 3027134 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 1 (pid: 3028218) of binary: /projects/bfdz/zluo8/ILVR/.venv/bin/python
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1226, in launch_command
+    multi_gpu_launcher(args)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 853, in multi_gpu_launcher
+    distrib_run.run(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+    ~~~~~~~~~~~~~~~
+        config=config,
+        ~~~~~~~~~~~~~~
+        entrypoint=cmd,
+        ~~~~~~~~~~~~~~~
+    )(*cmd_args)
+    ~^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+    ...<2 lines>...
+    )
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+src/main.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-06_16:17:59
+  host      : gpue01.delta.ncsa.illinois.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 3028218)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

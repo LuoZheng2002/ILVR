@@ -23,6 +23,7 @@ export TEST_IMAGE_ROOT=""
 SAVE_MODEL_PATH="checkpoints"
 LOG_FILE="train.log"
 
+export ILVR_FORCE_EMA_WITH_ZERO3=1
 
 mkdir -p "$(dirname "$SAVE_MODEL_PATH")" "$(dirname "$LOG_FILE")"
 

@@ -106,3 +106,4 @@ Trainer.tokenizer is now deprecated. You should use Trainer.processing_class ins
 `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
 `loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
 `loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+[2026-03-06T15:55:38.083] error: *** JOB 16356842 ON gpua016 CANCELLED AT 2026-03-06T15:55:38 DUE TO TIME LIMIT ***
