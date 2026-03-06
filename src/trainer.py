@@ -25,7 +25,19 @@ except ImportError:
 class _EMATeacher:
     def __init__(self, model: nn.Module, decay: float = 0.999):
         self.decay = float(decay)
-        self.teacher = copy.deepcopy(model)
+        if _HAS_DS and any(hasattr(p, "ds_id") for p in model.parameters()):
+            try:
+                params = [p for p in model.parameters()]
+                with deepspeed.zero.GatheredParameters(params, modifier_rank=None):
+                    self.teacher = copy.deepcopy(model)
+            except Exception as e:
+                logging.warning(
+                    "Failed to gather ZeRO-3 params for EMA teacher init (%s); using direct deepcopy",
+                    e,
+                )
+                self.teacher = copy.deepcopy(model)
+        else:
+            self.teacher = copy.deepcopy(model)
         self.teacher.eval()
         for p in self.teacher.parameters():
             p.requires_grad_(False)
