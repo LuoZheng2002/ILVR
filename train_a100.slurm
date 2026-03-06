@@ -9,7 +9,7 @@
 # #SBATCH --partition=gpuH200x8
 #SBATCH --gres=gpu:4                     # Request 4 GPUs
 #SBATCH --cpus-per-task=4                # CPU cores
-#SBATCH --mem=64G                        # RAM
+#SBATCH --mem=32G                        # RAM
 #SBATCH --account=bfdz-delta-gpu    # Your Slurm account/project
 
 # Load modules or activate your environment

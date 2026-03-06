@@ -1,0 +1,5 @@
+Using 2 processes
+Warning: The cache directory for DeepSpeed Triton autotune, /u/zluo8/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.Warning: The cache directory for DeepSpeed Triton autotune, /u/zluo8/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+
+Parameter Offload - Persistent parameters statistics: param_count = 368, numel = 848896
+{'loss': 37.3572, 'grad_norm': 157.10930206007305, 'learning_rate': 9.972136222910217e-06, 'mean_token_accuracy': 0.678844184614718, 'epoch': 0.09}
