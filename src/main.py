@@ -130,10 +130,31 @@ def main_train():
 
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     ds_config_path = os.path.join(repo_root, "configs", "config_stage3.json")
+    per_device_train_batch_size = 1
+    gradient_accumulation_steps = int(args.gradient_accumulation_steps)
+    world_size = max(int(os.environ.get("WORLD_SIZE", "1")), 1)
+
+    with open(ds_config_path, "r", encoding="utf-8") as f:
+        ds_config = json.load(f)
+
+    ds_config["train_micro_batch_size_per_gpu"] = per_device_train_batch_size
+    ds_config["gradient_accumulation_steps"] = gradient_accumulation_steps
+    ds_config["train_batch_size"] = (
+        per_device_train_batch_size * gradient_accumulation_steps * world_size
+    )
+
+    logging.info(
+        "Resolved DeepSpeed batch settings: micro_batch=%s, grad_accum=%s, train_batch=%s, world_size=%s",
+        ds_config["train_micro_batch_size_per_gpu"],
+        ds_config["gradient_accumulation_steps"],
+        ds_config["train_batch_size"],
+        world_size,
+    )
+
     ds_init_helper = None
     if HfDeepSpeedConfig is not None:
         try:
-            ds_init_helper = HfDeepSpeedConfig(ds_config_path)
+            ds_init_helper = HfDeepSpeedConfig(ds_config)
             logging.info(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
             print(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
         except Exception as e:
@@ -231,8 +252,8 @@ def main_train():
     training_args = SFTConfig(
         output_dir=args.save_model_path,
         num_train_epochs=args.epochs,
-        per_device_train_batch_size=1,
-        gradient_accumulation_steps=args.gradient_accumulation_steps,
+        per_device_train_batch_size=per_device_train_batch_size,
+        gradient_accumulation_steps=gradient_accumulation_steps,
         warmup_steps=args.warm_up_steps,
         learning_rate=1e-5,
         weight_decay=0.01,
@@ -251,7 +272,7 @@ def main_train():
         logging_dir='./logs/',
         logging_strategy='steps',
         max_seq_length=32768 if args.stage == 'stage1' else args.max_seq_length_train,
-        deepspeed=ds_config_path,
+        deepspeed=ds_config,
         ddp_find_unused_parameters=False if args.stage == 'stage2' else None,
     )
     
