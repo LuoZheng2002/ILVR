@@ -1,0 +1,80 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-03-05 22:28:04 - INFO - ========================================
+2026-03-05 22:28:04 - INFO - ========================================
+2026-03-05 22:28:04 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-05 22:28:04 - INFO - ========================================
+2026-03-05 22:28:04 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=612, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-05 22:28:04 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-05 22:28:04 - INFO - ========================================
+2026-03-05 22:28:04 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-05 22:28:07 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-05 22:28:07 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:03,  1.31it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:03,  1.29it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.62it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.66it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  3.93it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  3.97it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  4.63it/s]
+Loading checkpoint shards: 100%|██████████| 5/5 [00:01<00:00,  4.68it/s]
+2026-03-05 22:28:26 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-05 22:28:26 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-05 22:28:26 - INFO - Moving model to CUDA device: 0 ...
+2026-03-05 22:28:27 - INFO - Moving model to CUDA device: 1 ...
+/projects/bfdz/zluo8/ILVR/src/trainer.py:54: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+/projects/bfdz/zluo8/ILVR/src/trainer.py:54: FutureWarning: `tokenizer` is deprecated and removed starting from version 0.16.0 for `CustomTrainerStage1.__init__`. Use `processing_class` instead.
+  super().__init__(*args, **kwargs)
+W0305 22:31:35.915000 1425233 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1425882 closing signal SIGTERM
+E0305 22:31:36.389000 1425233 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: -9) local_rank: 1 (pid: 1425883) of binary: /projects/bfdz/zluo8/ILVR/.venv/bin/python
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1226, in launch_command
+    multi_gpu_launcher(args)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 853, in multi_gpu_launcher
+    distrib_run.run(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+    ~~~~~~~~~~~~~~~
+        config=config,
+        ~~~~~~~~~~~~~~
+        entrypoint=cmd,
+        ~~~~~~~~~~~~~~~
+    )(*cmd_args)
+    ~^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+    ...<2 lines>...
+    )
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+========================================================
+src/main.py FAILED
+--------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+--------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-05_22:31:35
+  host      : gpue05.delta.ncsa.illinois.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : -9 (pid: 1425883)
+  error_file: <N/A>
+  traceback : Signal 9 (SIGKILL) received by PID 1425883
+========================================================
+[2026-03-05T22:31:39.874] error: Detected 1 oom_kill event in StepId=16345844.batch. Some of the step tasks have been OOM Killed.

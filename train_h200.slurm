@@ -7,9 +7,9 @@
 # #SBATCH --mail-type=BEGIN,END,FAIL
 # #SBATCH --mail-user=luozheng@usc.edu
 #SBATCH --partition=gpuH200x8
-#SBATCH --gres=gpu:1                     # Request 1 GPU
+#SBATCH --gres=gpu:2                     # Request 2 GPUs
 #SBATCH --cpus-per-task=4                # CPU cores
-#SBATCH --mem=32G                        # RAM
+#SBATCH --mem=128G                        # RAM
 #SBATCH --account=bfdz-delta-gpu    # Your Slurm account/project
 
 # Load modules or activate your environment
