@@ -1,6 +1,7 @@
 import os
 import re
 import json
+import copy
 import logging
 from tqdm import tqdm
 from functools import partial
@@ -142,6 +143,10 @@ def main_train():
     ds_config["train_batch_size"] = (
         per_device_train_batch_size * gradient_accumulation_steps * world_size
     )
+    ds_init_config = copy.deepcopy(ds_config)
+    ds_init_config["train_batch_size"] = (
+        per_device_train_batch_size * gradient_accumulation_steps
+    )
 
     logging.info(
         "Resolved DeepSpeed batch settings: micro_batch=%s, grad_accum=%s, train_batch=%s, world_size=%s",
@@ -154,7 +159,7 @@ def main_train():
     ds_init_helper = None
     if HfDeepSpeedConfig is not None:
         try:
-            ds_init_helper = HfDeepSpeedConfig(ds_config)
+            ds_init_helper = HfDeepSpeedConfig(ds_init_config)
             logging.info(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
             print(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
         except Exception as e:
