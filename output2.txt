@@ -1,0 +1,21 @@
+=== Method A: add_tokens (simulate repo) ===
+ add_tokens changed: True; before_len=151665; after_len=151668
+ tokenizer.vocab_size attr: 151643
+ len(tokenizer): 151668
+  '<|latent_pad|>' -> token ids: [151665]  (len 1)
+  '<|latent_start|>' -> token ids: [151666]  (len 1)
+  '<|latent_end|>' -> token ids: [151667]  (len 1)
+  '<|im_start|>assistant' -> token ids: [151644, 77091]  (len 2)
+  '<|endoftext|>' -> token ids: [151643]  (len 1)
+  '<|vision_start|>' -> token ids: [151652]  (len 1)
+
+=== Method B: add_special_tokens (recommended) ===
+ add_special_tokens changed: True; before_len=151665; after_len=151668
+ tokenizer.vocab_size attr: 151643
+ len(tokenizer): 151668
+  '<|latent_pad|>' -> token ids: [151665]  (len 1)
+  '<|latent_start|>' -> token ids: [151666]  (len 1)
+  '<|latent_end|>' -> token ids: [151667]  (len 1)
+  '<|im_start|>assistant' -> token ids: [151644, 77091]  (len 2)
+  '<|endoftext|>' -> token ids: [151643]  (len 1)
+  '<|vision_start|>' -> token ids: [151652]  (len 1)
