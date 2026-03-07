@@ -208,7 +208,7 @@ class CustomTrainerStage1(SFTTrainer):
         return all_groups.mean(dim=0, keepdim=True)
 
     def _get_special_ids(self):
-        tok = self.tokenizer
+        tok = self.processing_class
         get_id = lambda s: tok(s, return_tensors="pt")["input_ids"][0,0].item()
         latent_pad_id   = get_id("<|latent_pad|>")
         latent_start_id = get_id("<|latent_start|>")
@@ -231,7 +231,7 @@ class CustomTrainerStage1(SFTTrainer):
         B, T = ids.shape
         cand_texts = ["<|im_start|>assistant", "<|im_start|>assistant\n"]
         cand_patterns = [
-            self.tokenizer(s, return_tensors="pt")["input_ids"][0].to(device) for s in cand_texts
+            self.processing_class(s, return_tensors="pt")["input_ids"][0].to(device) for s in cand_texts
         ]
         start_assistant = -1
         for pat in cand_patterns:
@@ -368,7 +368,7 @@ class CustomTrainerStage1(SFTTrainer):
                 else:
                     t += 1
 
-            pat = self.tokenizer("<|im_start|>assistant", return_tensors="pt")["input_ids"][0].to(device)
+            pat = self.processing_class("<|im_start|>assistant", return_tensors="pt")["input_ids"][0].to(device)
             start_assistant = -1
             for i in range(0, ids.size(1) - pat.size(0) + 1):
                 if torch.all(ids[0, i:i+pat.size(0)] == pat):
