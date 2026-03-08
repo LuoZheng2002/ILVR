@@ -12,6 +12,7 @@ from typing import Any, Dict, List, cast
 
 import torch.distributed as dist
 import numpy as np
+from transformers import TrainerCallback
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 
 try:
@@ -105,6 +106,15 @@ class _ShardedEMA:
         }
 
 
+class _EMAOptimizerStepCallback(TrainerCallback):
+    def __init__(self, trainer):
+        self._trainer = trainer
+
+    def on_optimizer_step(self, args, state, control, **kwargs):
+        self._trainer._update_ema_after_optimizer_step()
+        return control
+
+
 class CustomTrainerStage1(SFTTrainer):
     def __init__(
         self,
@@ -128,6 +138,16 @@ class CustomTrainerStage1(SFTTrainer):
         if ema_tau > 0.0:
             self._ema = _ShardedEMA(self.model, decay=ema_tau)
             logging.info("Initialized sharded EMA (tau=%s) for FSDP training.", ema_tau)
+            self.add_callback(_EMAOptimizerStepCallback(self))
+
+    def _update_ema_after_optimizer_step(self):
+        if self._ema is None:
+            return
+        accelerator = getattr(self, "accelerator", None)
+        if accelerator is not None and bool(getattr(accelerator, "optimizer_step_was_skipped", False)):
+            return
+        with torch.no_grad():
+            self._ema.update(self.model)
 
     def _dist_rank(self) -> int:
         if dist.is_available() and dist.is_initialized():
@@ -831,7 +851,4 @@ class CustomTrainerStage1(SFTTrainer):
 
     def optimizer_step(self, *args, **kwargs):
         super().optimizer_step(*args, **kwargs)
-        if not hasattr(self, "_ema") or self._ema is None:
-            return
-        with torch.no_grad():
-            self._ema.update(self.model)
+        self._update_ema_after_optimizer_step()

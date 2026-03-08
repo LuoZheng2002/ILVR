@@ -15,8 +15,8 @@
 ## 2) FSDP Integration
 - [x] Add FSDP config surface (CLI/config file): sharding strategy, auto-wrap policy, mixed precision, state dict type.
 - [x] Replace DeepSpeed engine wrapping with FSDP module wrapping.
-- [ ] Ensure gradient accumulation and `no_sync` semantics remain correct.
-- [ ] Preserve optimizer step ordering and scheduler stepping behavior.
+- [x] Ensure gradient accumulation and `no_sync` semantics remain correct.
+- [x] Preserve optimizer step ordering and scheduler stepping behavior.
 - [ ] Validate activation checkpointing compatibility under FSDP.
 
 ## 3) bf16 Enablement

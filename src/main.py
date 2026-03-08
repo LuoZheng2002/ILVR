@@ -192,7 +192,8 @@ def main_train():
     logging.info(f"Loading model (Stage 1) from: {args.model}")
     model_path = args.model
     config = Qwen2_5_VLConfig.from_pretrained(model_path, cache_dir=cache_dir, trust_remote_code=True)
-    grad_checkpointing = True
+    fsdp_activation_checkpointing = bool(getattr(args, "fsdp_activation_checkpointing", True))
+    grad_checkpointing = fsdp_activation_checkpointing
     
     
     config.compress_strategy = args.compress_strategy
@@ -270,6 +271,12 @@ def main_train():
             task_type="CAUSAL_LM",
         )
 
+    logging.info(
+        "Activation checkpointing config: gradient_checkpointing=%s, fsdp_activation_checkpointing=%s",
+        grad_checkpointing,
+        fsdp_activation_checkpointing,
+    )
+
     training_args = SFTConfig(
         output_dir=args.save_model_path,
         num_train_epochs=args.epochs,
@@ -301,7 +308,7 @@ def main_train():
             "limit_all_gathers": bool(getattr(args, "fsdp_limit_all_gathers", True)),
             "use_orig_params": bool(getattr(args, "fsdp_use_orig_params", True)),
             "sync_module_states": bool(getattr(args, "fsdp_sync_module_states", True)),
-            "activation_checkpointing": bool(getattr(args, "fsdp_activation_checkpointing", True)),
+            "activation_checkpointing": fsdp_activation_checkpointing,
             "state_dict_type": getattr(args, "fsdp_state_dict_type", "SHARDED_STATE_DICT"),
             "transformer_layer_cls_to_wrap": getattr(args, "fsdp_transformer_layer_cls_to_wrap", "Qwen2_5_VLDecoderLayer"),
         },
