@@ -192,8 +192,9 @@ def main_train():
     logging.info(f"Loading model (Stage 1) from: {args.model}")
     model_path = args.model
     config = Qwen2_5_VLConfig.from_pretrained(model_path, cache_dir=cache_dir, trust_remote_code=True)
+    fsdp_mode = bool(getattr(args, "fsdp", ""))
     fsdp_activation_checkpointing = bool(getattr(args, "fsdp_activation_checkpointing", True))
-    grad_checkpointing = fsdp_activation_checkpointing
+    grad_checkpointing = False if (fsdp_mode and fsdp_activation_checkpointing) else fsdp_activation_checkpointing
     
     
     config.compress_strategy = args.compress_strategy
@@ -272,9 +273,10 @@ def main_train():
         )
 
     logging.info(
-        "Activation checkpointing config: gradient_checkpointing=%s, fsdp_activation_checkpointing=%s",
+        "Activation checkpointing config: gradient_checkpointing=%s, fsdp_activation_checkpointing=%s, fsdp_enabled=%s",
         grad_checkpointing,
         fsdp_activation_checkpointing,
+        fsdp_mode,
     )
 
     training_args = SFTConfig(
