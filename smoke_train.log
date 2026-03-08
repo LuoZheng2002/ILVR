@@ -39,3 +39,37 @@
 2026-03-08 00:42:08 - INFO - cc /tmp/tmp917x2qs4/test.o -L/opt/nvidia/hpc_sdk/Linux_x86_64/25.3/cuda/12.8 -L/opt/nvidia/hpc_sdk/Linux_x86_64/25.3/cuda/12.8/lib64 -lcufile -o /tmp/tmp917x2qs4/a.out
 2026-03-08 00:42:14 - INFO - output log checkpoints_smoke exists but no checkpoint， train from start。
 2026-03-08 00:42:14 - INFO - start training (FSDP mode, precision=bf16)...
+2026-03-08 01:07:31 - INFO - ========================================
+2026-03-08 01:07:31 - INFO - ========================================
+2026-03-08 01:07:31 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=10, compress_strategy='average', gradient_accumulation_steps=1, epochs=0.02, data_path='data/TRAIN.jsonl', log_file='smoke_train.log', save_model_path='checkpoints_smoke', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=1, sim_weight=1.0, ema_tau=0.0, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, mixed_precision='bf16', fsdp='full_shard auto_wrap', fsdp_state_dict_type='SHARDED_STATE_DICT', fsdp_backward_prefetch='backward_pre', fsdp_forward_prefetch=False, fsdp_limit_all_gathers=True, fsdp_use_orig_params=True, fsdp_sync_module_states=True, fsdp_activation_checkpointing=True, fsdp_transformer_layer_cls_to_wrap='Qwen2_5_VLDecoderLayer', latent_num_segments_train=8, max_seq_length_stage1=32768, max_seq_length_train=8192, smoke_test_mode=True)
+2026-03-08 01:07:31 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=10, compress_strategy='average', gradient_accumulation_steps=1, epochs=0.02, data_path='data/TRAIN.jsonl', log_file='smoke_train.log', save_model_path='checkpoints_smoke', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=1, sim_weight=1.0, ema_tau=0.0, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, mixed_precision='bf16', fsdp='full_shard auto_wrap', fsdp_state_dict_type='SHARDED_STATE_DICT', fsdp_backward_prefetch='backward_pre', fsdp_forward_prefetch=False, fsdp_limit_all_gathers=True, fsdp_use_orig_params=True, fsdp_sync_module_states=True, fsdp_activation_checkpointing=True, fsdp_transformer_layer_cls_to_wrap='Qwen2_5_VLDecoderLayer', latent_num_segments_train=8, max_seq_length_stage1=32768, max_seq_length_train=8192, smoke_test_mode=True)
+2026-03-08 01:07:31 - INFO - ========================================
+2026-03-08 01:07:31 - INFO - ========================================
+2026-03-08 01:07:31 - INFO - Resolved FSDP batch settings: micro_batch=1, grad_accum=1
+2026-03-08 01:07:31 - INFO - Resolved FSDP batch settings: micro_batch=1, grad_accum=1
+2026-03-08 01:07:31 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-08 01:07:31 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-08 01:07:33 - INFO - Resolved mixed precision mode: bf16
+2026-03-08 01:07:33 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-08 01:07:33 - INFO - Resolved mixed precision mode: bf16
+2026-03-08 01:07:33 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-08 01:07:56 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-08 01:07:56 - INFO - Using CUDA device: 0
+2026-03-08 01:07:56 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-08 01:07:57 - INFO - Loaded training dataset with 69 examples (smoke_test_mode=True)
+2026-03-08 01:07:57 - INFO - Activation checkpointing config: gradient_checkpointing=False, fsdp_activation_checkpointing=True, fsdp_enabled=True
+2026-03-08 01:07:57 - INFO - Using CUDA device: 1
+2026-03-08 01:07:58 - INFO - Loaded training dataset with 69 examples (smoke_test_mode=True)
+2026-03-08 01:07:58 - INFO - Activation checkpointing config: gradient_checkpointing=False, fsdp_activation_checkpointing=True, fsdp_enabled=True
+2026-03-08 01:07:59 - INFO - cc -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -fPIC -c /tmp/tmpymuxion8/test.c -o /tmp/tmpymuxion8/test.o
+2026-03-08 01:07:59 - INFO - cc -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -fPIC -c /tmp/tmpu91a0gef/test.c -o /tmp/tmpu91a0gef/test.o
+2026-03-08 01:07:59 - INFO - cc /tmp/tmpymuxion8/test.o -laio -o /tmp/tmpymuxion8/a.out
+2026-03-08 01:07:59 - INFO - cc /tmp/tmpu91a0gef/test.o -laio -o /tmp/tmpu91a0gef/a.out
+2026-03-08 01:08:00 - INFO - cc -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -fPIC -c /tmp/tmpq8fikspf/test.c -o /tmp/tmpq8fikspf/test.o
+2026-03-08 01:08:00 - INFO - cc -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O3 -Wall -fPIC -fPIC -c /tmp/tmpea5xfjc7/test.c -o /tmp/tmpea5xfjc7/test.o
+2026-03-08 01:08:00 - INFO - cc /tmp/tmpq8fikspf/test.o -L/opt/nvidia/hpc_sdk/Linux_x86_64/25.3/cuda/12.8 -L/opt/nvidia/hpc_sdk/Linux_x86_64/25.3/cuda/12.8/lib64 -lcufile -o /tmp/tmpq8fikspf/a.out
+2026-03-08 01:08:00 - INFO - cc /tmp/tmpea5xfjc7/test.o -L/opt/nvidia/hpc_sdk/Linux_x86_64/25.3/cuda/12.8 -L/opt/nvidia/hpc_sdk/Linux_x86_64/25.3/cuda/12.8/lib64 -lcufile -o /tmp/tmpea5xfjc7/a.out
+2026-03-08 01:08:06 - INFO - output log checkpoints_smoke exists but no checkpoint， train from start。
+2026-03-08 01:08:06 - INFO - output log checkpoints_smoke exists but no checkpoint， train from start。
+2026-03-08 01:08:06 - INFO - start training (FSDP mode, precision=bf16)...
+2026-03-08 01:08:06 - INFO - start training (FSDP mode, precision=bf16)...
