@@ -1,0 +1,91 @@
+2026-03-08 00:40:57 - INFO - ========================================
+2026-03-08 00:40:57 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=10, compress_strategy='average', gradient_accumulation_steps=1, epochs=0.02, data_path='data/TRAIN.jsonl', log_file='smoke_train.log', save_model_path='checkpoints_smoke', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=1, sim_weight=1.0, ema_tau=0.0, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, mixed_precision='bf16', fsdp='full_shard auto_wrap', fsdp_state_dict_type='SHARDED_STATE_DICT', fsdp_backward_prefetch='backward_pre', fsdp_forward_prefetch=False, fsdp_limit_all_gathers=True, fsdp_use_orig_params=True, fsdp_sync_module_states=True, fsdp_activation_checkpointing=True, fsdp_transformer_layer_cls_to_wrap='Qwen2_5_VLDecoderLayer', latent_num_segments_train=8, max_seq_length_stage1=32768, max_seq_length_train=8192, smoke_test_mode=True)
+2026-03-08 00:40:57 - INFO - ========================================
+2026-03-08 00:40:57 - INFO - Resolved FSDP batch settings: micro_batch=1, grad_accum=1
+2026-03-08 00:40:57 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-08 00:41:00 - INFO - Resolved mixed precision mode: bf16
+2026-03-08 00:41:00 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  3.41it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  8.80it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 11.22it/s]
+2026-03-08 00:42:04 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-08 00:42:04 - INFO - Using CUDA device: 0
+2026-03-08 00:42:05 - INFO - Loaded training dataset with 69 examples (smoke_test_mode=True)
+2026-03-08 00:42:05 - INFO - Activation checkpointing config: gradient_checkpointing=False, fsdp_activation_checkpointing=True, fsdp_enabled=True
+2026-03-08 00:42:14 - INFO - output log checkpoints_smoke exists but no checkpoint， train from start。
+2026-03-08 00:42:14 - INFO - start training (FSDP mode, precision=bf16)...
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_init_utils.py:444: UserWarning: FSDP is switching to use `NO_SHARD` instead of ShardingStrategy.FULL_SHARD since the world size is 1.
+  warnings.warn(
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 379, in <module>
+[rank0]:     main_train()
+[rank0]:     ~~~~~~~~~~^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 363, in main_train
+[rank0]:     trainer.train(resume_from_checkpoint=resume_from_checkpoint)
+[rank0]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank0]:     return inner_training_loop(
+[rank0]:         args=args,
+[rank0]:     ...<2 lines>...
+[rank0]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank0]:     )
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2379, in _inner_training_loop
+[rank0]:     self.model = self.accelerator.prepare(self.model)
+[rank0]:                  ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 1555, in prepare
+[rank0]:     result = tuple(
+[rank0]:         self._prepare_one(obj, first_pass=True, device_placement=d) for obj, d in zip(args, device_placement)
+[rank0]:     )
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 1556, in <genexpr>
+[rank0]:     self._prepare_one(obj, first_pass=True, device_placement=d) for obj, d in zip(args, device_placement)
+[rank0]:     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 1398, in _prepare_one
+[rank0]:     return self.prepare_model(obj, device_placement=device_placement)
+[rank0]:            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 1955, in prepare_model
+[rank0]:     param.data = param.data.to(torch.float32)  # upcasting
+[rank0]:                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 890.00 MiB. GPU 0 has a total capacity of 39.49 GiB of which 132.31 MiB is free. Including non-PyTorch memory, this process has 39.36 GiB memory in use. Of the allocated memory 38.51 GiB is allocated by PyTorch, and 51.47 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank0]:[W308 00:42:36.414631531 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+E0308 00:42:40.471000 3822969 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 3822979) of binary: /projects/bfdz/zluo8/ILVR/.venv/bin/python
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+    ~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+    ~~~~~~~~~~~~~~~
+        config=config,
+        ~~~~~~~~~~~~~~
+        entrypoint=cmd,
+        ~~~~~~~~~~~~~~~
+    )(*cmd_args)
+    ~^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+    ...<2 lines>...
+    )
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+src/main.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-08_00:42:40
+  host      : gpua065.delta.ncsa.illinois.edu
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3822979)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
