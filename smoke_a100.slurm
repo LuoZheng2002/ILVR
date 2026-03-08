@@ -17,6 +17,8 @@ export HF_HOME=/work/nvme/bfdz/zluo8/huggingface
 export TOKENIZERS_PARALLELISM=false
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 export HF_HUB_OFFLINE=0
+export TRAIN_IMAGE_ROOT=data
+export TEST_IMAGE_ROOT=
 
 MASTER_PORT=${MASTER_PORT:-29510}
 
