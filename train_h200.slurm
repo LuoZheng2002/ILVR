@@ -2,7 +2,7 @@
 #SBATCH --job-name=train_zero3       # Job name
 #SBATCH --output=z_train_zero3_%j.out        # Standard output log (%j = job ID)
 #SBATCH --error=z_train_zero3_%j.err         # Error log
-#SBATCH --time=00:20:00                 # Max runtime (HH:MM:SS)
+#SBATCH --time=01:00:00                 # Max runtime (HH:MM:SS)
 # #SBATCH --partition=gpu                  # Partition/queue with GPU
 # #SBATCH --mail-type=BEGIN,END,FAIL
 # #SBATCH --mail-user=luozheng@usc.edu

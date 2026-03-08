@@ -1,0 +1,110 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-03-08 17:49:50 - INFO - ========================================
+2026-03-08 17:49:50 - INFO - ========================================
+2026-03-08 17:49:50 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=50, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-08 17:49:50 - INFO - ========================================
+2026-03-08 17:49:50 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=50, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-08 17:49:50 - INFO - ========================================
+2026-03-08 17:49:50 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=16, world_size=2
+2026-03-08 17:49:50 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=16, world_size=2
+2026-03-08 17:49:50 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-08 17:49:50 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-08 17:49:50 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-08 17:49:50 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-08 17:49:53 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-08 17:49:53 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:03<00:12,  3.24s/it]Loading checkpoint shards:  20%|██        | 1/5 [00:03<00:13,  3.32s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:06<00:08,  2.97s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:06<00:09,  3.03s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:08<00:05,  2.89s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:09<00:05,  2.95s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:02,  2.84s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:11<00:00,  2.32s/it]
+Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:02,  2.90s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.03s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.47s/it]
+2026-03-08 17:50:10 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-08 17:50:10 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-08 17:50:10 - INFO - Using CUDA device: 0
+2026-03-08 17:50:10 - INFO - Using CUDA device: 1
+2026-03-08 17:50:41 - INFO - last checkpoint: checkpoints/checkpoint-50，continue。
+2026-03-08 17:50:41 - INFO - last checkpoint: checkpoints/checkpoint-50，continue。
+2026-03-08 17:50:41 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-08 17:50:41 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 327, in <module>
+[rank1]:     main_train()
+[rank1]:     ~~~~~~~~~~^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 311, in main_train
+[rank1]:     trainer.train(resume_from_checkpoint=last_checkpoint)
+[rank1]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2212, in train
+[rank1]:     state = TrainerState.load_from_json(os.path.join(resume_from_checkpoint, TRAINER_STATE_NAME))
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer_callback.py", line 153, in load_from_json
+[rank1]:     with open(json_path, encoding="utf-8") as f:
+[rank1]:          ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]: FileNotFoundError: [Errno 2] No such file or directory: 'checkpoints/checkpoint-50/trainer_state.json'
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 327, in <module>
+[rank0]:     main_train()
+[rank0]:     ~~~~~~~~~~^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 311, in main_train
+[rank0]:     trainer.train(resume_from_checkpoint=last_checkpoint)
+[rank0]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2212, in train
+[rank0]:     state = TrainerState.load_from_json(os.path.join(resume_from_checkpoint, TRAINER_STATE_NAME))
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer_callback.py", line 153, in load_from_json
+[rank0]:     with open(json_path, encoding="utf-8") as f:
+[rank0]:          ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]: FileNotFoundError: [Errno 2] No such file or directory: 'checkpoints/checkpoint-50/trainer_state.json'
+[rank0]:[W308 17:50:41.873613839 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+W0308 17:50:44.052000 483932 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 490434 closing signal SIGTERM
+E0308 17:50:44.273000 483932 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 1 (pid: 490435) of binary: /projects/bfdz/zluo8/ILVR/.venv/bin/python
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1226, in launch_command
+    multi_gpu_launcher(args)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 853, in multi_gpu_launcher
+    distrib_run.run(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+    ~~~~~~~~~~~~~~~
+        config=config,
+        ~~~~~~~~~~~~~~
+        entrypoint=cmd,
+        ~~~~~~~~~~~~~~~
+    )(*cmd_args)
+    ~^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+    ...<2 lines>...
+    )
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+src/main.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-08_17:50:44
+  host      : gpue06.delta.ncsa.illinois.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 490435)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
