@@ -16,6 +16,11 @@ from transformers import TrainerCallback
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 
 try:
+    from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
+except Exception:
+    FSDP = None
+
+try:
     from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import apply_multimodal_rotary_pos_emb
 except Exception:
     apply_multimodal_rotary_pos_emb = None
@@ -158,6 +163,13 @@ class CustomTrainerStage1(SFTTrainer):
         if dist.is_available() and dist.is_initialized():
             return int(dist.get_world_size())
         return 1
+
+    def _maybe_fsdp_summon_full_params(self, model: nn.Module):
+        if FSDP is None:
+            return contextlib.nullcontext()
+        if isinstance(model, FSDP):
+            return FSDP.summon_full_params(model, recurse=True, writeback=False)
+        return contextlib.nullcontext()
 
     def _ema_shard_path(self, checkpoint_dir: str) -> str:
         rank = self._dist_rank()
@@ -465,7 +477,8 @@ class CustomTrainerStage1(SFTTrainer):
             return None
         pv  = pv.to(next(tea.parameters()).device).type(tea.visual.dtype)
         thw = thw.to(next(tea.parameters()).device)
-        patches = tea.visual(pv, grid_thw=thw)
+        with self._maybe_fsdp_summon_full_params(tea):
+            patches = tea.visual(pv, grid_thw=thw)
         num_imgs = thw.shape[0]
         if num_imgs == 0 or patches.numel() == 0:
             return None
@@ -675,7 +688,8 @@ class CustomTrainerStage1(SFTTrainer):
                 thw = thw.to(device)
                 # Extract dense visual patch embeddings from the teacher visual encoder.
                 # `patch_all` shape: (num_patches_total, D), where patches are concatenated across helper images.
-                patch_all = tea.visual(pv, grid_thw=thw)
+                with self._maybe_fsdp_summon_full_params(tea):
+                    patch_all = tea.visual(pv, grid_thw=thw)
                 num_imgs = int(thw.shape[0])
 
                 s_merge = int(getattr(tea.visual, "spatial_merge_size", 2))
@@ -788,10 +802,11 @@ class CustomTrainerStage1(SFTTrainer):
             pv_lat = inputs.get("pixel_values_latent", None)
             thw_lat = inputs.get("image_grid_thw_latent", None)
             if pv_lat is not None and thw_lat is not None:
-                _ = self.model.visual(
-                    pv_lat.to(self.model.device).to(self.model.visual.dtype),
-                    grid_thw=thw_lat.to(self.model.device)
-                )
+                with self._maybe_fsdp_summon_full_params(self.model):
+                    _ = self.model.visual(
+                        pv_lat.to(self.model.device).to(self.model.visual.dtype),
+                        grid_thw=thw_lat.to(self.model.device)
+                    )
         
         if teacher_latents is None:
             ce_loss, outputs = super().compute_loss(
