@@ -78,8 +78,15 @@ def get_args():
         "--latent_num_segments_train", type=int, default=8,
         help="Stage-2"
     )
+    parser.add_argument("--max_seq_length_stage1", type=int, default=32768,
+        help="Stage-1")
     parser.add_argument("--max_seq_length_train", type=int, default=8192,
         help="Stage-2")  # 改默认 8192
+    parser.add_argument(
+        "--smoke_test_mode",
+        action="store_true",
+        help="Load only a small subset of the training dataset for smoke tests.",
+    )
     # global_pad_to 已存在，保留
 # 其余不变
 
@@ -94,10 +101,13 @@ def seed_everything(seed: int = 42):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-def load_jsonl_dataset(jsonl_path):
+def load_jsonl_dataset(jsonl_path, smoke_test_mode: bool = False):
     with open(jsonl_path, "r", encoding="utf-8") as f:
         data = [json.loads(line) for line in f]
-        data = data[:]
+    if smoke_test_mode and len(data) > 0:
+        smoke_fraction = 0.02
+        keep_n = max(1, int(len(data) * smoke_fraction))
+        data = data[:keep_n]
     return Dataset.from_list(data)
 
 def place_input_image(

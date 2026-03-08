@@ -250,7 +250,15 @@ def main_train():
     
 
     preprocess_function = task_preporcess_config[args.task]
-    train_dataset = load_jsonl_dataset(args.data_path)
+    train_dataset = load_jsonl_dataset(
+        args.data_path,
+        smoke_test_mode=bool(getattr(args, "smoke_test_mode", False)),
+    )
+    logging.info(
+        "Loaded training dataset with %s examples (smoke_test_mode=%s)",
+        len(train_dataset),
+        bool(getattr(args, "smoke_test_mode", False)),
+    )
     train_dataset = [preprocess_function(sample) for sample in train_dataset]
 
     
@@ -302,7 +310,11 @@ def main_train():
         report_to=[],
         logging_dir='./logs/',
         logging_strategy='steps',
-        max_seq_length=32768 if args.stage == 'stage1' else args.max_seq_length_train,
+        max_seq_length=(
+            args.max_seq_length_stage1
+            if args.stage == 'stage1'
+            else args.max_seq_length_train
+        ),
         fsdp=getattr(args, "fsdp", "full_shard auto_wrap"),
         fsdp_config={
             "backward_prefetch": getattr(args, "fsdp_backward_prefetch", "backward_pre"),

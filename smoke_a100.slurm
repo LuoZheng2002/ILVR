@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 #SBATCH --job-name=smoke-train        # Job name
 #SBATCH --output=z_smoke_%j.out       # Standard output log (%j = job ID)
 #SBATCH --error=z_smoke_%j.err        # Error log
@@ -8,7 +9,7 @@
 # #SBATCH --mail-user=luozheng@usc.edu
 #SBATCH --gres=gpu:1                  # Request 1 GPU for smoke run
 #SBATCH --cpus-per-task=4             # CPU cores
-#SBATCH --mem=32G                     # RAM
+#SBATCH --mem=64G                     # RAM
 #SBATCH --account=bfdz-delta-gpu      # Slurm account/project
 
 source activate_environment.sh
@@ -28,6 +29,8 @@ torchrun --standalone --nproc_per_node=1 --master_port="${MASTER_PORT}" src/main
   --task "zebra-cot" \
   --gradient_accumulation_steps 1 \
   --stage stage1 \
+  --smoke_test_mode \
+  --max_seq_length_stage1 2048 \
   --warm_up_steps 1 \
   --data_path "data/TRAIN.jsonl" \
   --log_file "smoke_train.log" \
@@ -36,6 +39,7 @@ torchrun --standalone --nproc_per_node=1 --master_port="${MASTER_PORT}" src/main
   --save_model_path "checkpoints_smoke" \
   --cache_dir "${HF_HOME}" \
   --mixed_precision bf16 \
+  --ema_tau 0 \
   --save_steps 10
 
 echo "smoke training finished"
