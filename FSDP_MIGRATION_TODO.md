@@ -40,7 +40,7 @@
 ## 6) Launch & Infrastructure Updates
 - [x] Update training launch scripts (`run_training.sh`, SLURM files) to remove DeepSpeed launcher assumptions.
 - [x] Add/adjust `torchrun` arguments and distributed environment setup.
-- [ ] Remove DeepSpeed config dependencies from runtime path.
+- [x] Remove DeepSpeed config dependencies from runtime path.
 - [ ] Update dependency list (`requirements.txt`) if DeepSpeed becomes optional or removed.
 
 ## 7) Validation

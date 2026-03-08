@@ -18,8 +18,8 @@ from datasets import load_dataset
 
 from qwen_vl_utils import process_vision_info
 
-from utils_deepseed import *
-from task_deepseed import *
+from training_utils import *
+from task_preprocess import *
 from trainer import CustomTrainerStage1
 
 # ==============================================================

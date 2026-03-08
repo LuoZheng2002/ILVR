@@ -9,7 +9,7 @@ This file maps the key algorithmic components shown in the paper (ILVR) to where
 
 - Latent token insertion & sequence processing
   - `src/main.py` — adds special tokens: `processor.tokenizer.add_tokens(new_tokens, special_tokens=True)` (new_tokens = `['<|latent_pad|>','<|latent_start|>','<|latent_end|>']`).
-  - `src/utils_deepseed.py` — `process_batch`, `replace_subsequent_image_parts_1d/2d`, `place_input_image`, `place_output_image`, `replace_visual_spectial_tokens` and `generate_labels_with_latent_template` implement the token-level rewrites and label masking required by the latent template.
+  - `src/training_utils.py` — `process_batch`, `replace_subsequent_image_parts_1d/2d`, `place_input_image`, `place_output_image`, `replace_visual_spectial_tokens` and `generate_labels_with_latent_template` implement the token-level rewrites and label masking required by the latent template.
 
 - Momentum teacher (EMA) and teacher latents construction
   - `src/trainer.py` — `_EMATeacher` class (wraps a deep-copied, frozen teacher) and `CustomTrainerStage1._teacher_build_latents`.
@@ -30,26 +30,26 @@ This file maps the key algorithmic components shown in the paper (ILVR) to where
     - This implements the paper's cross-entropy + latent alignment objective.
 
 - Masking and label generation for latent template
-  - `src/utils_deepseed.py` — `generate_labels_with_latent_template`, `mask_latent_output_tokens_all_segments`, `generate_labels_after_latent_tokens`, and `LatentTemplateLogitsProcessor`:
+  - `src/training_utils.py` — `generate_labels_with_latent_template`, `mask_latent_output_tokens_all_segments`, `generate_labels_after_latent_tokens`, and `LatentTemplateLogitsProcessor`:
     - `generate_labels_with_latent_template` applies label masking so that only tokens after assistant start and selected latent pads contribute to CE (matches the template logic in figure).
     - `mask_latent_output_tokens_all_segments` returns boolean masks used by the trainer to mark which positions are latent output tokens.
-    - `LatentTemplateLogitsProcessor` enforces generation constraints at decode time so model emits pad tokens for latent spans until K are filled then ends the latent span — used in `src/evaluate_deepseed.py`/`eval.py` when creating `LogitsProcessorList`.
+    - `LatentTemplateLogitsProcessor` enforces generation constraints at decode time so model emits pad tokens for latent spans until K are filled then ends the latent span — used in `src/evaluate.py`/`eval.py` when creating `LogitsProcessorList`.
 
 - Generation-time constraints for latent tokens
-  - `src/utils_deepseed.py` — class `LatentTemplateLogitsProcessor` is applied during generation (see `src/evaluate_deepseed.py` and `src/eval.py`) to restrict logits so latent token generation follows the template (force pad tokens / force end token once enough pads are generated).
+  - `src/training_utils.py` — class `LatentTemplateLogitsProcessor` is applied during generation (see `src/evaluate.py` and `eval.py`) to restrict logits so latent token generation follows the template (force pad tokens / force end token once enough pads are generated).
 
 - Collation and splitting user/assistant images
-  - `src/main.py` — `collate_fn_stage1` relies on helpers `remove_assistant_images`, `remove_user_images` in `src/utils_deepseed.py` to separate image streams for (i) the user input images (full-resolution visual features) and (ii) assistant/helper images (candidate latent images). `process_vision_info` (imported from `qwen_vl_utils`) extracts pixel tensors and grid metadata expected by the model's visual encoder.
+  - `src/main.py` — `collate_fn_stage1` relies on helpers `remove_assistant_images`, `remove_user_images` in `src/training_utils.py` to separate image streams for (i) the user input images (full-resolution visual features) and (ii) assistant/helper images (candidate latent images). `process_vision_info` (imported from `qwen_vl_utils`) extracts pixel tensors and grid metadata expected by the model's visual encoder.
 
 - Inference & evaluation utilities
-  - `src/evaluate_deepseed.py` and `eval.py` — load `AutoProcessor` and `Qwen2_5_VLForConditionalGeneration`, build prompts via `processor.apply_chat_template`, run `model.generate(...)` and post-process outputs (`extract_final_answer`, `extract_assistant_content`, `extract_path_from_text`). They also use `LatentTemplateLogitsProcessor` to constrain latent generation where applicable.
+  - `src/evaluate.py` and `eval.py` — load `AutoProcessor` and `Qwen2_5_VLForConditionalGeneration`, build prompts via `processor.apply_chat_template`, run `model.generate(...)` and post-process outputs (`extract_final_answer`, `extract_assistant_content`, `extract_path_from_text`). They also use `LatentTemplateLogitsProcessor` to constrain latent generation where applicable.
 
 - Practical anchors to inspect code quickly
   - Teacher + selection: `src/trainer.py::_teacher_build_latents`
   - Loss composition: `src/trainer.py::compute_loss`
-  - Token/template preprocessing: `src/utils_deepseed.py::generate_labels_with_latent_template` and `src/utils_deepseed.py::process_batch`
+  - Token/template preprocessing: `src/training_utils.py::generate_labels_with_latent_template` and `src/training_utils.py::process_batch`
   - Collation / training input building: `src/main.py::collate_fn_stage1`
-  - Logits-time template constraints: `src/utils_deepseed.py::LatentTemplateLogitsProcessor`
+  - Logits-time template constraints: `src/training_utils.py::LatentTemplateLogitsProcessor`
   - EMA teacher wrapper: `src/trainer.py::_EMATeacher`
 
 If you want, I can open and annotate the specific functions above with inline comments explaining control flow and tensor shapes, or produce a small diagram that points to these functions. Which would you prefer? Reply with "annotate" or "diagram" (or both).

@@ -1,4 +1,4 @@
-# evaluate_deepseed.py
+# evaluate.py
 import os
 import re
 import json
@@ -10,7 +10,7 @@ import torch
 from PIL import Image
 from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor, LogitsProcessorList
 
-from utils_deepseed import LatentTemplateLogitsProcessor  
+from training_utils import LatentTemplateLogitsProcessor
 
 try:
     from mathruler.grader import extract_boxed_content

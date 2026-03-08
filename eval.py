@@ -1,4 +1,4 @@
-# evaluate_deepseed.py
+# eval.py
 import os
 import re
 import json
