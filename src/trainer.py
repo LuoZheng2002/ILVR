@@ -164,6 +164,9 @@ class CustomTrainerStage1(SFTTrainer):
             return int(dist.get_world_size())
         return 1
 
+    def _is_fsdp_wrapped(self, model: nn.Module) -> bool:
+        return FSDP is not None and isinstance(model, FSDP)
+
     def _maybe_fsdp_summon_full_params(self, model: nn.Module):
         if FSDP is None:
             return contextlib.nullcontext()
@@ -617,6 +620,42 @@ class CustomTrainerStage1(SFTTrainer):
         return spans
 
     @torch.no_grad()
+    def _teacher_build_latents_fsdp_safe(self, inputs):
+        tea = self.model
+        device = self.model.device
+        ids = inputs["input_ids"].to(device)
+        attn = inputs["attention_mask"].to(device)
+
+        old_flag = bool(getattr(tea.config, "output_hidden_states", False))
+        tea.config.output_hidden_states = True
+        try:
+            out = tea(
+                input_ids=ids,
+                attention_mask=attn,
+                pixel_values=inputs.get("pixel_values", None),
+                image_grid_thw=inputs.get("image_grid_thw", None),
+                output_hidden_states=True,
+                return_dict=True,
+            )
+        finally:
+            tea.config.output_hidden_states = old_flag
+
+        hs = out.hidden_states
+        h_last = hs[-1] if isinstance(hs, (tuple, list)) else hs
+        image_out_mask = inputs.get("image_out_mask", None)
+        if image_out_mask is None:
+            return None, torch.zeros_like(ids, dtype=torch.bool)
+        image_out_mask = image_out_mask.to(h_last.device).bool()
+        if not image_out_mask.any():
+            return None, image_out_mask
+
+        selected = h_last[image_out_mask]
+        if selected.numel() == 0:
+            return None, image_out_mask
+        teacher_latents = selected.unsqueeze(0)
+        return teacher_latents, image_out_mask
+
+    @torch.no_grad()
     def _teacher_build_latents(self, inputs, k, p):
         # Inputs: `inputs` contains token tensors and (optionally) two image streams:
         #  - `pixel_values` / `image_grid_thw`: visual inputs corresponding to user images
@@ -626,6 +665,10 @@ class CustomTrainerStage1(SFTTrainer):
         ids  = inputs["input_ids"].to(device)
         attn = inputs["attention_mask"].to(device)
         tea = self.model
+
+        if self._is_fsdp_wrapped(tea):
+            return self._teacher_build_latents_fsdp_safe(inputs)
+
         restore_training = bool(tea.training)
         ema_ctx = contextlib.nullcontext()
         if self._ema is not None:
@@ -801,7 +844,7 @@ class CustomTrainerStage1(SFTTrainer):
         with torch.no_grad():
             pv_lat = inputs.get("pixel_values_latent", None)
             thw_lat = inputs.get("image_grid_thw_latent", None)
-            if pv_lat is not None and thw_lat is not None:
+            if (not self._is_fsdp_wrapped(self.model)) and pv_lat is not None and thw_lat is not None:
                 with self._maybe_fsdp_summon_full_params(self.model):
                     _ = self.model.visual(
                         pv_lat.to(self.model.device).to(self.model.visual.dtype),
