@@ -1,0 +1,49 @@
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/src/main.py", line 22, in <module>
+    from task_preprocess import *
+  File "/projects/bfdz/zluo8/ILVR/src/task_preprocess.py", line 8, in <module>
+    TRAIN_IMAGE_ROOT = os.environ["TRAIN_IMAGE_ROOT"]  # No default, must be set by user
+                       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "<frozen os>", line 717, in __getitem__
+KeyError: 'TRAIN_IMAGE_ROOT'
+E0308 00:08:12.506000 3764045 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 0 (pid: 3764395) of binary: /projects/bfdz/zluo8/ILVR/.venv/bin/python
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+    ~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+    ~~~~~~~~~~~~~~~
+        config=config,
+        ~~~~~~~~~~~~~~
+        entrypoint=cmd,
+        ~~~~~~~~~~~~~~~
+    )(*cmd_args)
+    ~^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+    ...<2 lines>...
+    )
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+src/main.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-08_00:08:12
+  host      : gpua023.delta.ncsa.illinois.edu
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3764395)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
