@@ -1,0 +1,444 @@
+The following values were not passed to `accelerate launch` and had defaults used instead:
+		More than one GPU was found, enabling multi-GPU training.
+		If this was unintended please pass in `--num_processes=1`.
+	`--num_machines` was set to a value of `1`
+	`--mixed_precision` was set to a value of `'no'`
+	`--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-03-07 19:50:10 - INFO - ========================================
+2026-03-07 19:50:10 - INFO - ========================================
+2026-03-07 19:50:10 - INFO - ========================================
+2026-03-07 19:50:10 - INFO - ========================================
+2026-03-07 19:50:10 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=50, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-07 19:50:10 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=50, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-07 19:50:10 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=50, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-07 19:50:10 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=50, compress_strategy='average', gradient_accumulation_steps=8, epochs=15.0, data_path='data/TRAIN.jsonl', log_file='train.log', save_model_path='checkpoints', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=10, sim_weight=1.0, ema_tau=0.999, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, latent_num_segments_train=8, max_seq_length_train=8192)
+2026-03-07 19:50:10 - INFO - ========================================
+2026-03-07 19:50:10 - INFO - ========================================
+2026-03-07 19:50:10 - INFO - ========================================
+2026-03-07 19:50:10 - INFO - ========================================
+2026-03-07 19:50:10 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=32, world_size=4
+2026-03-07 19:50:10 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=32, world_size=4
+2026-03-07 19:50:10 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=32, world_size=4
+2026-03-07 19:50:10 - INFO - Resolved DeepSpeed batch settings: micro_batch=1, grad_accum=8, train_batch=32, world_size=4
+2026-03-07 19:50:10 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-07 19:50:10 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-07 19:50:10 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-07 19:50:10 - INFO - Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+2026-03-07 19:50:10 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-07 19:50:10 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-07 19:50:10 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-07 19:50:10 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-07 19:50:14 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-07 19:50:14 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-07 19:50:14 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+2026-03-07 19:50:14 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:03<00:13,  3.27s/it]Loading checkpoint shards:  20%|██        | 1/5 [00:03<00:13,  3.27s/it]Loading checkpoint shards:  20%|██        | 1/5 [00:03<00:13,  3.27s/it]Loading checkpoint shards:  20%|██        | 1/5 [00:03<00:13,  3.38s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:06<00:09,  3.12s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:06<00:09,  3.12s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:06<00:09,  3.12s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:06<00:09,  3.19s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:09<00:05,  3.00s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:09<00:05,  3.00s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:09<00:05,  3.00s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:09<00:06,  3.07s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:02,  2.89s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:02,  2.89s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:11<00:02,  2.89s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:11<00:00,  2.37s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:11<00:00,  2.37s/it]
+
+Loading checkpoint shards: 100%|██████████| 5/5 [00:11<00:00,  2.37s/it]
+Loading checkpoint shards:  80%|████████  | 4/5 [00:12<00:02,  2.96s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.07s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:12<00:00,  2.53s/it]
+2026-03-07 19:50:37 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-07 19:50:37 - INFO - Using CUDA device: 0
+2026-03-07 19:50:37 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-07 19:50:37 - INFO - Using CUDA device: 2
+2026-03-07 19:50:37 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-07 19:50:37 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-07 19:50:37 - INFO - Using CUDA device: 1
+2026-03-07 19:50:37 - INFO - Using CUDA device: 3
+2026-03-07 19:51:59 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-07 19:51:59 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-07 19:51:59 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-07 19:51:59 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-07 19:51:59 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-07 19:51:59 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-07 19:51:59 - INFO - output log checkpoints exists but no checkpoint， train from start。
+2026-03-07 19:51:59 - INFO - start training (DeepSpeed ZeRO-3 Mode)...
+2026-03-07 19:51:59 - WARNING - Gradient accumulation steps mismatch: GradientAccumulationPlugin has 1, DeepSpeed config has 8. Using DeepSpeed's value.
+  0%|          | 0/1620 [00:00<?, ?it/s]/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/checkpoint.py:87: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`...
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+`loss_type=None` was set in the config but it is unrecognised.Using the default loss: `ForCausalLMLoss`.
+  0%|          | 1/1620 [01:14<33:23:03, 74.23s/it]  0%|          | 2/1620 [01:54<24:19:49, 54.13s/it]  0%|          | 3/1620 [02:26<19:50:12, 44.16s/it]  0%|          | 4/1620 [02:43<15:00:11, 33.42s/it]  0%|          | 5/1620 [04:08<23:21:33, 52.07s/it]  0%|          | 6/1620 [04:29<18:35:18, 41.46s/it]  0%|          | 7/1620 [04:53<15:56:57, 35.60s/it]  0%|          | 8/1620 [05:31<16:19:19, 36.45s/it]  1%|          | 9/1620 [06:05<16:00:27, 35.77s/it]  1%|          | 10/1620 [06:56<18:05:58, 40.47s/it]  1%|          | 11/1620 [07:13<14:47:46, 33.11s/it]  1%|          | 12/1620 [08:30<20:51:23, 46.69s/it]  1%|          | 13/1620 [08:51<17:22:18, 38.92s/it]  1%|          | 14/1620 [09:23<16:26:57, 36.87s/it]  1%|          | 15/1620 [09:45<14:19:55, 32.15s/it]  1%|          | 16/1620 [10:53<19:14:03, 43.17s/it]  1%|          | 17/1620 [11:41<19:50:54, 44.58s/it]  1%|          | 18/1620 [12:03<16:43:10, 37.57s/it]  1%|          | 19/1620 [12:28<15:01:57, 33.80s/it]  1%|          | 20/1620 [13:28<18:32:14, 41.71s/it]                                                      1%|          | 20/1620 [13:28<18:32:14, 41.71s/it]  1%|▏         | 21/1620 [13:47<15:28:17, 34.83s/it]  1%|▏         | 22/1620 [14:18<15:02:54, 33.90s/it]  1%|▏         | 23/1620 [14:55<15:25:08, 34.76s/it]  1%|▏         | 24/1620 [15:08<12:33:54, 28.34s/it]  2%|▏         | 25/1620 [15:51<14:30:39, 32.75s/it]  2%|▏         | 26/1620 [16:30<15:18:41, 34.58s/it]  2%|▏         | 27/1620 [16:43<12:28:01, 28.17s/it]  2%|▏         | 28/1620 [17:08<11:58:59, 27.10s/it]  2%|▏         | 29/1620 [17:49<13:50:30, 31.32s/it]  2%|▏         | 30/1620 [18:27<14:43:36, 33.34s/it]  2%|▏         | 31/1620 [18:42<12:16:07, 27.80s/it]  2%|▏         | 32/1620 [18:59<10:51:37, 24.62s/it]  2%|▏         | 33/1620 [19:12<9:12:53, 20.90s/it]   2%|▏         | 34/1620 [19:26<8:21:34, 18.97s/it]  2%|▏         | 35/1620 [20:03<10:44:42, 24.41s/it]  2%|▏         | 36/1620 [20:25<10:27:42, 23.78s/it]  2%|▏         | 37/1620 [20:40<9:11:10, 20.89s/it]   2%|▏         | 38/1620 [20:57<8:41:18, 19.77s/it]  2%|▏         | 39/1620 [21:33<10:51:56, 24.74s/it]  2%|▏         | 40/1620 [22:41<16:32:44, 37.70s/it]                                                      2%|▏         | 40/1620 [22:41<16:32:44, 37.70s/it]  3%|▎         | 41/1620 [23:02<14:19:22, 32.66s/it]  3%|▎         | 42/1620 [23:27<13:19:15, 30.39s/it]  3%|▎         | 43/1620 [24:28<17:19:05, 39.53s/it]  3%|▎         | 44/1620 [25:21<19:04:01, 43.55s/it]  3%|▎         | 45/1620 [25:49<17:01:45, 38.92s/it]  3%|▎         | 46/1620 [27:01<21:19:13, 48.76s/it]  3%|▎         | 47/1620 [27:25<18:03:55, 41.34s/it]  3%|▎         | 48/1620 [28:30<21:08:12, 48.41s/it]  3%|▎         | 49/1620 [28:54<17:57:50, 41.17s/it]  3%|▎         | 50/1620 [29:15<15:17:23, 35.06s/it] stage3_gather_16bit_weights_on_model_save=false. Saving the full checkpoint instead, use zero_to_fp32.py to recover weights
+ stage3_gather_16bit_weights_on_model_save=false. Saving the full checkpoint instead, use zero_to_fp32.py to recover weights
+ stage3_gather_16bit_weights_on_model_save=false. Saving the full checkpoint instead, use zero_to_fp32.py to recover weights
+ stage3_gather_16bit_weights_on_model_save=false. Saving the full checkpoint instead, use zero_to_fp32.py to recover weights
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3977, in save_model
+[rank0]:     state_dict = self.accelerator.get_state_dict(self.deepspeed)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 3917, in get_state_dict
+[rank0]:     raise ValueError(
+[rank0]:     ...<4 lines>...
+[rank0]:     )
+[rank0]: ValueError: Cannot get 16bit model weights because `stage3_gather_16bit_weights_on_model_save` in DeepSpeed config is False. To save the model weights in 16bit, set `stage3_gather_16bit_weights_on_model_save` to True in DeepSpeed config file or set `zero3_save_16bit_model` to True when using `accelerate config`. To save the full checkpoint, run `model.save_checkpoint(save_dir)` and use `zero_to_fp32.py` to recover weights.
+
+[rank0]: During handling of the above exception, another exception occurred:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 944, in save
+[rank0]:     _save(
+[rank0]:     ~~~~~^
+[rank0]:         obj,
+[rank0]:         ^^^^
+[rank0]:     ...<3 lines>...
+[rank0]:         _disable_byteorder_record,
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:     )
+[rank0]:     ^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 1216, in _save
+[rank0]:     zip_file.write_record(name, storage, num_bytes)
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]: RuntimeError: [enforce fail at inline_container.cc:815] . PytorchStreamWriter failed writing file data/4: file write failed
+
+[rank0]: During handling of the above exception, another exception occurred:
+
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 327, in <module>
+[rank0]:     main_train()
+[rank0]:     ~~~~~~~~~~^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 311, in main_train
+[rank0]:     trainer.train(resume_from_checkpoint=last_checkpoint)
+[rank0]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank0]:     return inner_training_loop(
+[rank0]:         args=args,
+[rank0]:     ...<2 lines>...
+[rank0]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank0]:     )
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2664, in _inner_training_loop
+[rank0]:     self._maybe_log_save_evaluate(
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[rank0]:         tr_loss,
+[rank0]:         ^^^^^^^^
+[rank0]:     ...<6 lines>...
+[rank0]:         learning_rate=learning_rate,
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:     )
+[rank0]:     ^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3144, in _maybe_log_save_evaluate
+[rank0]:     self._save_checkpoint(model, trial)
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3241, in _save_checkpoint
+[rank0]:     self.save_model(output_dir, _internal_call=True)
+[rank0]:     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3989, in save_model
+[rank0]:     self.model_wrapped.save_checkpoint(output_dir)
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/engine.py", line 3503, in save_checkpoint
+[rank0]:     self._save_zero_checkpoint(save_dir, tag)
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/engine.py", line 3887, in _save_zero_checkpoint
+[rank0]:     self.checkpoint_engine.save(zero_sd, zero_checkpoint_name)
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/checkpoint_engine/torch_checkpoint_engine.py", line 32, in save
+[rank0]:     torch.save(state_dict, path, _use_new_zipfile_serialization=self.zipfile_serialization)
+[rank0]:     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 943, in save
+[rank0]:     with _open_zipfile_writer(f) as opened_zipfile:
+[rank0]:          ~~~~~~~~~~~~~~~~~~~~^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 784, in __exit__
+[rank0]:     self.file_like.write_end_of_file()
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[rank0]: RuntimeError: [enforce fail at inline_container.cc:626] . unexpected pos 11652050048 vs 11652049948
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3977, in save_model
+[rank1]:     state_dict = self.accelerator.get_state_dict(self.deepspeed)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 3917, in get_state_dict
+[rank1]:     raise ValueError(
+[rank1]:     ...<4 lines>...
+[rank1]:     )
+[rank1]: ValueError: Cannot get 16bit model weights because `stage3_gather_16bit_weights_on_model_save` in DeepSpeed config is False. To save the model weights in 16bit, set `stage3_gather_16bit_weights_on_model_save` to True in DeepSpeed config file or set `zero3_save_16bit_model` to True when using `accelerate config`. To save the full checkpoint, run `model.save_checkpoint(save_dir)` and use `zero_to_fp32.py` to recover weights.
+
+[rank1]: During handling of the above exception, another exception occurred:
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 944, in save
+[rank1]:     _save(
+[rank1]:     ~~~~~^
+[rank1]:         obj,
+[rank1]:         ^^^^
+[rank1]:     ...<3 lines>...
+[rank1]:         _disable_byteorder_record,
+[rank1]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:     )
+[rank1]:     ^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 1216, in _save
+[rank1]:     zip_file.write_record(name, storage, num_bytes)
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]: RuntimeError: [enforce fail at inline_container.cc:815] . PytorchStreamWriter failed writing file data/4: file write failed
+
+[rank1]: During handling of the above exception, another exception occurred:
+
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 327, in <module>
+[rank1]:     main_train()
+[rank1]:     ~~~~~~~~~~^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 311, in main_train
+[rank1]:     trainer.train(resume_from_checkpoint=last_checkpoint)
+[rank1]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank1]:     return inner_training_loop(
+[rank1]:         args=args,
+[rank1]:     ...<2 lines>...
+[rank1]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank1]:     )
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2664, in _inner_training_loop
+[rank1]:     self._maybe_log_save_evaluate(
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[rank1]:         tr_loss,
+[rank1]:         ^^^^^^^^
+[rank1]:     ...<6 lines>...
+[rank1]:         learning_rate=learning_rate,
+[rank1]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:     )
+[rank1]:     ^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3144, in _maybe_log_save_evaluate
+[rank1]:     self._save_checkpoint(model, trial)
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3241, in _save_checkpoint
+[rank1]:     self.save_model(output_dir, _internal_call=True)
+[rank1]:     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3989, in save_model
+[rank1]:     self.model_wrapped.save_checkpoint(output_dir)
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/engine.py", line 3503, in save_checkpoint
+[rank1]:     self._save_zero_checkpoint(save_dir, tag)
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/engine.py", line 3887, in _save_zero_checkpoint
+[rank1]:     self.checkpoint_engine.save(zero_sd, zero_checkpoint_name)
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/checkpoint_engine/torch_checkpoint_engine.py", line 32, in save
+[rank1]:     torch.save(state_dict, path, _use_new_zipfile_serialization=self.zipfile_serialization)
+[rank1]:     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 943, in save
+[rank1]:     with _open_zipfile_writer(f) as opened_zipfile:
+[rank1]:          ~~~~~~~~~~~~~~~~~~~~^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 784, in __exit__
+[rank1]:     self.file_like.write_end_of_file()
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[rank1]: RuntimeError: [enforce fail at inline_container.cc:626] . unexpected pos 11652050048 vs 11652049948
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3977, in save_model
+[rank2]:     state_dict = self.accelerator.get_state_dict(self.deepspeed)
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 3917, in get_state_dict
+[rank2]:     raise ValueError(
+[rank2]:     ...<4 lines>...
+[rank2]:     )
+[rank2]: ValueError: Cannot get 16bit model weights because `stage3_gather_16bit_weights_on_model_save` in DeepSpeed config is False. To save the model weights in 16bit, set `stage3_gather_16bit_weights_on_model_save` to True in DeepSpeed config file or set `zero3_save_16bit_model` to True when using `accelerate config`. To save the full checkpoint, run `model.save_checkpoint(save_dir)` and use `zero_to_fp32.py` to recover weights.
+
+[rank2]: During handling of the above exception, another exception occurred:
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 944, in save
+[rank2]:     _save(
+[rank2]:     ~~~~~^
+[rank2]:         obj,
+[rank2]:         ^^^^
+[rank2]:     ...<3 lines>...
+[rank2]:         _disable_byteorder_record,
+[rank2]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:     )
+[rank2]:     ^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 1216, in _save
+[rank2]:     zip_file.write_record(name, storage, num_bytes)
+[rank2]:     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]: RuntimeError: [enforce fail at inline_container.cc:815] . PytorchStreamWriter failed writing file data/4: file write failed
+
+[rank2]: During handling of the above exception, another exception occurred:
+
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 327, in <module>
+[rank2]:     main_train()
+[rank2]:     ~~~~~~~~~~^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 311, in main_train
+[rank2]:     trainer.train(resume_from_checkpoint=last_checkpoint)
+[rank2]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank2]:     return inner_training_loop(
+[rank2]:         args=args,
+[rank2]:     ...<2 lines>...
+[rank2]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank2]:     )
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2664, in _inner_training_loop
+[rank2]:     self._maybe_log_save_evaluate(
+[rank2]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[rank2]:         tr_loss,
+[rank2]:         ^^^^^^^^
+[rank2]:     ...<6 lines>...
+[rank2]:         learning_rate=learning_rate,
+[rank2]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:     )
+[rank2]:     ^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3144, in _maybe_log_save_evaluate
+[rank2]:     self._save_checkpoint(model, trial)
+[rank2]:     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3241, in _save_checkpoint
+[rank2]:     self.save_model(output_dir, _internal_call=True)
+[rank2]:     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3989, in save_model
+[rank2]:     self.model_wrapped.save_checkpoint(output_dir)
+[rank2]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/engine.py", line 3503, in save_checkpoint
+[rank2]:     self._save_zero_checkpoint(save_dir, tag)
+[rank2]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/engine.py", line 3887, in _save_zero_checkpoint
+[rank2]:     self.checkpoint_engine.save(zero_sd, zero_checkpoint_name)
+[rank2]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/checkpoint_engine/torch_checkpoint_engine.py", line 32, in save
+[rank2]:     torch.save(state_dict, path, _use_new_zipfile_serialization=self.zipfile_serialization)
+[rank2]:     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 943, in save
+[rank2]:     with _open_zipfile_writer(f) as opened_zipfile:
+[rank2]:          ~~~~~~~~~~~~~~~~~~~~^^^
+[rank2]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 784, in __exit__
+[rank2]:     self.file_like.write_end_of_file()
+[rank2]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[rank2]: RuntimeError: [enforce fail at inline_container.cc:626] . unexpected pos 11652050048 vs 11652049948
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3977, in save_model
+[rank3]:     state_dict = self.accelerator.get_state_dict(self.deepspeed)
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py", line 3917, in get_state_dict
+[rank3]:     raise ValueError(
+[rank3]:     ...<4 lines>...
+[rank3]:     )
+[rank3]: ValueError: Cannot get 16bit model weights because `stage3_gather_16bit_weights_on_model_save` in DeepSpeed config is False. To save the model weights in 16bit, set `stage3_gather_16bit_weights_on_model_save` to True in DeepSpeed config file or set `zero3_save_16bit_model` to True when using `accelerate config`. To save the full checkpoint, run `model.save_checkpoint(save_dir)` and use `zero_to_fp32.py` to recover weights.
+
+[rank3]: During handling of the above exception, another exception occurred:
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 944, in save
+[rank3]:     _save(
+[rank3]:     ~~~~~^
+[rank3]:         obj,
+[rank3]:         ^^^^
+[rank3]:     ...<3 lines>...
+[rank3]:         _disable_byteorder_record,
+[rank3]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:     )
+[rank3]:     ^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 1216, in _save
+[rank3]:     zip_file.write_record(name, storage, num_bytes)
+[rank3]:     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]: RuntimeError: [enforce fail at inline_container.cc:815] . PytorchStreamWriter failed writing file data/5: file write failed
+
+[rank3]: During handling of the above exception, another exception occurred:
+
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 327, in <module>
+[rank3]:     main_train()
+[rank3]:     ~~~~~~~~~~^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 311, in main_train
+[rank3]:     trainer.train(resume_from_checkpoint=last_checkpoint)
+[rank3]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank3]:     return inner_training_loop(
+[rank3]:         args=args,
+[rank3]:     ...<2 lines>...
+[rank3]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank3]:     )
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2664, in _inner_training_loop
+[rank3]:     self._maybe_log_save_evaluate(
+[rank3]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[rank3]:         tr_loss,
+[rank3]:         ^^^^^^^^
+[rank3]:     ...<6 lines>...
+[rank3]:         learning_rate=learning_rate,
+[rank3]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:     )
+[rank3]:     ^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3144, in _maybe_log_save_evaluate
+[rank3]:     self._save_checkpoint(model, trial)
+[rank3]:     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3241, in _save_checkpoint
+[rank3]:     self.save_model(output_dir, _internal_call=True)
+[rank3]:     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3989, in save_model
+[rank3]:     self.model_wrapped.save_checkpoint(output_dir)
+[rank3]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/engine.py", line 3503, in save_checkpoint
+[rank3]:     self._save_zero_checkpoint(save_dir, tag)
+[rank3]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/engine.py", line 3887, in _save_zero_checkpoint
+[rank3]:     self.checkpoint_engine.save(zero_sd, zero_checkpoint_name)
+[rank3]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/deepspeed/runtime/checkpoint_engine/torch_checkpoint_engine.py", line 32, in save
+[rank3]:     torch.save(state_dict, path, _use_new_zipfile_serialization=self.zipfile_serialization)
+[rank3]:     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 943, in save
+[rank3]:     with _open_zipfile_writer(f) as opened_zipfile:
+[rank3]:          ~~~~~~~~~~~~~~~~~~~~^^^
+[rank3]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/serialization.py", line 784, in __exit__
+[rank3]:     self.file_like.write_end_of_file()
+[rank3]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+[rank3]: RuntimeError: [enforce fail at inline_container.cc:626] . unexpected pos 15225226496 vs 15225226392
+  3%|▎         | 50/1620 [30:31<15:58:39, 36.64s/it]
+W0307 20:23:34.934000 845289 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 846121 closing signal SIGTERM
+W0307 20:23:35.679000 845289 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 846122 closing signal SIGTERM
+E0307 20:23:36.428000 845289 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 3 (pid: 846124) of binary: /projects/bfdz/zluo8/ILVR/.venv/bin/python
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/accelerate", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 1226, in launch_command
+    multi_gpu_launcher(args)
+    ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/commands/launch.py", line 853, in multi_gpu_launcher
+    distrib_run.run(args)
+    ~~~~~~~~~~~~~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+    ~~~~~~~~~~~~~~~
+        config=config,
+        ~~~~~~~~~~~~~~
+        entrypoint=cmd,
+        ~~~~~~~~~~~~~~~
+    )(*cmd_args)
+    ~^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+    ...<2 lines>...
+    )
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+src/main.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-07_20:23:34
+  host      : gpue01.delta.ncsa.illinois.edu
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 846124)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

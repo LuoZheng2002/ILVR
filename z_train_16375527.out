@@ -1,0 +1,12 @@
+Using 4 processes
+Warning: The cache directory for DeepSpeed Triton autotune, /u/zluo8/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.Warning: The cache directory for DeepSpeed Triton autotune, /u/zluo8/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /u/zluo8/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+Warning: The cache directory for DeepSpeed Triton autotune, /u/zluo8/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+
+Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.jsonEnabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+
+Parameter Offload - Persistent parameters statistics: param_count = 368, numel = 848896
+{'loss': 66.6856, 'grad_norm': 246.8430695944258, 'learning_rate': 9.944099378881989e-06, 'mean_token_accuracy': 0.6795346869155765, 'epoch': 0.19}
+{'loss': 23.277, 'grad_norm': 185.47138529478346, 'learning_rate': 9.819875776397517e-06, 'mean_token_accuracy': 0.8759429410099984, 'epoch': 0.37}
