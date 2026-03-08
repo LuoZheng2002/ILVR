@@ -301,6 +301,7 @@ def main_train():
             "limit_all_gathers": bool(getattr(args, "fsdp_limit_all_gathers", True)),
             "use_orig_params": bool(getattr(args, "fsdp_use_orig_params", True)),
             "sync_module_states": bool(getattr(args, "fsdp_sync_module_states", True)),
+            "activation_checkpointing": bool(getattr(args, "fsdp_activation_checkpointing", True)),
             "state_dict_type": getattr(args, "fsdp_state_dict_type", "SHARDED_STATE_DICT"),
             "transformer_layer_cls_to_wrap": getattr(args, "fsdp_transformer_layer_cls_to_wrap", "Qwen2_5_VLDecoderLayer"),
         },

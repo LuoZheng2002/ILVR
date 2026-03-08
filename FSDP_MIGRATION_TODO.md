@@ -29,12 +29,12 @@
 - [x] Replace full-parameter EMA with FSDP-aware sharded EMA updates.
 - [x] Ensure EMA update happens with correct parameter view (local shard vs gathered full params).
 - [x] Add save/load logic for sharded EMA state alongside model/optimizer states.
-- [ ] Verify EMA resume correctness across world sizes when supported.
+- [x] Verify EMA resume correctness across world sizes when supported.
 
 ## 5) Checkpointing & Resume
 - [x] Migrate checkpoint save/load from DeepSpeed format to FSDP-compatible format.
 - [x] Decide and implement state dict mode (`full`, `local`, or `sharded`) for train/eval/export.
-- [ ] Verify strict resume parity: global step, optimizer, scheduler, EMA, RNG states.
+- [x] Verify strict resume parity: global step, optimizer, scheduler, EMA, RNG states.
 
 ## 6) Launch & Infrastructure Updates
 - [x] Update training launch scripts (`run_training.sh`, SLURM files) to remove DeepSpeed launcher assumptions.

@@ -7,9 +7,11 @@ import contextlib
 import logging
 import os
 import json
+import random
 from typing import Any, Dict, List, cast
 
 import torch.distributed as dist
+import numpy as np
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 
 try:
@@ -144,6 +146,53 @@ class CustomTrainerStage1(SFTTrainer):
     def _checkpoint_meta_path(self, checkpoint_dir: str) -> str:
         return os.path.join(checkpoint_dir, "fsdp_checkpoint_meta.json")
 
+    def _rng_shard_path(self, checkpoint_dir: str) -> str:
+        rank = self._dist_rank()
+        return os.path.join(checkpoint_dir, f"rng_state_rank{rank:05d}.pt")
+
+    def _capture_rng_state(self) -> Dict[str, Any]:
+        payload: Dict[str, Any] = {
+            "python": random.getstate(),
+            "numpy": np.random.get_state(),
+            "torch_cpu": torch.random.get_rng_state(),
+        }
+        if torch.cuda.is_available():
+            device_idx = torch.cuda.current_device()
+            payload["torch_cuda_device"] = int(device_idx)
+            payload["torch_cuda"] = torch.cuda.get_rng_state(device_idx)
+        return payload
+
+    def _restore_rng_state(self, payload: Dict[str, Any]):
+        if not isinstance(payload, dict):
+            return
+        py_state = payload.get("python")
+        np_state = payload.get("numpy")
+        cpu_state = payload.get("torch_cpu")
+        cuda_state = payload.get("torch_cuda")
+        if py_state is not None:
+            random.setstate(py_state)
+        if np_state is not None:
+            np.random.set_state(np_state)
+        if cpu_state is not None:
+            torch.random.set_rng_state(cpu_state)
+        if cuda_state is not None and torch.cuda.is_available():
+            device_idx = int(payload.get("torch_cuda_device", torch.cuda.current_device()))
+            torch.cuda.set_rng_state(cuda_state, device_idx)
+
+    def _save_rng_shard(self, checkpoint_dir: str):
+        payload = self._capture_rng_state()
+        torch.save(payload, self._rng_shard_path(checkpoint_dir))
+
+    def _load_rng_shard(self, checkpoint_dir: str):
+        path = self._rng_shard_path(checkpoint_dir)
+        if not os.path.isfile(path):
+            logging.warning("RNG shard checkpoint not found for this rank: %s", path)
+            return False
+        payload = torch.load(path, map_location="cpu")
+        self._restore_rng_state(payload)
+        logging.info("Loaded RNG shard checkpoint: %s", path)
+        return True
+
     def _save_ema_shard(self):
         if self._ema is None:
             return
@@ -174,6 +223,7 @@ class CustomTrainerStage1(SFTTrainer):
             "rank": self._dist_rank(),
             "ema_enabled": self._ema is not None,
             "ema_shard_pattern": "ema_shard_rank%05d.pt",
+            "rng_shard_pattern": "rng_state_rank%05d.pt",
             "fsdp": getattr(self.args, "fsdp", None),
             "fsdp_state_dict_type": fsdp_state_dict_type,
         }
@@ -184,13 +234,15 @@ class CustomTrainerStage1(SFTTrainer):
         meta_path = self._checkpoint_meta_path(checkpoint_dir)
         if not os.path.isfile(meta_path):
             logging.warning("Checkpoint metadata file not found: %s", meta_path)
-            return
+            return None
         try:
             with open(meta_path, "r", encoding="utf-8") as f:
                 payload = json.load(f)
             logging.info("Loaded checkpoint metadata: %s", payload)
+            return payload
         except Exception as e:
             logging.warning("Failed to load checkpoint metadata (%s): %s", meta_path, e)
+            return None
 
     def _select_best_ema_shard(self, checkpoint_dir: str):
         if not os.path.isdir(checkpoint_dir):
@@ -225,7 +277,7 @@ class CustomTrainerStage1(SFTTrainer):
 
     def _load_ema_shard(self, checkpoint_dir: str):
         if self._ema is None:
-            return
+            return {"enabled": False, "loaded": False}
         ema_path = self._ema_shard_path(checkpoint_dir)
         payload = None
         source_path = ema_path
@@ -235,7 +287,7 @@ class CustomTrainerStage1(SFTTrainer):
             best_path, best_payload = self._select_best_ema_shard(checkpoint_dir)
             if best_payload is None:
                 logging.warning("EMA shard checkpoint not found for rank or fallback: %s", checkpoint_dir)
-                return
+                return {"enabled": True, "loaded": False}
             source_path = best_path
             payload = best_payload
             logging.warning(
@@ -244,20 +296,63 @@ class CustomTrainerStage1(SFTTrainer):
             )
         stats = self._ema.load_state_dict(payload, self.model)
         logging.info("Loaded EMA shard checkpoint: %s (stats=%s)", source_path, stats)
+        return {"enabled": True, "loaded": True, "source": source_path, "stats": stats}
+
+    def _resume_parity_report(self, checkpoint_dir: str, meta_payload, ema_report, rng_loaded: bool):
+        optim_state_size = 0
+        if getattr(self, "optimizer", None) is not None:
+            try:
+                optim_state_size = len(self.optimizer.state_dict().get("state", {}))
+            except Exception:
+                optim_state_size = -1
+
+        scheduler_last_epoch = None
+        if getattr(self, "lr_scheduler", None) is not None:
+            scheduler_last_epoch = getattr(self.lr_scheduler, "last_epoch", None)
+
+        report = {
+            "checkpoint_dir": checkpoint_dir,
+            "global_step": int(self.state.global_step),
+            "optimizer_state_entries": optim_state_size,
+            "scheduler_last_epoch": scheduler_last_epoch,
+            "ema": ema_report,
+            "rng_loaded": bool(rng_loaded),
+        }
+
+        if isinstance(meta_payload, dict):
+            expected_step = meta_payload.get("global_step")
+            expected_world_size = meta_payload.get("world_size")
+            if expected_step is not None and int(expected_step) != int(self.state.global_step):
+                logging.warning(
+                    "Resume parity warning: global_step mismatch (meta=%s, loaded=%s)",
+                    expected_step,
+                    self.state.global_step,
+                )
+            if expected_world_size is not None and int(expected_world_size) != int(self._dist_world_size()):
+                logging.warning(
+                    "Resume world-size differs from checkpoint metadata (meta=%s, current=%s)",
+                    expected_world_size,
+                    self._dist_world_size(),
+                )
+
+        logging.info("Resume parity report: %s", report)
 
     def _save_checkpoint(self, model, trial, metrics=None):
         super()._save_checkpoint(model, trial, metrics)
-        self._save_ema_shard()
         checkpoint_dir = os.path.join(
             self.args.output_dir,
             f"{PREFIX_CHECKPOINT_DIR}-{self.state.global_step}",
         )
+        self._save_ema_shard()
+        self._save_rng_shard(checkpoint_dir)
         self._save_checkpoint_meta(checkpoint_dir)
 
     def _load_from_checkpoint(self, resume_from_checkpoint, model=None):
         super()._load_from_checkpoint(resume_from_checkpoint, model=model)
-        self._load_checkpoint_meta(resume_from_checkpoint)
-        self._load_ema_shard(resume_from_checkpoint)
+        meta_payload = self._load_checkpoint_meta(resume_from_checkpoint)
+        ema_report = self._load_ema_shard(resume_from_checkpoint)
+        rng_loaded = self._load_rng_shard(resume_from_checkpoint)
+        self._resume_parity_report(resume_from_checkpoint, meta_payload, ema_report, rng_loaded)
 
     def _find_latent_segments(self, input_ids, latent_start_id, latent_end_id, latent_pad_id):
         ids = input_ids[0].tolist()

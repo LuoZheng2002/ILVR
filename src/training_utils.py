@@ -72,6 +72,7 @@ def get_args():
     parser.add_argument("--fsdp_limit_all_gathers", type=_str2bool, default=True)
     parser.add_argument("--fsdp_use_orig_params", type=_str2bool, default=True)
     parser.add_argument("--fsdp_sync_module_states", type=_str2bool, default=True)
+    parser.add_argument("--fsdp_activation_checkpointing", type=_str2bool, default=True)
     parser.add_argument("--fsdp_transformer_layer_cls_to_wrap", type=str, default="Qwen2_5_VLDecoderLayer")
     parser.add_argument(
         "--latent_num_segments_train", type=int, default=8,
