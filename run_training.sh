@@ -52,6 +52,7 @@ torchrun --standalone --nproc_per_node="${NUM_PROCESSES}" --master_port="${MASTE
   --save_model_path "${SAVE_MODEL_PATH}" \
   --cache_dir "${HF_HOME}" \
   --mixed_precision bf16 \
+  --fsdp_sync_module_states true \
   --save_steps "${SAVE_STEPS}"
 
 echo "training finished, save model to ${SAVE_MODEL_PATH}"

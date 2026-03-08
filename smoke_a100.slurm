@@ -6,7 +6,7 @@
 # #SBATCH --partition=gpu
 # #SBATCH --mail-type=BEGIN,END,FAIL
 # #SBATCH --mail-user=luozheng@usc.edu
-#SBATCH --gres=gpu:1                  # Request 1 GPU for smoke run
+#SBATCH --gres=gpu:2                  # Request 2 GPUs for smoke run
 #SBATCH --cpus-per-task=4             # CPU cores
 #SBATCH --mem=32G                     # RAM
 #SBATCH --account=bfdz-delta-gpu      # Slurm account/project
@@ -22,7 +22,7 @@ export TEST_IMAGE_ROOT=
 
 MASTER_PORT=${MASTER_PORT:-29510}
 
-torchrun --standalone --nproc_per_node=1 --master_port="${MASTER_PORT}" src/main.py \
+torchrun --standalone --nproc_per_node=2 --master_port="${MASTER_PORT}" src/main.py \
   --model "Qwen/Qwen2.5-VL-7B-Instruct" \
   --epochs 0.02 \
   --task "zebra-cot" \
@@ -38,6 +38,7 @@ torchrun --standalone --nproc_per_node=1 --master_port="${MASTER_PORT}" src/main
   --save_model_path "checkpoints_smoke" \
   --cache_dir "${HF_HOME}" \
   --mixed_precision bf16 \
+  --fsdp_sync_module_states true \
   --ema_tau 0 \
   --save_steps 10
 
