@@ -1,0 +1,248 @@
+W0308 01:17:30.278000 1879978 torch/distributed/run.py:792] 
+W0308 01:17:30.278000 1879978 torch/distributed/run.py:792] *****************************************
+W0308 01:17:30.278000 1879978 torch/distributed/run.py:792] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W0308 01:17:30.278000 1879978 torch/distributed/run.py:792] *****************************************
+2026-03-08 01:18:48 - INFO - ========================================
+2026-03-08 01:18:48 - INFO - ========================================
+2026-03-08 01:18:48 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=10, compress_strategy='average', gradient_accumulation_steps=1, epochs=0.02, data_path='data/TRAIN.jsonl', log_file='smoke_train.log', save_model_path='checkpoints_smoke', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=1, sim_weight=1.0, ema_tau=0.0, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, mixed_precision='bf16', fsdp='full_shard auto_wrap', fsdp_state_dict_type='SHARDED_STATE_DICT', fsdp_backward_prefetch='backward_pre', fsdp_forward_prefetch=False, fsdp_limit_all_gathers=True, fsdp_use_orig_params=True, fsdp_sync_module_states=True, fsdp_activation_checkpointing=True, fsdp_transformer_layer_cls_to_wrap='Qwen2_5_VLDecoderLayer', latent_num_segments_train=8, max_seq_length_stage1=32768, max_seq_length_train=8192, smoke_test_mode=True)
+2026-03-08 01:18:48 - INFO - Namespace(evaluation_output_path='evaluation_results.json', model='Qwen/Qwen2.5-VL-7B-Instruct', stage='stage1', task='zebra-cot', test_data_path=None, latent_size=8, save_steps=10, compress_strategy='average', gradient_accumulation_steps=1, epochs=0.02, data_path='data/TRAIN.jsonl', log_file='smoke_train.log', save_model_path='checkpoints_smoke', load_model_path='./checkpoints/model_stage1', cache_dir='/work/nvme/bfdz/zluo8/huggingface', ce_weight=1.0, warm_up_steps=1, sim_weight=1.0, ema_tau=0.0, coverage_p=0.9, image_pool_k=8, latent_ce_ratio=0.0, use_lora=False, lora_r=32, lora_alpha=64, lora_dropout=0.05, lora_target_modules='q_proj,k_proj,v_proj,o_proj,up_proj,down_proj,gate_proj', resume_from_checkpoint_path=None, helper_group_L=256, mixed_precision='bf16', fsdp='full_shard auto_wrap', fsdp_state_dict_type='SHARDED_STATE_DICT', fsdp_backward_prefetch='backward_pre', fsdp_forward_prefetch=False, fsdp_limit_all_gathers=True, fsdp_use_orig_params=True, fsdp_sync_module_states=True, fsdp_activation_checkpointing=True, fsdp_transformer_layer_cls_to_wrap='Qwen2_5_VLDecoderLayer', latent_num_segments_train=8, max_seq_length_stage1=32768, max_seq_length_train=8192, smoke_test_mode=True)
+2026-03-08 01:18:48 - INFO - ========================================
+2026-03-08 01:18:48 - INFO - ========================================
+2026-03-08 01:18:48 - INFO - Resolved FSDP batch settings: micro_batch=1, grad_accum=1
+2026-03-08 01:18:48 - INFO - Resolved FSDP batch settings: micro_batch=1, grad_accum=1
+2026-03-08 01:18:48 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-08 01:18:48 - INFO - Loading processor from: Qwen/Qwen2.5-VL-7B-Instruct
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+The image processor of type `Qwen2VLImageProcessor` is now loaded as a fast processor by default, even if the model checkpoint was saved with a slow processor. This is a breaking change and may produce slightly different outputs. To continue using the slow processor, instantiate this class with `use_fast=False`. Note that this behavior will be extended to all models in a future release.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+2026-03-08 01:18:50 - INFO - Resolved mixed precision mode: bf16
+2026-03-08 01:18:50 - INFO - Resolved mixed precision mode: bf16
+2026-03-08 01:18:50 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+2026-03-08 01:18:50 - INFO - Loading model (Stage 1) from: Qwen/Qwen2.5-VL-7B-Instruct
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  3.66it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  3.66it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  9.13it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  9.13it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 11.58it/s]
+Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 11.57it/s]
+2026-03-08 01:19:10 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-08 01:19:10 - INFO - Vocab sync check passed: tokenizer=151668, input_emb=151668, output_emb=151668, config_vocab=151668
+2026-03-08 01:19:10 - INFO - Using CUDA device: 0
+2026-03-08 01:19:11 - INFO - Loaded training dataset with 69 examples (smoke_test_mode=True)
+2026-03-08 01:19:11 - INFO - Activation checkpointing config: gradient_checkpointing=False, fsdp_activation_checkpointing=True, fsdp_enabled=True
+2026-03-08 01:19:11 - INFO - Using CUDA device: 1
+2026-03-08 01:19:12 - INFO - Loaded training dataset with 69 examples (smoke_test_mode=True)
+2026-03-08 01:19:12 - INFO - Activation checkpointing config: gradient_checkpointing=False, fsdp_activation_checkpointing=True, fsdp_enabled=True
+2026-03-08 01:19:19 - INFO - output log checkpoints_smoke exists but no checkpoint， train from start。
+2026-03-08 01:19:19 - INFO - start training (FSDP mode, precision=bf16)...
+2026-03-08 01:19:19 - INFO - output log checkpoints_smoke exists but no checkpoint， train from start。
+2026-03-08 01:19:19 - INFO - start training (FSDP mode, precision=bf16)...
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py:1962: UserWarning: Upcasted low precision parameters in Qwen2_5_VLForConditionalGeneration because mixed precision turned on in FSDP. Affects: model.visual.patch_embed.proj.weight, model.visual.blocks.0.norm1.weight, model.visual.blocks.0.norm2.weight, model.visual.blocks.0.attn.qkv.weight, model.visual.blocks.0.attn.qkv.bias, model.visual.blocks.0.attn.proj.weight, model.visual.blocks.0.attn.proj.bias, model.visual.blocks.0.mlp.gate_proj.weight, model.visual.blocks.0.mlp.gate_proj.bias, model.visual.blocks.0.mlp.up_proj.weight, model.visual.blocks.0.mlp.up_proj.bias, model.visual.blocks.0.mlp.down_proj.weight, model.visual.blocks.0.mlp.down_proj.bias, model.visual.blocks.1.norm1.weight, model.visual.blocks.1.norm2.weight, model.visual.blocks.1.attn.qkv.weight, model.visual.blocks.1.attn.qkv.bias, model.visual.blocks.1.attn.proj.weight, model.visual.blocks.1.attn.proj.bias, model.visual.blocks.1.mlp.gate_proj.weight, model.visual.blocks.1.mlp.gate_proj.bias, model.visual.blocks.1.mlp.up_proj.weight, model.visual.blocks.1.mlp.up_proj.bias, model.visual.blocks.1.mlp.down_proj.weight, model.visual.blocks.1.mlp.down_proj.bias, model.visual.blocks.2.norm1.weight, model.visual.blocks.2.norm2.weight, model.visual.blocks.2.attn.qkv.weight, model.visual.blocks.2.attn.qkv.bias, model.visual.blocks.2.attn.proj.weight, model.visual.blocks.2.attn.proj.bias, model.visual.blocks.2.mlp.gate_proj.weight, model.visual.blocks.2.mlp.gate_proj.bias, model.visual.blocks.2.mlp.up_proj.weight, model.visual.blocks.2.mlp.up_proj.bias, model.visual.blocks.2.mlp.down_proj.weight, model.visual.blocks.2.mlp.down_proj.bias, model.visual.blocks.3.norm1.weight, model.visual.blocks.3.norm2.weight, model.visual.blocks.3.attn.qkv.weight, model.visual.blocks.3.attn.qkv.bias, model.visual.blocks.3.attn.proj.weight, model.visual.blocks.3.attn.proj.bias, model.visual.blocks.3.mlp.gate_proj.weight, model.visual.blocks.3.mlp.gate_proj.bias, model.visual.blocks.3.mlp.up_proj.weight, model.visual.blocks.3.mlp.up_proj.bias, model.visual.blocks.3.mlp.down_proj.weight, model.visual.blocks.3.mlp.down_proj.bias, model.visual.blocks.4.norm1.weight, model.visual.blocks.4.norm2.weight, model.visual.blocks.4.attn.qkv.weight, model.visual.blocks.4.attn.qkv.bias, model.visual.blocks.4.attn.proj.weight, model.visual.blocks.4.attn.proj.bias, model.visual.blocks.4.mlp.gate_proj.weight, model.visual.blocks.4.mlp.gate_proj.bias, model.visual.blocks.4.mlp.up_proj.weight, model.visual.blocks.4.mlp.up_proj.bias, model.visual.blocks.4.mlp.down_proj.weight, model.visual.blocks.4.mlp.down_proj.bias, model.visual.blocks.5.norm1.weight, model.visual.blocks.5.norm2.weight, model.visual.blocks.5.attn.qkv.weight, model.visual.blocks.5.attn.qkv.bias, model.visual.blocks.5.attn.proj.weight, model.visual.blocks.5.attn.proj.bias, model.visual.blocks.5.mlp.gate_proj.weight, model.visual.blocks.5.mlp.gate_proj.bias, model.visual.blocks.5.mlp.up_proj.weight, model.visual.blocks.5.mlp.up_proj.bias, model.visual.blocks.5.mlp.down_proj.weight, model.visual.blocks.5.mlp.down_proj.bias, model.visual.blocks.6.norm1.weight, model.visual.blocks.6.norm2.weight, model.visual.blocks.6.attn.qkv.weight, model.visual.blocks.6.attn.qkv.bias, model.visual.blocks.6.attn.proj.weight, model.visual.blocks.6.attn.proj.bias, model.visual.blocks.6.mlp.gate_proj.weight, model.visual.blocks.6.mlp.gate_proj.bias, model.visual.blocks.6.mlp.up_proj.weight, model.visual.blocks.6.mlp.up_proj.bias, model.visual.blocks.6.mlp.down_proj.weight, model.visual.blocks.6.mlp.down_proj.bias, model.visual.blocks.7.norm1.weight, model.visual.blocks.7.norm2.weight, model.visual.blocks.7.attn.qkv.weight, model.visual.blocks.7.attn.qkv.bias, model.visual.blocks.7.attn.proj.weight, model.visual.blocks.7.attn.proj.bias, model.visual.blocks.7.mlp.gate_proj.weight, model.visual.blocks.7.mlp.gate_proj.bias, model.visual.blocks.7.mlp.up_proj.weight, model.visual.blocks.7.mlp.up_proj.bias, model.visual.blocks.7.mlp.down_proj.weight, model.visual.blocks.7.mlp.down_proj.bias, model.visual.blocks.8.norm1.weight, model.visual.blocks.8.norm2.weight, model.visual.blocks.8.attn.qkv.weight, model.visual.blocks.8.attn.qkv.bias, model.visual.blocks.8.attn.proj.weight, model.visual.blocks.8.attn.proj.bias, model.visual.blocks.8.mlp.gate_proj.weight, model.visual.blocks.8.mlp.gate_proj.bias, model.visual.blocks.8.mlp.up_proj.weight, model.visual.blocks.8.mlp.up_proj.bias, model.visual.blocks.8.mlp.down_proj.weight, model.visual.blocks.8.mlp.down_proj.bias, model.visual.blocks.9.norm1.weight, model.visual.blocks.9.norm2.weight, model.visual.blocks.9.attn.qkv.weight, model.visual.blocks.9.attn.qkv.bias, model.visual.blocks.9.attn.proj.weight, model.visual.blocks.9.attn.proj.bias, model.visual.blocks.9.mlp.gate_proj.weight, model.visual.blocks.9.mlp.gate_proj.bias, model.visual.blocks.9.mlp.up_proj.weight, model.visual.blocks.9.mlp.up_proj.bias, model.visual.blocks.9.mlp.down_proj.weight, model.visual.blocks.9.mlp.down_proj.bias, model.visual.blocks.10.norm1.weight, model.visual.blocks.10.norm2.weight, model.visual.blocks.10.attn.qkv.weight, model.visual.blocks.10.attn.qkv.bias, model.visual.blocks.10.attn.proj.weight, model.visual.blocks.10.attn.proj.bias, model.visual.blocks.10.mlp.gate_proj.weight, model.visual.blocks.10.mlp.gate_proj.bias, model.visual.blocks.10.mlp.up_proj.weight, model.visual.blocks.10.mlp.up_proj.bias, model.visual.blocks.10.mlp.down_proj.weight, model.visual.blocks.10.mlp.down_proj.bias, model.visual.blocks.11.norm1.weight, model.visual.blocks.11.norm2.weight, model.visual.blocks.11.attn.qkv.weight, model.visual.blocks.11.attn.qkv.bias, model.visual.blocks.11.attn.proj.weight, model.visual.blocks.11.attn.proj.bias, model.visual.blocks.11.mlp.gate_proj.weight, model.visual.blocks.11.mlp.gate_proj.bias, model.visual.blocks.11.mlp.up_proj.weight, model.visual.blocks.11.mlp.up_proj.bias, model.visual.blocks.11.mlp.down_proj.weight, model.visual.blocks.11.mlp.down_proj.bias, model.visual.blocks.12.norm1.weight, model.visual.blocks.12.norm2.weight, model.visual.blocks.12.attn.qkv.weight, model.visual.blocks.12.attn.qkv.bias, model.visual.blocks.12.attn.proj.weight, model.visual.blocks.12.attn.proj.bias, model.visual.blocks.12.mlp.gate_proj.weight, model.visual.blocks.12.mlp.gate_proj.bias, model.visual.blocks.12.mlp.up_proj.weight, model.visual.blocks.12.mlp.up_proj.bias, model.visual.blocks.12.mlp.down_proj.weight, model.visual.blocks.12.mlp.down_proj.bias, model.visual.blocks.13.norm1.weight, model.visual.blocks.13.norm2.weight, model.visual.blocks.13.attn.qkv.weight, model.visual.blocks.13.attn.qkv.bias, model.visual.blocks.13.attn.proj.weight, model.visual.blocks.13.attn.proj.bias, model.visual.blocks.13.mlp.gate_proj.weight, model.visual.blocks.13.mlp.gate_proj.bias, model.visual.blocks.13.mlp.up_proj.weight, model.visual.blocks.13.mlp.up_proj.bias, model.visual.blocks.13.mlp.down_proj.weight, model.visual.blocks.13.mlp.down_proj.bias, model.visual.blocks.14.norm1.weight, model.visual.blocks.14.norm2.weight, model.visual.blocks.14.attn.qkv.weight, model.visual.blocks.14.attn.qkv.bias, model.visual.blocks.14.attn.proj.weight, model.visual.blocks.14.attn.proj.bias, model.visual.blocks.14.mlp.gate_proj.weight, model.visual.blocks.14.mlp.gate_proj.bias, model.visual.blocks.14.mlp.up_proj.weight, model.visual.blocks.14.mlp.up_proj.bias, model.visual.blocks.14.mlp.down_proj.weight, model.visual.blocks.14.mlp.down_proj.bias, model.visual.blocks.15.norm1.weight, model.visual.blocks.15.norm2.weight, model.visual.blocks.15.attn.qkv.weight, model.visual.blocks.15.attn.qkv.bias, model.visual.blocks.15.attn.proj.weight, model.visual.blocks.15.attn.proj.bias, model.visual.blocks.15.mlp.gate_proj.weight, model.visual.blocks.15.mlp.gate_proj.bias, model.visual.blocks.15.mlp.up_proj.weight, model.visual.blocks.15.mlp.up_proj.bias, model.visual.blocks.15.mlp.down_proj.weight, model.visual.blocks.15.mlp.down_proj.bias, model.visual.blocks.16.norm1.weight, model.visual.blocks.16.norm2.weight, model.visual.blocks.16.attn.qkv.weight, model.visual.blocks.16.attn.qkv.bias, model.visual.blocks.16.attn.proj.weight, model.visual.blocks.16.attn.proj.bias, model.visual.blocks.16.mlp.gate_proj.weight, model.visual.blocks.16.mlp.gate_proj.bias, model.visual.blocks.16.mlp.up_proj.weight, model.visual.blocks.16.mlp.up_proj.bias, model.visual.blocks.16.mlp.down_proj.weight, model.visual.blocks.16.mlp.down_proj.bias, model.visual.blocks.17.norm1.weight, model.visual.blocks.17.norm2.weight, model.visual.blocks.17.attn.qkv.weight, model.visual.blocks.17.attn.qkv.bias, model.visual.blocks.17.attn.proj.weight, model.visual.blocks.17.attn.proj.bias, model.visual.blocks.17.mlp.gate_proj.weight, model.visual.blocks.17.mlp.gate_proj.bias, model.visual.blocks.17.mlp.up_proj.weight, model.visual.blocks.17.mlp.up_proj.bias, model.visual.blocks.17.mlp.down_proj.weight, model.visual.blocks.17.mlp.down_proj.bias, model.visual.blocks.18.norm1.weight, model.visual.blocks.18.norm2.weight, model.visual.blocks.18.attn.qkv.weight, model.visual.blocks.18.attn.qkv.bias, model.visual.blocks.18.attn.proj.weight, model.visual.blocks.18.attn.proj.bias, model.visual.blocks.18.mlp.gate_proj.weight, model.visual.blocks.18.mlp.gate_proj.bias, model.visual.blocks.18.mlp.up_proj.weight, model.visual.blocks.18.mlp.up_proj.bias, model.visual.blocks.18.mlp.down_proj.weight, model.visual.blocks.18.mlp.down_proj.bias, model.visual.blocks.19.norm1.weight, model.visual.blocks.19.norm2.weight, model.visual.blocks.19.attn.qkv.weight, model.visual.blocks.19.attn.qkv.bias, model.visual.blocks.19.attn.proj.weight, model.visual.blocks.19.attn.proj.bias, model.visual.blocks.19.mlp.gate_proj.weight, model.visual.blocks.19.mlp.gate_proj.bias, model.visual.blocks.19.mlp.up_proj.weight, model.visual.blocks.19.mlp.up_proj.bias, model.visual.blocks.19.mlp.down_proj.weight, model.visual.blocks.19.mlp.down_proj.bias, model.visual.blocks.20.norm1.weight, model.visual.blocks.20.norm2.weight, model.visual.blocks.20.attn.qkv.weight, model.visual.blocks.20.attn.qkv.bias, model.visual.blocks.20.attn.proj.weight, model.visual.blocks.20.attn.proj.bias, model.visual.blocks.20.mlp.gate_proj.weight, model.visual.blocks.20.mlp.gate_proj.bias, model.visual.blocks.20.mlp.up_proj.weight, model.visual.blocks.20.mlp.up_proj.bias, model.visual.blocks.20.mlp.down_proj.weight, model.visual.blocks.20.mlp.down_proj.bias, model.visual.blocks.21.norm1.weight, model.visual.blocks.21.norm2.weight, model.visual.blocks.21.attn.qkv.weight, model.visual.blocks.21.attn.qkv.bias, model.visual.blocks.21.attn.proj.weight, model.visual.blocks.21.attn.proj.bias, model.visual.blocks.21.mlp.gate_proj.weight, model.visual.blocks.21.mlp.gate_proj.bias, model.visual.blocks.21.mlp.up_proj.weight, model.visual.blocks.21.mlp.up_proj.bias, model.visual.blocks.21.mlp.down_proj.weight, model.visual.blocks.21.mlp.down_proj.bias, model.visual.blocks.22.norm1.weight, model.visual.blocks.22.norm2.weight, model.visual.blocks.22.attn.qkv.weight, model.visual.blocks.22.attn.qkv.bias, model.visual.blocks.22.attn.proj.weight, model.visual.blocks.22.attn.proj.bias, model.visual.blocks.22.mlp.gate_proj.weight, model.visual.blocks.22.mlp.gate_proj.bias, model.visual.blocks.22.mlp.up_proj.weight, model.visual.blocks.22.mlp.up_proj.bias, model.visual.blocks.22.mlp.down_proj.weight, model.visual.blocks.22.mlp.down_proj.bias, model.visual.blocks.23.norm1.weight, model.visual.blocks.23.norm2.weight, model.visual.blocks.23.attn.qkv.weight, model.visual.blocks.23.attn.qkv.bias, model.visual.blocks.23.attn.proj.weight, model.visual.blocks.23.attn.proj.bias, model.visual.blocks.23.mlp.gate_proj.weight, model.visual.blocks.23.mlp.gate_proj.bias, model.visual.blocks.23.mlp.up_proj.weight, model.visual.blocks.23.mlp.up_proj.bias, model.visual.blocks.23.mlp.down_proj.weight, model.visual.blocks.23.mlp.down_proj.bias, model.visual.blocks.24.norm1.weight, model.visual.blocks.24.norm2.weight, model.visual.blocks.24.attn.qkv.weight, model.visual.blocks.24.attn.qkv.bias, model.visual.blocks.24.attn.proj.weight, model.visual.blocks.24.attn.proj.bias, model.visual.blocks.24.mlp.gate_proj.weight, model.visual.blocks.24.mlp.gate_proj.bias, model.visual.blocks.24.mlp.up_proj.weight, model.visual.blocks.24.mlp.up_proj.bias, model.visual.blocks.24.mlp.down_proj.weight, model.visual.blocks.24.mlp.down_proj.bias, model.visual.blocks.25.norm1.weight, model.visual.blocks.25.norm2.weight, model.visual.blocks.25.attn.qkv.weight, model.visual.blocks.25.attn.qkv.bias, model.visual.blocks.25.attn.proj.weight, model.visual.blocks.25.attn.proj.bias, model.visual.blocks.25.mlp.gate_proj.weight, model.visual.blocks.25.mlp.gate_proj.bias, model.visual.blocks.25.mlp.up_proj.weight, model.visual.blocks.25.mlp.up_proj.bias, model.visual.blocks.25.mlp.down_proj.weight, model.visual.blocks.25.mlp.down_proj.bias, model.visual.blocks.26.norm1.weight, model.visual.blocks.26.norm2.weight, model.visual.blocks.26.attn.qkv.weight, model.visual.blocks.26.attn.qkv.bias, model.visual.blocks.26.attn.proj.weight, model.visual.blocks.26.attn.proj.bias, model.visual.blocks.26.mlp.gate_proj.weight, model.visual.blocks.26.mlp.gate_proj.bias, model.visual.blocks.26.mlp.up_proj.weight, model.visual.blocks.26.mlp.up_proj.bias, model.visual.blocks.26.mlp.down_proj.weight, model.visual.blocks.26.mlp.down_proj.bias, model.visual.blocks.27.norm1.weight, model.visual.blocks.27.norm2.weight, model.visual.blocks.27.attn.qkv.weight, model.visual.blocks.27.attn.qkv.bias, model.visual.blocks.27.attn.proj.weight, model.visual.blocks.27.attn.proj.bias, model.visual.blocks.27.mlp.gate_proj.weight, model.visual.blocks.27.mlp.gate_proj.bias, model.visual.blocks.27.mlp.up_proj.weight, model.visual.blocks.27.mlp.up_proj.bias, model.visual.blocks.27.mlp.down_proj.weight, model.visual.blocks.27.mlp.down_proj.bias, model.visual.blocks.28.norm1.weight, model.visual.blocks.28.norm2.weight, model.visual.blocks.28.attn.qkv.weight, model.visual.blocks.28.attn.qkv.bias, model.visual.blocks.28.attn.proj.weight, model.visual.blocks.28.attn.proj.bias, model.visual.blocks.28.mlp.gate_proj.weight, model.visual.blocks.28.mlp.gate_proj.bias, model.visual.blocks.28.mlp.up_proj.weight, model.visual.blocks.28.mlp.up_proj.bias, model.visual.blocks.28.mlp.down_proj.weight, model.visual.blocks.28.mlp.down_proj.bias, model.visual.blocks.29.norm1.weight, model.visual.blocks.29.norm2.weight, model.visual.blocks.29.attn.qkv.weight, model.visual.blocks.29.attn.qkv.bias, model.visual.blocks.29.attn.proj.weight, model.visual.blocks.29.attn.proj.bias, model.visual.blocks.29.mlp.gate_proj.weight, model.visual.blocks.29.mlp.gate_proj.bias, model.visual.blocks.29.mlp.up_proj.weight, model.visual.blocks.29.mlp.up_proj.bias, model.visual.blocks.29.mlp.down_proj.weight, model.visual.blocks.29.mlp.down_proj.bias, model.visual.blocks.30.norm1.weight, model.visual.blocks.30.norm2.weight, model.visual.blocks.30.attn.qkv.weight, model.visual.blocks.30.attn.qkv.bias, model.visual.blocks.30.attn.proj.weight, model.visual.blocks.30.attn.proj.bias, model.visual.blocks.30.mlp.gate_proj.weight, model.visual.blocks.30.mlp.gate_proj.bias, model.visual.blocks.30.mlp.up_proj.weight, model.visual.blocks.30.mlp.up_proj.bias, model.visual.blocks.30.mlp.down_proj.weight, model.visual.blocks.30.mlp.down_proj.bias, model.visual.blocks.31.norm1.weight, model.visual.blocks.31.norm2.weight, model.visual.blocks.31.attn.qkv.weight, model.visual.blocks.31.attn.qkv.bias, model.visual.blocks.31.attn.proj.weight, model.visual.blocks.31.attn.proj.bias, model.visual.blocks.31.mlp.gate_proj.weight, model.visual.blocks.31.mlp.gate_proj.bias, model.visual.blocks.31.mlp.up_proj.weight, model.visual.blocks.31.mlp.up_proj.bias, model.visual.blocks.31.mlp.down_proj.weight, model.visual.blocks.31.mlp.down_proj.bias, model.visual.merger.ln_q.weight, model.visual.merger.mlp.0.weight, model.visual.merger.mlp.0.bias, model.visual.merger.mlp.2.weight, model.visual.merger.mlp.2.bias, model.language_model.embed_tokens.weight, model.language_model.norm.weight, lm_head.weight.
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py:1962: UserWarning: Upcasted low precision parameters in Qwen2_5_VLDecoderLayer because mixed precision turned on in FSDP. Affects: self_attn.q_proj.weight, self_attn.q_proj.bias, self_attn.k_proj.weight, self_attn.k_proj.bias, self_attn.v_proj.weight, self_attn.v_proj.bias, self_attn.o_proj.weight, mlp.gate_proj.weight, mlp.up_proj.weight, mlp.down_proj.weight, input_layernorm.weight, post_attention_layernorm.weight.
+  warnings.warn(
+/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/accelerate/accelerator.py:1968: UserWarning: FSDP upcast of low precision parameters may affect the precision of model checkpoints.
+  warnings.warn(
+  0%|          | 0/1 [00:00<?, ?it/s][rank0]: Traceback (most recent call last):
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 379, in <module>
+[rank0]:     main_train()
+[rank0]:     ~~~~~~~~~~^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 363, in main_train
+[rank0]:     trainer.train(resume_from_checkpoint=resume_from_checkpoint)
+[rank0]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank0]:     return inner_training_loop(
+[rank0]:         args=args,
+[rank0]:     ...<2 lines>...
+[rank0]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank0]:     )
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2582, in _inner_training_loop
+[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3796, in training_step
+[rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 799, in compute_loss
+[rank0]:     teacher_latents, firstK_mask = self._teacher_build_latents(inputs, k=k, p=self.coverage_p)
+[rank0]:                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank0]:     return func(*args, **kwargs)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 691, in _teacher_build_latents
+[rank0]:     with self._maybe_fsdp_summon_full_params(tea):
+[rank0]:          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+[rank0]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 141, in __enter__
+[rank0]:     return next(self.gen)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py", line 939, in summon_full_params
+[rank0]:     with _unshard_params(
+[rank0]:          ~~~~~~~~~~~~~~~^
+[rank0]:         module, recurse, writeback, rank0_only, offload_to_cpu, with_grads
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:     ):
+[rank0]:     ^
+[rank0]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 141, in __enter__
+[rank0]:     return next(self.gen)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_unshard_param_utils.py", line 295, in _unshard_params
+[rank0]:     stack.enter_context(
+[rank0]:     ~~~~~~~~~~~~~~~~~~~^
+[rank0]:         _unshard_params_for_summon(
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:     ...<6 lines>...
+[rank0]:         )
+[rank0]:         ^
+[rank0]:     )
+[rank0]:     ^
+[rank0]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 530, in enter_context
+[rank0]:     result = _enter(cm)
+[rank0]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 141, in __enter__
+[rank0]:     return next(self.gen)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_unshard_param_utils.py", line 256, in _unshard_params_for_summon
+[rank0]:     with _unshard_fsdp_state_params(
+[rank0]:          ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[rank0]:         module=module,
+[rank0]:         ^^^^^^^^^^^^^^
+[rank0]:     ...<4 lines>...
+[rank0]:         with_grads=with_grads,
+[rank0]:         ^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:     ):
+[rank0]:     ^
+[rank0]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 141, in __enter__
+[rank0]:     return next(self.gen)
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_unshard_param_utils.py", line 198, in _unshard_fsdp_state_params
+[rank0]:     _unshard(state, handle, computation_stream, computation_stream)
+[rank0]:     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_runtime_utils.py", line 301, in _unshard
+[rank0]:     handle.unshard()
+[rank0]:     ~~~~~~~~~~~~~~^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_flat_param.py", line 1354, in unshard
+[rank0]:     unsharded_flat_param = self._alloc_padded_unsharded_flat_param()
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_flat_param.py", line 1381, in _alloc_padded_unsharded_flat_param
+[rank0]:     _alloc_storage(unsharded_flat_param, flat_param._padded_unsharded_size)  # type: ignore[attr-defined]
+[rank0]:     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/utils.py", line 192, in _alloc_storage
+[rank0]:     tensor._typed_storage()._resize_(size.numel())
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+[rank0]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/storage.py", line 1258, in _resize_
+[rank0]:     self._untyped_storage.resize_(size * self._element_size())
+[rank0]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 890.00 MiB. GPU 0 has a total capacity of 39.49 GiB of which 16.31 MiB is free. Including non-PyTorch memory, this process has 39.47 GiB memory in use. Of the allocated memory 38.52 GiB is allocated by PyTorch, and 124.42 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 379, in <module>
+[rank1]:     main_train()
+[rank1]:     ~~~~~~~~~~^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/main.py", line 363, in main_train
+[rank1]:     trainer.train(resume_from_checkpoint=resume_from_checkpoint)
+[rank1]:     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2238, in train
+[rank1]:     return inner_training_loop(
+[rank1]:         args=args,
+[rank1]:     ...<2 lines>...
+[rank1]:         ignore_keys_for_eval=ignore_keys_for_eval,
+[rank1]:     )
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 2582, in _inner_training_loop
+[rank1]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/transformers/trainer.py", line 3796, in training_step
+[rank1]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 799, in compute_loss
+[rank1]:     teacher_latents, firstK_mask = self._teacher_build_latents(inputs, k=k, p=self.coverage_p)
+[rank1]:                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+[rank1]:     return func(*args, **kwargs)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/src/trainer.py", line 691, in _teacher_build_latents
+[rank1]:     with self._maybe_fsdp_summon_full_params(tea):
+[rank1]:          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+[rank1]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 141, in __enter__
+[rank1]:     return next(self.gen)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/fully_sharded_data_parallel.py", line 939, in summon_full_params
+[rank1]:     with _unshard_params(
+[rank1]:          ~~~~~~~~~~~~~~~^
+[rank1]:         module, recurse, writeback, rank0_only, offload_to_cpu, with_grads
+[rank1]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:     ):
+[rank1]:     ^
+[rank1]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 141, in __enter__
+[rank1]:     return next(self.gen)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_unshard_param_utils.py", line 295, in _unshard_params
+[rank1]:     stack.enter_context(
+[rank1]:     ~~~~~~~~~~~~~~~~~~~^
+[rank1]:         _unshard_params_for_summon(
+[rank1]:         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:     ...<6 lines>...
+[rank1]:         )
+[rank1]:         ^
+[rank1]:     )
+[rank1]:     ^
+[rank1]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 530, in enter_context
+[rank1]:     result = _enter(cm)
+[rank1]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 141, in __enter__
+[rank1]:     return next(self.gen)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_unshard_param_utils.py", line 256, in _unshard_params_for_summon
+[rank1]:     with _unshard_fsdp_state_params(
+[rank1]:          ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+[rank1]:         module=module,
+[rank1]:         ^^^^^^^^^^^^^^
+[rank1]:     ...<4 lines>...
+[rank1]:         with_grads=with_grads,
+[rank1]:         ^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:     ):
+[rank1]:     ^
+[rank1]:   File "/sw/rh9.4/spack/v1.0.0/sw/linux-x86_64_v2/python-3.13.5-7bp2p4z/lib/python3.13/contextlib.py", line 141, in __enter__
+[rank1]:     return next(self.gen)
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_unshard_param_utils.py", line 198, in _unshard_fsdp_state_params
+[rank1]:     _unshard(state, handle, computation_stream, computation_stream)
+[rank1]:     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_runtime_utils.py", line 301, in _unshard
+[rank1]:     handle.unshard()
+[rank1]:     ~~~~~~~~~~~~~~^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_flat_param.py", line 1354, in unshard
+[rank1]:     unsharded_flat_param = self._alloc_padded_unsharded_flat_param()
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/fsdp/_flat_param.py", line 1381, in _alloc_padded_unsharded_flat_param
+[rank1]:     _alloc_storage(unsharded_flat_param, flat_param._padded_unsharded_size)  # type: ignore[attr-defined]
+[rank1]:     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/utils.py", line 192, in _alloc_storage
+[rank1]:     tensor._typed_storage()._resize_(size.numel())
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+[rank1]:   File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/storage.py", line 1258, in _resize_
+[rank1]:     self._untyped_storage.resize_(size * self._element_size())
+[rank1]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[rank1]: torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 890.00 MiB. GPU 1 has a total capacity of 39.49 GiB of which 16.31 MiB is free. Including non-PyTorch memory, this process has 39.47 GiB memory in use. Of the allocated memory 38.52 GiB is allocated by PyTorch, and 124.32 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+  0%|          | 0/1 [00:19<?, ?it/s]
+[rank0]:[W308 01:20:08.215019568 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+W0308 01:20:16.402000 1879978 torch/distributed/elastic/multiprocessing/api.py:897] Sending process 1880328 closing signal SIGTERM
+E0308 01:20:16.574000 1879978 torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: 1) local_rank: 1 (pid: 1880329) of binary: /projects/bfdz/zluo8/ILVR/.venv/bin/python
+Traceback (most recent call last):
+  File "/projects/bfdz/zluo8/ILVR/.venv/bin/torchrun", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+    ~~~^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+    ~~~~~~~~~~~~~~~
+        config=config,
+        ~~~~~~~~~~~~~~
+        entrypoint=cmd,
+        ~~~~~~~~~~~~~~~
+    )(*cmd_args)
+    ~^^^^^^^^^^^
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/projects/bfdz/zluo8/ILVR/.venv/lib/python3.13/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+    ...<2 lines>...
+    )
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+src/main.py FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-03-08_01:20:16
+  host      : gpua036.delta.ncsa.illinois.edu
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 1880329)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
