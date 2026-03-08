@@ -131,6 +131,19 @@ def _resolve_training_precision(precision_arg: str):
     fp16_flag = requested == "fp16"
     return requested, model_dtype, bf16_flag, fp16_flag
 
+
+def _validate_resume_checkpoint(path: str):
+    if not os.path.isdir(path):
+        raise ValueError(f"resume_from_checkpoint_path is not a directory: {path}")
+    marker_files = {"trainer_state.json", "training_args.bin", "training_args.json"}
+    has_marker = any(os.path.isfile(os.path.join(path, name)) for name in marker_files)
+    if not has_marker:
+        logging.warning(
+            "Checkpoint directory does not contain common Trainer marker files (%s): %s",
+            ", ".join(sorted(marker_files)),
+            path,
+        )
+
     
 
 # ==============================================================
@@ -310,18 +323,22 @@ def main_train():
     )
     
 
-    last_checkpoint = None
-    if os.path.isdir(training_args.output_dir):
-        last_checkpoint = get_last_checkpoint(training_args.output_dir)
-        if last_checkpoint is not None:
-            logging.info(f"last checkpoint: {last_checkpoint}，continue。")
-        else:
-            logging.info(f"output log {training_args.output_dir} exists but no checkpoint， train from start。")
+    resume_from_checkpoint = getattr(args, "resume_from_checkpoint_path", None)
+    if resume_from_checkpoint:
+        _validate_resume_checkpoint(resume_from_checkpoint)
+        logging.info("Resuming from user-provided checkpoint: %s", resume_from_checkpoint)
     else:
-        logging.info("no checkpoint，train from start。")
+        if os.path.isdir(training_args.output_dir):
+            resume_from_checkpoint = get_last_checkpoint(training_args.output_dir)
+            if resume_from_checkpoint is not None:
+                logging.info(f"last checkpoint: {resume_from_checkpoint}，continue。")
+            else:
+                logging.info(f"output log {training_args.output_dir} exists but no checkpoint， train from start。")
+        else:
+            logging.info("no checkpoint，train from start。")
 
     logging.info("start training (FSDP mode, precision=%s)...", resolved_precision)
-    trainer.train(resume_from_checkpoint=last_checkpoint)
+    trainer.train(resume_from_checkpoint=resume_from_checkpoint)
 
     final_model_path = training_args.output_dir
 

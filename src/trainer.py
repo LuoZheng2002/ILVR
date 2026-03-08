@@ -6,7 +6,8 @@ import math
 import contextlib
 import logging
 import os
-from typing import Dict, List
+import json
+from typing import Any, Dict, List, cast
 
 import torch.distributed as dist
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
@@ -39,6 +40,9 @@ class _ShardedEMA:
             if shadow.device != data.device:
                 shadow = shadow.to(data.device)
                 self.shadow[name] = shadow
+            if shadow.shape != data.shape:
+                self.shadow[name] = data.clone().float()
+                continue
             shadow.mul_(d).add_(data.float(), alpha=(1.0 - d))
 
     @torch.no_grad()
@@ -62,18 +66,41 @@ class _ShardedEMA:
         return {
             "decay": self.decay,
             "shadow": {k: v.detach().cpu() for k, v in self.shadow.items()},
+            "shadow_shapes": {k: tuple(v.shape) for k, v in self.shadow.items()},
         }
 
     def load_state_dict(self, state_dict: Dict[str, object], model: nn.Module):
-        self.decay = float(state_dict.get("decay", self.decay))
-        raw_shadow = state_dict.get("shadow", {})
+        decay_value = cast(Any, state_dict.get("decay", self.decay))
+        try:
+            self.decay = float(decay_value)
+        except Exception:
+            pass
+        raw_shadow_obj = state_dict.get("shadow", {})
+        raw_shadow: Dict[str, Any] = raw_shadow_obj if isinstance(raw_shadow_obj, dict) else {}
         self.shadow = {}
-        model_params = dict(model.named_parameters())
-        for name, tensor in raw_shadow.items():
-            if name not in model_params:
+        loaded = 0
+        skipped_shape = 0
+        model_params = {
+            name: p
+            for name, p in model.named_parameters()
+            if p.requires_grad
+        }
+        for name, target in model_params.items():
+            tensor_obj = raw_shadow.get(name)
+            if not isinstance(tensor_obj, torch.Tensor):
                 continue
-            target = model_params[name]
+            tensor = tensor_obj
+            if tuple(tensor.shape) != tuple(target.shape):
+                skipped_shape += 1
+                continue
             self.shadow[name] = tensor.to(device=target.device, dtype=torch.float32)
+            loaded += 1
+        return {
+            "loaded": loaded,
+            "skipped_shape": skipped_shape,
+            "target_trainable": len(model_params),
+            "source_tensors": len(raw_shadow),
+        }
 
 
 class CustomTrainerStage1(SFTTrainer):
@@ -105,9 +132,17 @@ class CustomTrainerStage1(SFTTrainer):
             return int(dist.get_rank())
         return 0
 
+    def _dist_world_size(self) -> int:
+        if dist.is_available() and dist.is_initialized():
+            return int(dist.get_world_size())
+        return 1
+
     def _ema_shard_path(self, checkpoint_dir: str) -> str:
         rank = self._dist_rank()
         return os.path.join(checkpoint_dir, f"ema_shard_rank{rank:05d}.pt")
+
+    def _checkpoint_meta_path(self, checkpoint_dir: str) -> str:
+        return os.path.join(checkpoint_dir, "fsdp_checkpoint_meta.json")
 
     def _save_ema_shard(self):
         if self._ema is None:
@@ -118,25 +153,110 @@ class CustomTrainerStage1(SFTTrainer):
         )
         os.makedirs(checkpoint_dir, exist_ok=True)
         ema_path = self._ema_shard_path(checkpoint_dir)
-        torch.save(self._ema.state_dict(), ema_path)
+        payload = self._ema.state_dict()
+        payload["_ema_meta"] = {
+            "rank": self._dist_rank(),
+            "world_size": self._dist_world_size(),
+            "global_step": int(self.state.global_step),
+        }
+        torch.save(payload, ema_path)
+
+    def _save_checkpoint_meta(self, checkpoint_dir: str):
+        if not self.is_world_process_zero():
+            return
+        fsdp_config = getattr(self.args, "fsdp_config", {})
+        fsdp_state_dict_type = None
+        if isinstance(fsdp_config, dict):
+            fsdp_state_dict_type = fsdp_config.get("state_dict_type")
+        payload = {
+            "global_step": int(self.state.global_step),
+            "world_size": self._dist_world_size(),
+            "rank": self._dist_rank(),
+            "ema_enabled": self._ema is not None,
+            "ema_shard_pattern": "ema_shard_rank%05d.pt",
+            "fsdp": getattr(self.args, "fsdp", None),
+            "fsdp_state_dict_type": fsdp_state_dict_type,
+        }
+        with open(self._checkpoint_meta_path(checkpoint_dir), "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2, ensure_ascii=False)
+
+    def _load_checkpoint_meta(self, checkpoint_dir: str):
+        meta_path = self._checkpoint_meta_path(checkpoint_dir)
+        if not os.path.isfile(meta_path):
+            logging.warning("Checkpoint metadata file not found: %s", meta_path)
+            return
+        try:
+            with open(meta_path, "r", encoding="utf-8") as f:
+                payload = json.load(f)
+            logging.info("Loaded checkpoint metadata: %s", payload)
+        except Exception as e:
+            logging.warning("Failed to load checkpoint metadata (%s): %s", meta_path, e)
+
+    def _select_best_ema_shard(self, checkpoint_dir: str):
+        if not os.path.isdir(checkpoint_dir):
+            return None, None
+        trainable = {
+            name: tuple(p.shape)
+            for name, p in self.model.named_parameters()
+            if p.requires_grad
+        }
+        best_path = None
+        best_payload = None
+        best_score = -1
+        for fname in os.listdir(checkpoint_dir):
+            if not (fname.startswith("ema_shard_rank") and fname.endswith(".pt")):
+                continue
+            path = os.path.join(checkpoint_dir, fname)
+            try:
+                payload = torch.load(path, map_location="cpu")
+            except Exception:
+                continue
+            raw_shadow = payload.get("shadow", {})
+            score = 0
+            for name, shape in trainable.items():
+                t = raw_shadow.get(name)
+                if t is not None and tuple(t.shape) == shape:
+                    score += 1
+            if score > best_score:
+                best_score = score
+                best_path = path
+                best_payload = payload
+        return best_path, best_payload
 
     def _load_ema_shard(self, checkpoint_dir: str):
         if self._ema is None:
             return
         ema_path = self._ema_shard_path(checkpoint_dir)
-        if not os.path.isfile(ema_path):
-            logging.warning("EMA shard checkpoint not found for this rank: %s", ema_path)
-            return
-        payload = torch.load(ema_path, map_location="cpu")
-        self._ema.load_state_dict(payload, self.model)
-        logging.info("Loaded EMA shard checkpoint: %s", ema_path)
+        payload = None
+        source_path = ema_path
+        if os.path.isfile(ema_path):
+            payload = torch.load(ema_path, map_location="cpu")
+        else:
+            best_path, best_payload = self._select_best_ema_shard(checkpoint_dir)
+            if best_payload is None:
+                logging.warning("EMA shard checkpoint not found for rank or fallback: %s", checkpoint_dir)
+                return
+            source_path = best_path
+            payload = best_payload
+            logging.warning(
+                "EMA shard for current rank missing; falling back to best available shard: %s",
+                best_path,
+            )
+        stats = self._ema.load_state_dict(payload, self.model)
+        logging.info("Loaded EMA shard checkpoint: %s (stats=%s)", source_path, stats)
 
     def _save_checkpoint(self, model, trial, metrics=None):
         super()._save_checkpoint(model, trial, metrics)
         self._save_ema_shard()
+        checkpoint_dir = os.path.join(
+            self.args.output_dir,
+            f"{PREFIX_CHECKPOINT_DIR}-{self.state.global_step}",
+        )
+        self._save_checkpoint_meta(checkpoint_dir)
 
     def _load_from_checkpoint(self, resume_from_checkpoint, model=None):
         super()._load_from_checkpoint(resume_from_checkpoint, model=model)
+        self._load_checkpoint_meta(resume_from_checkpoint)
         self._load_ema_shard(resume_from_checkpoint)
 
     def _find_latent_segments(self, input_ids, latent_start_id, latent_end_id, latent_pad_id):
@@ -530,6 +650,9 @@ class CustomTrainerStage1(SFTTrainer):
 
     @contextlib.contextmanager
     def _ema_teacher_context(self):
+        if self._ema is None:
+            yield
+            return
         self._ema.begin_teacher(self.model)
         try:
             yield

@@ -14,7 +14,7 @@
 
 ## 2) FSDP Integration
 - [x] Add FSDP config surface (CLI/config file): sharding strategy, auto-wrap policy, mixed precision, state dict type.
-- [ ] Replace DeepSpeed engine wrapping with FSDP module wrapping.
+- [x] Replace DeepSpeed engine wrapping with FSDP module wrapping.
 - [ ] Ensure gradient accumulation and `no_sync` semantics remain correct.
 - [ ] Preserve optimizer step ordering and scheduler stepping behavior.
 - [ ] Validate activation checkpointing compatibility under FSDP.
@@ -26,22 +26,21 @@
 - [x] Add capability checks/fallback messaging for hardware that lacks bf16 support.
 
 ## 4) Sharded EMA
-- [ ] Replace full-parameter EMA with FSDP-aware sharded EMA updates.
-- [ ] Ensure EMA update happens with correct parameter view (local shard vs gathered full params).
-- [ ] Add save/load logic for sharded EMA state alongside model/optimizer states.
+- [x] Replace full-parameter EMA with FSDP-aware sharded EMA updates.
+- [x] Ensure EMA update happens with correct parameter view (local shard vs gathered full params).
+- [x] Add save/load logic for sharded EMA state alongside model/optimizer states.
 - [ ] Verify EMA resume correctness across world sizes when supported.
 
 ## 5) Checkpointing & Resume
-- [ ] Migrate checkpoint save/load from DeepSpeed format to FSDP-compatible format.
-- [ ] Decide and implement state dict mode (`full`, `local`, or `sharded`) for train/eval/export.
-- [ ] Provide conversion or compatibility path for existing checkpoints if needed.
+- [x] Migrate checkpoint save/load from DeepSpeed format to FSDP-compatible format.
+- [x] Decide and implement state dict mode (`full`, `local`, or `sharded`) for train/eval/export.
 - [ ] Verify strict resume parity: global step, optimizer, scheduler, EMA, RNG states.
 
 ## 6) Launch & Infrastructure Updates
 - [x] Update training launch scripts (`run_training.sh`, SLURM files) to remove DeepSpeed launcher assumptions.
 - [x] Add/adjust `torchrun` arguments and distributed environment setup.
 - [x] Remove DeepSpeed config dependencies from runtime path.
-- [ ] Update dependency list (`requirements.txt`) if DeepSpeed becomes optional or removed.
+- [x] Update dependency list (`requirements.txt`) if DeepSpeed becomes optional or removed.
 
 ## 7) Validation
 - [ ] Smoke test 1-GPU / small batch run.
