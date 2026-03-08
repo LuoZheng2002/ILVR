@@ -1,15 +1,15 @@
 #!/bin/bash
-#SBATCH --job-name=train       # Job name
-#SBATCH --output=z_train_%j.out        # Standard output log (%j = job ID)
-#SBATCH --error=z_train_%j.err         # Error log
-#SBATCH --time=01:00:00                 # Max runtime (HH:MM:SS)
+#SBATCH --job-name=train_zero3       # Job name
+#SBATCH --output=z_train_zero3_%j.out        # Standard output log (%j = job ID)
+#SBATCH --error=z_train_zero3_%j.err         # Error log
+#SBATCH --time=00:20:00                 # Max runtime (HH:MM:SS)
 # #SBATCH --partition=gpu                  # Partition/queue with GPU
 # #SBATCH --mail-type=BEGIN,END,FAIL
 # #SBATCH --mail-user=luozheng@usc.edu
 #SBATCH --partition=gpuH200x8
-#SBATCH --gres=gpu:4                     # Request 4 GPUs
+#SBATCH --gres=gpu:2                     # Request 2 GPUs
 #SBATCH --cpus-per-task=4                # CPU cores
-#SBATCH --mem=64G                        # RAM
+#SBATCH --mem=32G                        # RAM
 #SBATCH --account=bfdz-delta-gpu    # Your Slurm account/project
 
 # Load modules or activate your environment
