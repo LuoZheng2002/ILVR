@@ -13,17 +13,17 @@
 - [ ] Record distributed initialization path and launch assumptions (`torchrun`, env vars, world size/rank handling).
 
 ## 2) FSDP Integration
-- [ ] Add FSDP config surface (CLI/config file): sharding strategy, auto-wrap policy, mixed precision, state dict type.
+- [x] Add FSDP config surface (CLI/config file): sharding strategy, auto-wrap policy, mixed precision, state dict type.
 - [ ] Replace DeepSpeed engine wrapping with FSDP module wrapping.
 - [ ] Ensure gradient accumulation and `no_sync` semantics remain correct.
 - [ ] Preserve optimizer step ordering and scheduler stepping behavior.
 - [ ] Validate activation checkpointing compatibility under FSDP.
 
 ## 3) bf16 Enablement
-- [ ] Set FSDP mixed precision to `bf16` (params/reduce/buffer dtypes as appropriate).
+- [x] Set FSDP mixed precision to `bf16` (params/reduce/buffer dtypes as appropriate).
 - [ ] Remove/disable fp16-only codepaths (e.g., grad scaler if not needed for bf16).
 - [ ] Ensure loss computation and numerically sensitive ops remain in stable dtype where required.
-- [ ] Add capability checks/fallback messaging for hardware that lacks bf16 support.
+- [x] Add capability checks/fallback messaging for hardware that lacks bf16 support.
 
 ## 4) Sharded EMA
 - [ ] Replace full-parameter EMA with FSDP-aware sharded EMA updates.
@@ -38,8 +38,8 @@
 - [ ] Verify strict resume parity: global step, optimizer, scheduler, EMA, RNG states.
 
 ## 6) Launch & Infrastructure Updates
-- [ ] Update training launch scripts (`run_training.sh`, SLURM files) to remove DeepSpeed launcher assumptions.
-- [ ] Add/adjust `torchrun` arguments and distributed environment setup.
+- [x] Update training launch scripts (`run_training.sh`, SLURM files) to remove DeepSpeed launcher assumptions.
+- [x] Add/adjust `torchrun` arguments and distributed environment setup.
 - [ ] Remove DeepSpeed config dependencies from runtime path.
 - [ ] Update dependency list (`requirements.txt`) if DeepSpeed becomes optional or removed.
 

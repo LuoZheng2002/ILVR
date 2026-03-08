@@ -1,7 +1,5 @@
 import os
 import re
-import json
-import copy
 import logging
 from tqdm import tqdm
 from functools import partial
@@ -14,10 +12,6 @@ from transformers import (
     AutoProcessor,
 )
 from transformers.trainer_utils import get_last_checkpoint
-try:
-    from transformers.integrations import HfDeepSpeedConfig
-except Exception:
-    HfDeepSpeedConfig = None
 from trl import SFTTrainer, SFTConfig
 from peft import LoraConfig, get_peft_model
 from datasets import load_dataset
@@ -104,6 +98,39 @@ def collate_fn_stage1(examples, processor, args):
     batch["image_out_mask"] = image_out_mask
     return batch
 
+
+def _resolve_training_precision(precision_arg: str):
+    requested = (precision_arg or "bf16").lower()
+    if requested not in {"auto", "bf16", "fp16", "fp32"}:
+        raise ValueError(f"Unsupported mixed precision mode: {precision_arg}")
+
+    cuda_ok = torch.cuda.is_available()
+    bf16_ok = cuda_ok and torch.cuda.is_bf16_supported()
+
+    if requested == "auto":
+        requested = "bf16" if bf16_ok else "fp16"
+
+    if requested == "bf16" and not bf16_ok:
+        logging.warning(
+            "bf16 was requested but this hardware/runtime does not support it; "
+            "falling back to fp16."
+        )
+        requested = "fp16"
+
+    if requested == "fp16":
+        if not cuda_ok:
+            logging.warning("fp16 requested without CUDA; falling back to fp32.")
+            requested = "fp32"
+        model_dtype = torch.float16
+    elif requested == "bf16":
+        model_dtype = torch.bfloat16
+    else:
+        model_dtype = torch.float32
+
+    bf16_flag = requested == "bf16"
+    fp16_flag = requested == "fp16"
+    return requested, model_dtype, bf16_flag, fp16_flag
+
     
 
 # ==============================================================
@@ -129,42 +156,13 @@ def main_train():
     cache_dir = args.cache_dir
     os.environ['HF_HOME'] = cache_dir
 
-    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    ds_config_path = os.path.join(repo_root, "configs", "config_stage3.json")
     per_device_train_batch_size = 1
     gradient_accumulation_steps = int(args.gradient_accumulation_steps)
-    world_size = max(int(os.environ.get("WORLD_SIZE", "1")), 1)
-
-    with open(ds_config_path, "r", encoding="utf-8") as f:
-        ds_config = json.load(f)
-
-    ds_config["train_micro_batch_size_per_gpu"] = per_device_train_batch_size
-    ds_config["gradient_accumulation_steps"] = gradient_accumulation_steps
-    ds_config["train_batch_size"] = (
-        per_device_train_batch_size * gradient_accumulation_steps * world_size
-    )
-    ds_init_config = copy.deepcopy(ds_config)
-    ds_init_config["train_batch_size"] = (
-        per_device_train_batch_size * gradient_accumulation_steps
-    )
-
     logging.info(
-        "Resolved DeepSpeed batch settings: micro_batch=%s, grad_accum=%s, train_batch=%s, world_size=%s",
-        ds_config["train_micro_batch_size_per_gpu"],
-        ds_config["gradient_accumulation_steps"],
-        ds_config["train_batch_size"],
-        world_size,
+        "Resolved FSDP batch settings: micro_batch=%s, grad_accum=%s",
+        per_device_train_batch_size,
+        gradient_accumulation_steps,
     )
-
-    ds_init_helper = None
-    if HfDeepSpeedConfig is not None:
-        try:
-            ds_init_helper = HfDeepSpeedConfig(ds_init_config)
-            logging.info(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
-            print(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
-        except Exception as e:
-            logging.warning(f"Failed to initialize HfDeepSpeedConfig ({e}); fallback to regular model init")
-            print(f"Failed to initialize HfDeepSpeedConfig ({e}); fallback to regular model init")
     
     logging.info(f"Loading processor from: {args.model}")
     processor = AutoProcessor.from_pretrained(args.model, cache_dir=cache_dir, trust_remote_code=True)
@@ -172,6 +170,11 @@ def main_train():
     new_tokens = ["<|latent_pad|>", "<|latent_start|>", "<|latent_end|>"]
     processor.tokenizer.add_tokens(new_tokens, special_tokens=True)
 
+
+    resolved_precision, model_dtype, bf16_flag, fp16_flag = _resolve_training_precision(
+        getattr(args, "mixed_precision", "bf16")
+    )
+    logging.info("Resolved mixed precision mode: %s", resolved_precision)
 
     logging.info(f"Loading model (Stage 1) from: {args.model}")
     model_path = args.model
@@ -193,7 +196,7 @@ def main_train():
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
         model_path,
         config=config,
-        torch_dtype=torch.bfloat16,
+        torch_dtype=model_dtype,
         attn_implementation="flash_attention_2",
         cache_dir=cache_dir,
         low_cpu_mem_usage=True,
@@ -267,7 +270,8 @@ def main_train():
         save_steps=args.save_steps,
         save_total_limit=1,
         optim="adamw_torch_fused" if args.stage == 'stage1' else "adamw_torch",
-        bf16=True,
+        bf16=bf16_flag,
+        fp16=fp16_flag,
         push_to_hub=False,
         remove_unused_columns=False,
         gradient_checkpointing=grad_checkpointing,
@@ -277,7 +281,16 @@ def main_train():
         logging_dir='./logs/',
         logging_strategy='steps',
         max_seq_length=32768 if args.stage == 'stage1' else args.max_seq_length_train,
-        deepspeed=ds_config,
+        fsdp=getattr(args, "fsdp", "full_shard auto_wrap"),
+        fsdp_config={
+            "backward_prefetch": getattr(args, "fsdp_backward_prefetch", "backward_pre"),
+            "forward_prefetch": bool(getattr(args, "fsdp_forward_prefetch", False)),
+            "limit_all_gathers": bool(getattr(args, "fsdp_limit_all_gathers", True)),
+            "use_orig_params": bool(getattr(args, "fsdp_use_orig_params", True)),
+            "sync_module_states": bool(getattr(args, "fsdp_sync_module_states", True)),
+            "state_dict_type": getattr(args, "fsdp_state_dict_type", "SHARDED_STATE_DICT"),
+            "transformer_layer_cls_to_wrap": getattr(args, "fsdp_transformer_layer_cls_to_wrap", "Qwen2_5_VLDecoderLayer"),
+        },
         ddp_find_unused_parameters=False if args.stage == 'stage2' else None,
     )
     
@@ -307,7 +320,7 @@ def main_train():
     else:
         logging.info("no checkpoint，train from start。")
 
-    logging.info("start training (DeepSpeed ZeRO-3 Mode)...")
+    logging.info("start training (FSDP mode, precision=%s)...", resolved_precision)
     trainer.train(resume_from_checkpoint=last_checkpoint)
 
     final_model_path = training_args.output_dir

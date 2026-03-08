@@ -23,12 +23,10 @@ export TEST_IMAGE_ROOT=""
 SAVE_MODEL_PATH="checkpoints"
 LOG_FILE="train.log"
 
-export ILVR_FORCE_EMA_WITH_ZERO3=1
-
 mkdir -p "$(dirname "$SAVE_MODEL_PATH")" "$(dirname "$LOG_FILE")"
 
 
-NUM_PROCESSES=${NUM_PROCESSES:-$(python - <<'PY'
+NUM_PROCESSES=${NUM_PROCESSES:-$(python3 - <<'PY'
 try:
     import torch
     print(torch.cuda.device_count() or 1)
@@ -38,7 +36,9 @@ PY
 )}
 echo "Using ${NUM_PROCESSES} processes"
 
-accelerate launch --num_processes="${NUM_PROCESSES}" src/main.py \
+MASTER_PORT=${MASTER_PORT:-29500}
+
+torchrun --standalone --nproc_per_node="${NUM_PROCESSES}" --master_port="${MASTER_PORT}" src/main.py \
   --model "${MODEL_NAME}" \
   --epochs "${EPOCHS}" \
   --task "${TASK_NAME}" \
@@ -51,6 +51,7 @@ accelerate launch --num_processes="${NUM_PROCESSES}" src/main.py \
   --ce_weight "${CE_WEIGHT}" \
   --save_model_path "${SAVE_MODEL_PATH}" \
   --cache_dir "${HF_HOME}" \
+  --mixed_precision bf16 \
   --save_steps "${SAVE_STEPS}"
 
 echo "training finished, save model to ${SAVE_MODEL_PATH}"

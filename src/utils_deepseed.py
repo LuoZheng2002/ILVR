@@ -8,8 +8,16 @@ import argparse
 from datasets import Dataset
 from transformers import LogitsProcessor
 
-from transformers import LogitsProcessor
-import torch
+
+def _str2bool(v):
+    if isinstance(v, bool):
+        return v
+    vv = str(v).strip().lower()
+    if vv in {"1", "true", "t", "yes", "y", "on"}:
+        return True
+    if vv in {"0", "false", "f", "no", "n", "off"}:
+        return False
+    raise argparse.ArgumentTypeError(f"Invalid boolean value: {v}")
 
 
 def get_args():
@@ -51,6 +59,20 @@ def get_args():
         help="Path to a specific checkpoint to resume training from. If None, training starts from scratch."
     )
     parser.add_argument("--helper_group_L", type=int, default=256,help="")
+    parser.add_argument("--mixed_precision", type=str, default="bf16", choices=["auto", "bf16", "fp16", "fp32"])
+    parser.add_argument("--fsdp", type=str, default="full_shard auto_wrap")
+    parser.add_argument(
+        "--fsdp_state_dict_type",
+        type=str,
+        default="SHARDED_STATE_DICT",
+        choices=["FULL_STATE_DICT", "LOCAL_STATE_DICT", "SHARDED_STATE_DICT"],
+    )
+    parser.add_argument("--fsdp_backward_prefetch", type=str, default="backward_pre")
+    parser.add_argument("--fsdp_forward_prefetch", type=_str2bool, default=False)
+    parser.add_argument("--fsdp_limit_all_gathers", type=_str2bool, default=True)
+    parser.add_argument("--fsdp_use_orig_params", type=_str2bool, default=True)
+    parser.add_argument("--fsdp_sync_module_states", type=_str2bool, default=True)
+    parser.add_argument("--fsdp_transformer_layer_cls_to_wrap", type=str, default="Qwen2_5_VLDecoderLayer")
     parser.add_argument(
         "--latent_num_segments_train", type=int, default=8,
         help="Stage-2"
