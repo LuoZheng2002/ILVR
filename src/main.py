@@ -14,10 +14,7 @@ from transformers import (
     AutoProcessor,
 )
 from transformers.trainer_utils import get_last_checkpoint
-try:
-    from transformers.integrations import HfDeepSpeedConfig
-except Exception:
-    HfDeepSpeedConfig = None
+from transformers.integrations import HfDeepSpeedConfig
 from trl import SFTTrainer, SFTConfig
 from peft import LoraConfig, get_peft_model
 from datasets import load_dataset
@@ -137,6 +134,9 @@ def main_train():
 
     with open(ds_config_path, "r", encoding="utf-8") as f:
         ds_config = json.load(f)
+    zero_stage = int(ds_config.get("zero_optimization", {}).get("stage", 0))
+    if zero_stage != 3:
+        raise ValueError(f"DeepSpeed ZeRO-3 is required, but config has zero_optimization.stage={zero_stage}")
 
     ds_config["train_micro_batch_size_per_gpu"] = per_device_train_batch_size
     ds_config["gradient_accumulation_steps"] = gradient_accumulation_steps
@@ -156,15 +156,9 @@ def main_train():
         world_size,
     )
 
-    ds_init_helper = None
-    if HfDeepSpeedConfig is not None:
-        try:
-            ds_init_helper = HfDeepSpeedConfig(ds_init_config)
-            logging.info(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
-            print(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
-        except Exception as e:
-            logging.warning(f"Failed to initialize HfDeepSpeedConfig ({e}); fallback to regular model init")
-            print(f"Failed to initialize HfDeepSpeedConfig ({e}); fallback to regular model init")
+    ds_init_helper = HfDeepSpeedConfig(ds_init_config)
+    logging.info(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
+    print(f"Enabled HfDeepSpeedConfig for ZeRO init: {ds_config_path}")
     
     logging.info(f"Loading processor from: {args.model}")
     processor = AutoProcessor.from_pretrained(args.model, cache_dir=cache_dir, trust_remote_code=True)

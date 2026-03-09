@@ -4,7 +4,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 import copy
-import json
 import os
 import logging
 import deepspeed
@@ -15,28 +14,13 @@ try:
 except Exception:
     apply_multimodal_rotary_pos_emb = None
 
-try:
-    import deepspeed
-    _HAS_DS = True
-except ImportError:
-    _HAS_DS = False
-
-
 class _EMATeacher:
     def __init__(self, model: nn.Module, decay: float = 0.999):
         self.decay = float(decay)
-        if _HAS_DS and any(hasattr(p, "ds_id") for p in model.parameters()):
-            try:
-                params = [p for p in model.parameters()]
-                with deepspeed.zero.GatheredParameters(params, modifier_rank=None):
-                    self.teacher = copy.deepcopy(model)
-            except Exception as e:
-                logging.warning(
-                    "Failed to gather ZeRO-3 params for EMA teacher init (%s); using direct deepcopy",
-                    e,
-                )
-                self.teacher = copy.deepcopy(model)
-        else:
+        params = [p for p in model.parameters()]
+        if not all(hasattr(p, "ds_id") for p in params):
+            raise RuntimeError("DeepSpeed ZeRO-3 is required, but model parameters are not ZeRO-3 partitioned.")
+        with deepspeed.zero.GatheredParameters(params, modifier_rank=None):
             self.teacher = copy.deepcopy(model)
         self.teacher.eval()
         for p in self.teacher.parameters():
@@ -77,26 +61,11 @@ class CustomTrainerStage1(SFTTrainer):
         ema_tau = float(ema_tau)
         if ema_tau > 0.0:
             force_ema = os.environ.get("ILVR_FORCE_EMA_WITH_ZERO3", "0") == "1"
-            if self._is_zero3_enabled() and not force_ema:
+            if not force_ema:
                 self._ema_disabled_for_zero3 = True
-                logging.warning("EMA disabled because ZeRO-3 is enabled; set ILVR_FORCE_EMA_WITH_ZERO3=1 to force-enable at your own memory risk")
+                logging.warning("EMA disabled under ZeRO-3; set ILVR_FORCE_EMA_WITH_ZERO3=1 to force-enable at your own memory risk")
             else:
                 self._ema = _EMATeacher(self.model, decay=ema_tau)
-
-    def _is_zero3_enabled(self) -> bool:
-        ds_cfg = getattr(self.args, "deepspeed", None)
-        if isinstance(ds_cfg, dict):
-            zero_cfg = ds_cfg.get("zero_optimization", {})
-            return int(zero_cfg.get("stage", 0)) == 3
-        if isinstance(ds_cfg, str):
-            try:
-                with open(ds_cfg, "r", encoding="utf-8") as f:
-                    payload = json.load(f)
-                zero_cfg = payload.get("zero_optimization", {})
-                return int(zero_cfg.get("stage", 0)) == 3
-            except Exception:
-                return False
-        return False
 
     def _find_latent_segments(self, input_ids, latent_start_id, latent_end_id, latent_pad_id):
         ids = input_ids[0].tolist()
@@ -565,14 +534,13 @@ class CustomTrainerStage1(SFTTrainer):
             return
         d = float(self._ema.decay)
         with torch.no_grad():
-            if _HAS_DS and any(hasattr(p, "ds_id") for p in self.model.parameters()):
-                for p_t, p_s in zip(self._ema.teacher.parameters(), self.model.parameters()):
-                    with deepspeed.zero.GatheredParameters(p_s, modifier_rank=0):
-                        if p_s.data.numel() == 0:
-                            continue
-                        p_data = p_s.data
-                        if p_data.device != p_t.data.device:
-                            p_data = p_data.to(p_t.data.device)
-                        p_t.data.mul_(d).add_(p_data, alpha=(1.0 - d))
-            else:
-                self._ema.update(self.model)
+            for p_t, p_s in zip(self._ema.teacher.parameters(), self.model.parameters()):
+                if not hasattr(p_s, "ds_id"):
+                    raise RuntimeError("DeepSpeed ZeRO-3 is required, but model parameters are not ZeRO-3 partitioned.")
+                with deepspeed.zero.GatheredParameters(p_s, modifier_rank=0):
+                    if p_s.data.numel() == 0:
+                        continue
+                    p_data = p_s.data
+                    if p_data.device != p_t.data.device:
+                        p_data = p_data.to(p_t.data.device)
+                    p_t.data.mul_(d).add_(p_data, alpha=(1.0 - d))
