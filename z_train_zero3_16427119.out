@@ -1,0 +1,12 @@
+Using 2 processes
+Warning: The cache directory for DeepSpeed Triton autotune, /u/zluo8/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.Warning: The cache directory for DeepSpeed Triton autotune, /u/zluo8/.triton/autotune, appears to be on an NFS system. While this is generally acceptable, if you experience slowdowns or hanging when DeepSpeed exits, it is recommended to set the TRITON_CACHE_DIR environment variable to a non-NFS path.
+
+Enabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.jsonEnabled HfDeepSpeedConfig for ZeRO init: /projects/bfdz/zluo8/ILVR/configs/config_stage3.json
+
+Parameter Offload - Persistent parameters statistics: param_count = 368, numel = 848896
+{'loss': 37.8735, 'grad_norm': 192.21960452194924, 'learning_rate': 9.972136222910217e-06, 'mean_token_accuracy': 0.6749641178175807, 'epoch': 0.09}
+{'loss': 17.0903, 'grad_norm': 110.40284097988429, 'learning_rate': 9.910216718266254e-06, 'mean_token_accuracy': 0.8472621213644743, 'epoch': 0.19}
+{'loss': 12.8131, 'grad_norm': 64.02652728219878, 'learning_rate': 9.848297213622292e-06, 'mean_token_accuracy': 0.9061888538300991, 'epoch': 0.28}
+{'loss': 12.0304, 'grad_norm': 39.09108698754871, 'learning_rate': 9.786377708978329e-06, 'mean_token_accuracy': 0.9149964597076178, 'epoch': 0.37}
+{'loss': 12.0521, 'grad_norm': 35.38858892769251, 'learning_rate': 9.724458204334366e-06, 'mean_token_accuracy': 0.9137109115719795, 'epoch': 0.46}
+{'loss': 12.1492, 'grad_norm': 34.01207920743397, 'learning_rate': 9.662538699690404e-06, 'mean_token_accuracy': 0.911830784752965, 'epoch': 0.56}
