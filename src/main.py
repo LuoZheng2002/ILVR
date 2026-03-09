@@ -135,8 +135,9 @@ def main_train():
     with open(ds_config_path, "r", encoding="utf-8") as f:
         ds_config = json.load(f)
     zero_stage = int(ds_config.get("zero_optimization", {}).get("stage", 0))
-    if zero_stage != 3:
-        raise ValueError(f"DeepSpeed ZeRO-3 is required, but config has zero_optimization.stage={zero_stage}")
+    assert zero_stage == 3, (
+        f"DeepSpeed ZeRO-3 is required, but config has zero_optimization.stage={zero_stage}"
+    )
 
     ds_config["train_micro_batch_size_per_gpu"] = per_device_train_batch_size
     ds_config["gradient_accumulation_steps"] = gradient_accumulation_steps

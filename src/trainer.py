@@ -4,7 +4,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 import copy
-import os
 import logging
 import deepspeed
 from typing import List
@@ -18,8 +17,9 @@ class _EMATeacher:
     def __init__(self, model: nn.Module, decay: float = 0.999):
         self.decay = float(decay)
         params = [p for p in model.parameters()]
-        if not all(hasattr(p, "ds_id") for p in params):
-            raise RuntimeError("DeepSpeed ZeRO-3 is required, but model parameters are not ZeRO-3 partitioned.")
+        assert all(hasattr(p, "ds_id") for p in params), (
+            "DeepSpeed ZeRO-3 is required, but model parameters are not ZeRO-3 partitioned."
+        )
         with deepspeed.zero.GatheredParameters(params, modifier_rank=None):
             self.teacher = copy.deepcopy(model)
         self.teacher.eval()
@@ -56,16 +56,9 @@ class CustomTrainerStage1(SFTTrainer):
         self.helper_group_L = int(helper_group_L)
         self.ce_weight = float(ce_weight)
         self.image_pool_k = int(image_pool_k)
-        self._ema = None
-        self._ema_disabled_for_zero3 = False
         ema_tau = float(ema_tau)
-        if ema_tau > 0.0:
-            force_ema = os.environ.get("ILVR_FORCE_EMA_WITH_ZERO3", "0") == "1"
-            if not force_ema:
-                self._ema_disabled_for_zero3 = True
-                logging.warning("EMA disabled under ZeRO-3; set ILVR_FORCE_EMA_WITH_ZERO3=1 to force-enable at your own memory risk")
-            else:
-                self._ema = _EMATeacher(self.model, decay=ema_tau)
+        assert ema_tau > 0.0, "EMA must be enabled in ZeRO-3-only mode (ema_tau > 0)."
+        self._ema = _EMATeacher(self.model, decay=ema_tau)
 
     def _find_latent_segments(self, input_ids, latent_start_id, latent_end_id, latent_pad_id):
         ids = input_ids[0].tolist()
@@ -305,13 +298,8 @@ class CustomTrainerStage1(SFTTrainer):
         device = self.model.device
         ids  = inputs["input_ids"].to(device)
         attn = inputs["attention_mask"].to(device)
-        if self._ema is not None:
-            tea = self._ema.teacher.to(device).eval()
-            restore_training = False
-        else:
-            tea = self.model
-            restore_training = bool(tea.training)
-            tea.eval()
+        assert self._ema is not None, "EMA teacher is required in ZeRO-3-only mode."
+        tea = self._ema.teacher.to(device).eval()
 
         try:
 
@@ -450,8 +438,7 @@ class CustomTrainerStage1(SFTTrainer):
             firstK_mask = self._build_firstK_mask(ids, seg_pad_indices, Kstars)
             return latents, firstK_mask
         finally:
-            if restore_training:
-                tea.train()
+            pass
 
     def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
         # High-level compute_loss flow:
@@ -530,13 +517,13 @@ class CustomTrainerStage1(SFTTrainer):
 
     def optimizer_step(self, *args, **kwargs):
         super().optimizer_step(*args, **kwargs)
-        if not hasattr(self, "_ema") or self._ema is None:
-            return
+        assert self._ema is not None, "EMA teacher is required in ZeRO-3-only mode."
         d = float(self._ema.decay)
         with torch.no_grad():
             for p_t, p_s in zip(self._ema.teacher.parameters(), self.model.parameters()):
-                if not hasattr(p_s, "ds_id"):
-                    raise RuntimeError("DeepSpeed ZeRO-3 is required, but model parameters are not ZeRO-3 partitioned.")
+                assert hasattr(p_s, "ds_id"), (
+                    "DeepSpeed ZeRO-3 is required, but model parameters are not ZeRO-3 partitioned."
+                )
                 with deepspeed.zero.GatheredParameters(p_s, modifier_rank=0):
                     if p_s.data.numel() == 0:
                         continue
